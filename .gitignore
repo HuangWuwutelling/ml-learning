@@ -1,0 +1,16 @@
+# 公众号文章（不上传 GitHub）
+articles/
+plan.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+.DS_Store
