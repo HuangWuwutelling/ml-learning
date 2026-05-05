@@ -32,7 +32,11 @@ pip install -r requirements.txt
 ### 3. 运行
 
 ```bash
+# Day 1: 线性回归
 jupyter notebook notebooks/day1_linear_regression.ipynb
+
+# Day 2: Ridge & Lasso 回归
+jupyter notebook notebooks/day2_ridge_lasso.ipynb
 ```
 
 ## 已实现算法
@@ -40,6 +44,7 @@ jupyter notebook notebooks/day1_linear_regression.ipynb
 | Day | 算法 | Notebook | 模型文件 |
 |-----|------|----------|----------|
 | 1 | 线性回归（单变量 → 多变量） | `notebooks/day1_linear_regression.ipynb` | `models/linear_regression.py` |
+| 2 | Ridge & Lasso（L1/L2 正则化） | `notebooks/day2_ridge_lasso.ipynb` | `models/ridge_regression.py` / `models/lasso_regression.py` |
 
 ## 算法实现说明
 
