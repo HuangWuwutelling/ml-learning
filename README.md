@@ -29,6 +29,11 @@ pip install -r requirements.txt
 - 链接：https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques
 - 下载 `train.csv` 放入 `data/` 目录
 
+**Titanic: Machine Learning from Disaster**
+- Day 3 使用 pandas 内置数据集，自动下载
+- 或手动下载：https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv
+- 保存为 `titanic_train.csv` 放入 `data/` 目录
+
 ### 3. 运行
 
 ```bash
@@ -37,6 +42,9 @@ jupyter notebook notebooks/day1_linear_regression.ipynb
 
 # Day 2: Ridge & Lasso 回归
 jupyter notebook notebooks/day2_ridge_lasso.ipynb
+
+# Day 3: 逻辑回归（Titanic 幸存者预测）
+jupyter notebook notebooks/day3_logistic_regression.ipynb
 ```
 
 ## 已实现算法
@@ -45,6 +53,7 @@ jupyter notebook notebooks/day2_ridge_lasso.ipynb
 |-----|------|----------|----------|
 | 1 | 线性回归（单变量 → 多变量） | `notebooks/day1_linear_regression.ipynb` | `models/linear_regression.py` |
 | 2 | Ridge & Lasso（L1/L2 正则化） | `notebooks/day2_ridge_lasso.ipynb` | `models/ridge_regression.py` / `models/lasso_regression.py` |
+| 3 | 逻辑回归（二分类） | `notebooks/day3_logistic_regression.ipynb` | `models/logistic_regression.py` |
 
 ## 算法实现说明
 
