@@ -34,6 +34,9 @@ pip install -r requirements.txt
 - 或手动下载：https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv
 - 保存为 `titanic_train.csv` 放入 `data/` 目录
 
+**Iris (鸢尾花数据集)**
+- Day 4 使用 `sklearn.datasets.load_iris()` 自动加载，无需手动下载
+
 ### 3. 运行
 
 ```bash
@@ -45,6 +48,9 @@ jupyter notebook notebooks/day2_ridge_lasso.ipynb
 
 # Day 3: 逻辑回归（Titanic 幸存者预测）
 jupyter notebook notebooks/day3_logistic_regression.ipynb
+
+# Day 4: 决策树（Iris 分类）
+jupyter notebook notebooks/day4_decision_tree.ipynb
 ```
 
 ## 已实现算法
@@ -54,6 +60,7 @@ jupyter notebook notebooks/day3_logistic_regression.ipynb
 | 1 | 线性回归（单变量 → 多变量） | `notebooks/day1_linear_regression.ipynb` | `models/linear_regression.py` |
 | 2 | Ridge & Lasso（L1/L2 正则化） | `notebooks/day2_ridge_lasso.ipynb` | `models/ridge_regression.py` / `models/lasso_regression.py` |
 | 3 | 逻辑回归（二分类） | `notebooks/day3_logistic_regression.ipynb` | `models/logistic_regression.py` |
+| 4 | 决策树（CART 分类树） | `notebooks/day4_decision_tree.ipynb` | `models/decision_tree.py` |
 
 ## 算法实现说明
 
