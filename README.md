@@ -7,7 +7,9 @@
 ```
 ├── models/           # 算法实现（纯 Numpy）
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
-├── data/             # 数据集（Kaggle 下载）
+├── scripts/          # 生成封面、架构图等辅助脚本
+├── data/             # 数据集
+├── articles/         # 公众号文章
 ├── utils/            # 工具函数
 ├── requirements.txt
 └── .gitignore
@@ -37,6 +39,9 @@ pip install -r requirements.txt
 **Iris (鸢尾花数据集)**
 - Day 4 使用 `sklearn.datasets.load_iris()` 自动加载，无需手动下载
 
+**Digits (手写数字数据集)**
+- Day 5 使用 `sklearn.datasets.load_digits()` 自动加载，无需手动下载
+
 ### 3. 运行
 
 ```bash
@@ -51,6 +56,9 @@ jupyter notebook notebooks/day3_logistic_regression.ipynb
 
 # Day 4: 决策树（Iris 分类）
 jupyter notebook notebooks/day4_decision_tree.ipynb
+
+# Day 5: 随机森林（Digits 手写数字分类）
+jupyter notebook notebooks/day5_random_forest.ipynb
 ```
 
 ## 已实现算法
@@ -61,6 +69,7 @@ jupyter notebook notebooks/day4_decision_tree.ipynb
 | 2 | Ridge & Lasso（L1/L2 正则化） | `notebooks/day2_ridge_lasso.ipynb` | `models/ridge_regression.py` / `models/lasso_regression.py` |
 | 3 | 逻辑回归（二分类） | `notebooks/day3_logistic_regression.ipynb` | `models/logistic_regression.py` |
 | 4 | 决策树（CART 分类树） | `notebooks/day4_decision_tree.ipynb` | `models/decision_tree.py` |
+| 5 | 随机森林（Bagging + 随机特征） | `notebooks/day5_random_forest.ipynb` | `models/random_forest.py` |
 
 ## 算法实现说明
 
