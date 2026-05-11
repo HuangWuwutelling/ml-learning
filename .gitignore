@@ -2,6 +2,9 @@
 articles/
 plan.md
 
+# 辅助脚本（封面图、notebook 生成等，与算法本身无关）
+scripts/
+
 # Python
 __pycache__/
 *.pyc

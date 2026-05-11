@@ -7,9 +7,7 @@
 ```
 ├── models/           # 算法实现（纯 Numpy）
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
-├── scripts/          # 生成封面、架构图等辅助脚本
 ├── data/             # 数据集
-├── articles/         # 公众号文章
 ├── utils/            # 工具函数
 ├── requirements.txt
 └── .gitignore
