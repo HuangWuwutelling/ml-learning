@@ -10,9 +10,20 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+.venv/
 
 # Jupyter
 .ipynb_checkpoints/
+notebooks/*.png
+
+# 自动下载的数据集
+data/chinook.db
+data/chinook_cache/
+
+# 项目文件（发表后上传）
+app_text_to_sql.py
+simple_agent.py
+notebooks/text_to_sql.ipynb
 
 # OS
 Thumbs.db
