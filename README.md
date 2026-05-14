@@ -40,6 +40,9 @@ pip install -r requirements.txt
 **Digits (手写数字数据集)**
 - Day 5 使用 `sklearn.datasets.load_digits()` 自动加载，无需手动下载
 
+**California Housing (加州房价数据集)**
+- Day 6 使用 `sklearn.datasets.fetch_california_housing()` 自动加载，无需手动下载
+
 ### 3. 运行
 
 ```bash
@@ -57,6 +60,9 @@ jupyter notebook notebooks/day4_decision_tree.ipynb
 
 # Day 5: 随机森林（Digits 手写数字分类）
 jupyter notebook notebooks/day5_random_forest.ipynb
+
+# Day 6: GBDT（加州房价回归）
+jupyter notebook notebooks/day6_gbdt.ipynb
 ```
 
 ## 已实现算法
@@ -68,6 +74,7 @@ jupyter notebook notebooks/day5_random_forest.ipynb
 | 3 | 逻辑回归（二分类） | `notebooks/day3_logistic_regression.ipynb` | `models/logistic_regression.py` |
 | 4 | 决策树（CART 分类树） | `notebooks/day4_decision_tree.ipynb` | `models/decision_tree.py` |
 | 5 | 随机森林（Bagging + 随机特征） | `notebooks/day5_random_forest.ipynb` | `models/random_forest.py` |
+| 6 | GBDT（梯度提升，串行回归树） | `notebooks/day6_gbdt.ipynb` | `models/gradient_boosting.py` |
 
 ## 算法实现说明
 
