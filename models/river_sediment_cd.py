@@ -545,18 +545,8 @@ def plot_cumulative_cd(steady_result, time_result, sampling_depth=0.50,
     dec_colors = ['#FF8C00', '#DC143C', '#8B0000']
 
     for yr, c in zip(decades, dec_colors):
-        # Total Cd deposited over `yr` years: J_Cd * time
         sec = yr * 365.25 * 24 * 3600
 
-        # Cd that stays in top `sampling_depth`:
-        # If t_fill > yr: all deposited Cd stays within the sampled depth
-        # If t_fill < yr: once filled, Cd burial rate = J_out * C_ss
-        Cd_in_top = np.where(
-            t_fill_years > yr,
-            J_Cd * sec,  # all stays
-            C_ss * M_depth + J_Cd * sec * 0  # saturated at C_ss * M_depth
-        )
-        # Better: use the exact mass balance
         Cd_total_deposited = J_Cd * sec  # total Cd that entered bed
         sed_total_deposited = J_out * sec  # total sediment that entered bed
 
