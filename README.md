@@ -75,6 +75,9 @@ jupyter notebook notebooks/day7_kmeans.ipynb
 
 # Day 8: DBSCAN（月牙形数据密度聚类）
 jupyter notebook notebooks/day8_dbscan.ipynb
+
+# Day 9: SVM（二分类，RBF 核处理环形数据）
+jupyter notebook notebooks/day9_svm.ipynb
 ```
 
 ## 已实现算法
@@ -89,6 +92,7 @@ jupyter notebook notebooks/day8_dbscan.ipynb
 | 6 | GBDT（梯度提升，串行回归树） | `notebooks/day6_gbdt.ipynb` | `models/gradient_boosting.py` |
 | 7 | K-Means（Lloyd 算法） | `notebooks/day7_kmeans.ipynb` | `models/kmeans.py` |
 | 8 | DBSCAN（密度聚类） | `notebooks/day8_dbscan.ipynb` | `models/dbscan.py` |
+| 9 | SVM（SMO + 核技巧） | `notebooks/day9_svm.ipynb` | `models/svm.py` |
 
 ## 算法实现说明
 
