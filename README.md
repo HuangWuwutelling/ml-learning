@@ -43,6 +43,12 @@ pip install -r requirements.txt
 **California Housing (加州房价数据集)**
 - Day 6 使用 `sklearn.datasets.fetch_california_housing()` 自动加载，无需手动下载
 
+**Mall Customers (商场客户数据)**
+- Day 7 使用 `kagglehub.dataset_download()` 自动下载，无需手动操作
+
+**make_moons (月牙形合成数据)**
+- Day 8 使用 `sklearn.datasets.make_moons()` 自动生成，无需手动下载
+
 ### 3. 运行
 
 ```bash
@@ -63,6 +69,12 @@ jupyter notebook notebooks/day5_random_forest.ipynb
 
 # Day 6: GBDT（加州房价回归）
 jupyter notebook notebooks/day6_gbdt.ipynb
+
+# Day 7: K-Means（商场客户分群）
+jupyter notebook notebooks/day7_kmeans.ipynb
+
+# Day 8: DBSCAN（月牙形数据密度聚类）
+jupyter notebook notebooks/day8_dbscan.ipynb
 ```
 
 ## 已实现算法
@@ -75,6 +87,8 @@ jupyter notebook notebooks/day6_gbdt.ipynb
 | 4 | 决策树（CART 分类树） | `notebooks/day4_decision_tree.ipynb` | `models/decision_tree.py` |
 | 5 | 随机森林（Bagging + 随机特征） | `notebooks/day5_random_forest.ipynb` | `models/random_forest.py` |
 | 6 | GBDT（梯度提升，串行回归树） | `notebooks/day6_gbdt.ipynb` | `models/gradient_boosting.py` |
+| 7 | K-Means（Lloyd 算法） | `notebooks/day7_kmeans.ipynb` | `models/kmeans.py` |
+| 8 | DBSCAN（密度聚类） | `notebooks/day8_dbscan.ipynb` | `models/dbscan.py` |
 
 ## 算法实现说明
 
