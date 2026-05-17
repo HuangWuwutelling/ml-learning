@@ -158,7 +158,7 @@ class _DecisionTreeWrapper:
     def predict_proba(self, X):
         dt = _SimpleDecisionTree()
         dt._tree = self._tree
-        dt.n_classes_ = len(np.unique(self._tree['value']))
+        dt.n_classes_ = len(self._tree['value'])
         return dt.predict_proba(X[:, self.feat_idx_])
 
 
