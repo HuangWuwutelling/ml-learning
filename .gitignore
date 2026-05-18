@@ -21,11 +21,14 @@ data/chinook.db
 data/chinook_cache/
 
 # 项目文件（发表后上传）
-app_text_to_sql.py
-simple_agent.py
-notebooks/text_to_sql.ipynb
+projects/app_text_to_sql.py
+projects/simple_agent.py
+notebooks/projects/text_to_sql.ipynb
 
 # OS
 Thumbs.db
 .DS_Store
 CLAUDE.md
+
+# Claude Code worktrees & auto-memory
+.claude/

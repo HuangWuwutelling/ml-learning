@@ -7,6 +7,7 @@
 ```
 ├── models/           # 算法实现（纯 Numpy）
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
+├── projects/         # 可运行的应用（Text-to-SQL, AI Agent）
 ├── data/             # 数据集
 ├── utils/            # 工具函数
 ├── requirements.txt
@@ -76,8 +77,14 @@ jupyter notebook notebooks/day7_kmeans.ipynb
 # Day 8: DBSCAN（月牙形数据密度聚类）
 jupyter notebook notebooks/day8_dbscan.ipynb
 
-# Day 9: SVM（二分类，RBF 核处理环形数据）
+# Day 9: SVM（SMO + 核技巧，乳腺癌 + 环形数据）
 jupyter notebook notebooks/day9_svm.ipynb
+
+# Day 10: PCA（主成分分析，Digits 降维可视化）
+jupyter notebook notebooks/day10_pca.ipynb
+
+# Day 11: MLP（多层感知机，手写数字分类）
+jupyter notebook notebooks/day11_mlp.ipynb
 ```
 
 ## 已实现算法
@@ -93,9 +100,28 @@ jupyter notebook notebooks/day9_svm.ipynb
 | 7 | K-Means（Lloyd 算法） | `notebooks/day7_kmeans.ipynb` | `models/kmeans.py` |
 | 8 | DBSCAN（密度聚类） | `notebooks/day8_dbscan.ipynb` | `models/dbscan.py` |
 | 9 | SVM（SMO + 核技巧） | `notebooks/day9_svm.ipynb` | `models/svm.py` |
+| 10 | PCA（主成分分析，SVD 分解） | `notebooks/day10_pca.ipynb` | `models/pca.py` |
+| 11 | MLP（多层感知机，反向传播） | `notebooks/day11_mlp.ipynb` | `models/mlp.py` |
 
 ## 算法实现说明
 
 - 所有算法基于 Numpy 实现，不使用 sklearn 等 ML 库进行训练
 - sklearn 仅用于 `train_test_split` 等辅助功能
 - 梯度下降作为核心优化方法
+
+## 公众号文章（持续更新）
+
+| Day | 文章 | 状态 |
+|-----|------|------|
+| 0 | 从回归到降维——ML 算法进化路线图 | 已发表 |
+| 1 | 线性回归 | 已发表 |
+| 2 | 岭回归与 Lasso | 已发表 |
+| 3 | 逻辑回归 | 已发表 |
+| 4 | 决策树 | 已发表 |
+| 5 | 随机森林 | 已发表 |
+| 6 | GBDT | 已发表 |
+| 7 | K-Means 聚类 | 已发表 |
+| 8 | DBSCAN 密度聚类 | 已发表 |
+| 9 | SVM：用间隔最大化的思路做分类 | 已发表 |
+| 10 | PCA：用方差最大化的思路做降维 | 已发表 |
+| 11 | MLP 多层感知机 | 待发表 |
