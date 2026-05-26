@@ -245,7 +245,7 @@ def fig4_pathway_comparison():
     atm_yearly = 9.64  # g/ha/yr
     atm_50yr = atm_yearly * 50  # g/ha
     atm_soil = atm_50yr / 10 / SOIL_MASS + SOIL_BG_CD  # mg/kg
-    # = 9.64 * 50 / 10 / 260 + 0.15 = 482 / 260 + 0.15 = 1.85 + 0.15 = 0.335
+    # = 9.64 * 50 / 10 / 260 + 0.15 = 48.2 / 260 + 0.15 = 0.185 + 0.15 = 0.335
 
     # Flood Cd at the most impacted distance (peak of combined scenarios)
     x = np.linspace(0, 1100, 500)
