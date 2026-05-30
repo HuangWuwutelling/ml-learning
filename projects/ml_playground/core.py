@@ -20,6 +20,7 @@ from models.kmeans import KMeans
 from models.dbscan import DBSCAN
 from models.pca import PCA
 from models.mlp import MLP
+from models.cnn import CNN
 
 
 ALGORITHMS = {
@@ -150,6 +151,16 @@ ALGORITHMS = {
         "class": MLP,
         "default_params": {"layer_dims": [64, 32, 10], "lr": 0.1, "epochs": 1000},
         "needs_scaling": True,
+        "supports_proba": True,
+        "default_dataset": "digits",
+    },
+    "cnn": {
+        "name": "CNN",
+        "type": "classification",
+        "description": "卷积神经网络，Conv + Pool + FC 图像分类",
+        "class": CNN,
+        "default_params": {"epochs": 10, "lr": 0.1},
+        "needs_scaling": False,
         "supports_proba": True,
         "default_dataset": "digits",
     },
