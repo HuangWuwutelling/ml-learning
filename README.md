@@ -1,18 +1,67 @@
 # ML Learning
 
-机器学习 & 深度学习算法学习项目。每种算法用 Numpy 从零实现，在真实数据集上实验。
+机器学习 & 深度学习算法学习项目 + LLM 工程作品集。每种算法用 Numpy 从零实现，在真实数据集上实验。
 
 ## 项目结构
 
 ```
-├── models/           # 算法实现（纯 Numpy）
+├── models/           # 算法实现（纯 Numpy + 环境模型）
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
-├── projects/         # 可运行的应用（Text-to-SQL, AI Agent）
+├── projects/
+│   ├── ml_playground/    # FastAPI + Gradio 统一平台
+│   ├── env_agent/        # LangGraph 环保申报 Agent
+│   ├── app_text_to_sql.py
+│   └── simple_agent.py
+├── articles/         # 公众号文章（ml/ | llm/ | engineering/ | env/）
+├── scripts/          # Notebook 生成 & 封面图脚本
 ├── data/             # 数据集
-├── utils/            # 工具函数
+├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek
+├── 环保类知识库LLM Wiki/      # YoudaoNote LLM Wiki
 ├── requirements.txt
 └── .gitignore
 ```
+
+## 已实现算法
+
+| Day | 算法 | 模型文件 |
+|-----|------|----------|
+| 1 | 线性回归（单变量 → 多变量） | `models/linear_regression.py` |
+| 2 | Ridge & Lasso（L1/L2 正则化） | `models/ridge_regression.py` / `models/lasso_regression.py` |
+| 3 | 逻辑回归（二分类） | `models/logistic_regression.py` |
+| 4 | 决策树（CART 分类树） | `models/decision_tree.py` |
+| 5 | 随机森林（Bagging + 随机特征） | `models/random_forest.py` |
+| 6 | GBDT（梯度提升，串行回归树） | `models/gradient_boosting.py` |
+| 7 | K-Means（Lloyd 算法） | `models/kmeans.py` |
+| 8 | DBSCAN（密度聚类） | `models/dbscan.py` |
+| 9 | SVM（SMO + 核技巧） | `models/svm.py` |
+| 10 | PCA（主成分分析，SVD 分解） | `models/pca.py` |
+| 11 | MLP（多层感知机，反向传播） | `models/mlp.py` |
+| 12 | CNN（卷积神经网络，im2col） | `models/cnn.py` |
+| 13 | RNN / LSTM（循环神经网络，BPTT） | `models/rnn.py` |
+| 14 | Word2Vec（Skip-gram + Negative Sampling） | `models/word2vec.py` |
+| 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
+
+## 环境模型
+
+| 模型 | 描述 | 代码 |
+|------|------|------|
+| 河流底泥 Cd 污染分布 | 悬浮沉积物-污染物耦合模型，模拟 100km 河段 Cd 沿程分布 | `models/river_sediment_cd.py` |
+| 大气 Cd 沉降模拟 | 高斯烟羽模型，模拟焚烧厂 Cd 排放对周边农田的长期累积效应 | `models/atmo_cd_deposition.py` |
+| 洪水底泥 Cd 农田输入 | 漫滩沉积模型，模拟洪水将河床 Cd 输移至两岸农田 | `models/floodplain_cd_deposition.py` |
+| 室内甲醛通风模型 | 箱式模型，模拟通风/活性炭/活性锰对室内甲醛浓度的影响 | `models/indoor_formaldehyde.py` |
+| 多金属对比 | Cd, Pb, As 多金属迁移差异对比 | `models/multi_metal_comparison.py` |
+| 空间分布 | 变河床条件下的 Cd 空间分布 | `models/multi_metal_spatial.py` |
+| 废石清理后底泥 Cd 去向 | 活性层替换模型，追踪废石清理后底泥镉的三个去向（稀释/搬运/封存） | `models/floodplain_recovery.py` |
+
+## 项目
+
+| 项目 | 描述 | 技术栈 |
+|------|------|--------|
+| **ML Playground** | 所有算法的 FastAPI + Gradio 统一平台 | FastAPI, Gradio, Matplotlib |
+| **Text-to-SQL 助手** | 自然语言转 SQL 查询 | Gradio, DeepSeek API |
+| **环保申报 AI Agent** | 多轮对话 Agent，查法规 + 算排放 + 填表单 | LangGraph, DeepSeek, BGE |
+| **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
+| **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
 
 ## 快速复现
 
@@ -22,106 +71,34 @@
 pip install -r requirements.txt
 ```
 
-### 2. 下载数据
-
-本项目使用 Kaggle 数据集，需要自行下载后放入 `data/` 目录：
-
-**House Prices: Advanced Regression Techniques**
-- 链接：https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques
-- 下载 `train.csv` 放入 `data/` 目录
-
-**Titanic: Machine Learning from Disaster**
-- Day 3 使用 pandas 内置数据集，自动下载
-- 或手动下载：https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv
-- 保存为 `titanic_train.csv` 放入 `data/` 目录
-
-**Iris (鸢尾花数据集)**
-- Day 4 使用 `sklearn.datasets.load_iris()` 自动加载，无需手动下载
-
-**Digits (手写数字数据集)**
-- Day 5 使用 `sklearn.datasets.load_digits()` 自动加载，无需手动下载
-
-**California Housing (加州房价数据集)**
-- Day 6 使用 `sklearn.datasets.fetch_california_housing()` 自动加载，无需手动下载
-
-**Mall Customers (商场客户数据)**
-- Day 7 使用 `kagglehub.dataset_download()` 自动下载，无需手动操作
-
-**make_moons (月牙形合成数据)**
-- Day 8 使用 `sklearn.datasets.make_moons()` 自动生成，无需手动下载
-
-### 3. 运行
+### 2. 运行 Notebook
 
 ```bash
-# Day 1: 线性回归
+# Day 1-15: 从线性回归到 Transformer
+python -m jupyter nbconvert --to notebook --execute --inplace notebooks/dayN_*.ipynb
+
+# 或逐个运行
 jupyter notebook notebooks/day1_linear_regression.ipynb
-
-# Day 2: Ridge & Lasso 回归
-jupyter notebook notebooks/day2_ridge_lasso.ipynb
-
-# Day 3: 逻辑回归（Titanic 幸存者预测）
-jupyter notebook notebooks/day3_logistic_regression.ipynb
-
-# Day 4: 决策树（Iris 分类）
-jupyter notebook notebooks/day4_decision_tree.ipynb
-
-# Day 5: 随机森林（Digits 手写数字分类）
-jupyter notebook notebooks/day5_random_forest.ipynb
-
-# Day 6: GBDT（加州房价回归）
-jupyter notebook notebooks/day6_gbdt.ipynb
-
-# Day 7: K-Means（商场客户分群）
-jupyter notebook notebooks/day7_kmeans.ipynb
-
-# Day 8: DBSCAN（月牙形数据密度聚类）
-jupyter notebook notebooks/day8_dbscan.ipynb
-
-# Day 9: SVM（SMO + 核技巧，乳腺癌 + 环形数据）
-jupyter notebook notebooks/day9_svm.ipynb
-
-# Day 10: PCA（主成分分析，Digits 降维可视化）
-jupyter notebook notebooks/day10_pca.ipynb
-
-# Day 11: MLP（多层感知机，手写数字分类）
-jupyter notebook notebooks/day11_mlp.ipynb
 ```
 
-## 已实现算法
+### 3. 运行项目
 
-| Day | 算法 | Notebook | 模型文件 |
-|-----|------|----------|----------|
-| 1 | 线性回归（单变量 → 多变量） | `notebooks/day1_linear_regression.ipynb` | `models/linear_regression.py` |
-| 2 | Ridge & Lasso（L1/L2 正则化） | `notebooks/day2_ridge_lasso.ipynb` | `models/ridge_regression.py` / `models/lasso_regression.py` |
-| 3 | 逻辑回归（二分类） | `notebooks/day3_logistic_regression.ipynb` | `models/logistic_regression.py` |
-| 4 | 决策树（CART 分类树） | `notebooks/day4_decision_tree.ipynb` | `models/decision_tree.py` |
-| 5 | 随机森林（Bagging + 随机特征） | `notebooks/day5_random_forest.ipynb` | `models/random_forest.py` |
-| 6 | GBDT（梯度提升，串行回归树） | `notebooks/day6_gbdt.ipynb` | `models/gradient_boosting.py` |
-| 7 | K-Means（Lloyd 算法） | `notebooks/day7_kmeans.ipynb` | `models/kmeans.py` |
-| 8 | DBSCAN（密度聚类） | `notebooks/day8_dbscan.ipynb` | `models/dbscan.py` |
-| 9 | SVM（SMO + 核技巧） | `notebooks/day9_svm.ipynb` | `models/svm.py` |
-| 10 | PCA（主成分分析，SVD 分解） | `notebooks/day10_pca.ipynb` | `models/pca.py` |
-| 11 | MLP（多层感知机，反向传播） | `notebooks/day11_mlp.ipynb` | `models/mlp.py` |
+```bash
+# ML Playground
+uvicorn projects.ml_playground.app:app
+
+# 环保申报 Agent
+python projects/env_agent/app.py
+
+# Text-to-SQL
+python projects/app_text_to_sql.py
+
+# RAG 法律问答
+cd 环境法律法规智能问答系统 && python app.py
+```
 
 ## 算法实现说明
 
 - 所有算法基于 Numpy 实现，不使用 sklearn 等 ML 库进行训练
 - sklearn 仅用于 `train_test_split` 等辅助功能
-- 梯度下降作为核心优化方法
-
-## 公众号文章（持续更新）
-
-| Day | 文章 | 状态 |
-|-----|------|------|
-| 0 | 从回归到降维——ML 算法进化路线图 | 已发表 |
-| 1 | 线性回归 | 已发表 |
-| 2 | 岭回归与 Lasso | 已发表 |
-| 3 | 逻辑回归 | 已发表 |
-| 4 | 决策树 | 已发表 |
-| 5 | 随机森林 | 已发表 |
-| 6 | GBDT | 已发表 |
-| 7 | K-Means 聚类 | 已发表 |
-| 8 | DBSCAN 密度聚类 | 已发表 |
-| 9 | SVM：用间隔最大化的思路做分类 | 已发表 |
-| 10 | PCA：用方差最大化的思路做降维 | 已发表 |
-| 11 | MLP 多层感知机 | 待发表 |
+- 环境模型为独立脚本，无类接口，直接运行输出结果
