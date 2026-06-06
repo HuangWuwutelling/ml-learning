@@ -12,7 +12,7 @@
 │   ├── env_agent/        # LangGraph 环保申报 Agent
 │   ├── app_text_to_sql.py
 │   └── simple_agent.py
-├── articles/         # 公众号文章（ml/ | llm/ | engineering/ | env/）
+├── articles/         # 公众号文章（ml/ | llm/ | engineering/ | env/ | ai-history/）
 ├── scripts/          # Notebook 生成 & 封面图脚本
 ├── data/             # 数据集
 ├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek
@@ -52,6 +52,18 @@
 | 多金属对比 | Cd, Pb, As 多金属迁移差异对比 | `models/multi_metal_comparison.py` |
 | 空间分布 | 变河床条件下的 Cd 空间分布 | `models/multi_metal_spatial.py` |
 | 废石清理后底泥 Cd 去向 | 活性层替换模型，追踪废石清理后底泥镉的三个去向（稀释/搬运/封存） | `models/floodplain_recovery.py` |
+
+## AI 发展史系列
+
+千字科普短文，不涉及代码，把算法线零散的知识点串成时间线，给读者一个"上帝视角"。
+
+| # | 文章 | 说明 |
+|---|------|------|
+| 00 | **WALL·E 的学习曲线**——从拾荒机器人到 AI 笔记 | 用 WALL·E 的进化弧线引出 AI 发展的主线 |
+| 01 | **AI 70 年：从图灵到大模型时代** | 一张时间线串起 11 个关键节点，搭起整个系列的框架 |
+| 02 | **AI 三起两落：同一个剧本，三个变量** | 三次热潮的重复模式，以及三个改变剧本的变量（✅ 已发） |
+| 03 | 当 AI 走出科技公司：ChatGPT 与 DeepSeek 的启示 | 普及的两个层级：交互（ChatGPT）+ 成本（DeepSeek）（✅ 已发） |
+| 04 | 从词向量到大模型：NLP 进化路线图 | 技术线：从 one-hot → Word2Vec → RNN → Transformer → BERT/GPT（✅ 已发） |
 
 ## 项目
 
