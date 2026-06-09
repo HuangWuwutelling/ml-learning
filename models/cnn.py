@@ -170,7 +170,11 @@ class MaxPool2D:
         return out.reshape(C, N, out_H, out_W).transpose(1, 0, 2, 3)
 
     def backward(self, dout, lr=None):
-        """dout: (N, C, H_out, W_out) → dX: (N, C, H_in, W_in)"""
+        """dout: (N, C, H_out, W_out) → dX: (N, C, H_in, W_in)
+
+        Parameters (for interface consistency — ignored, no learnable params)
+        lr : ignored
+        """
         N, C, out_H, out_W = dout.shape
         dout_flat = dout.transpose(1, 0, 2, 3).reshape(C, -1)       # (C, N*OH*OW)
 
@@ -275,6 +279,46 @@ class CNN:
             ReLU(),
             Dense(128, n_classes, seed=s + 3),
         ]
+
+    def summary(self):
+        """Print a layer-by-layer architecture summary."""
+        print(f"{'Layer':<20} {'Output Shape':<20} {'Param #':<10}")
+        print("-" * 50)
+        n, c, h, w = 1, 1, None, None  # dummy batch
+        total_params = 0
+        for layer in self.layers:
+            if isinstance(layer, Conv2D):
+                out_h = (h - layer.k_size + 2 * layer.pad) // layer.stride + 1 if h else None
+                out_w = (w - layer.k_size + 2 * layer.pad) // layer.stride + 1 if w else None
+                params = layer.W.size + layer.b.size
+                name = f"Conv2D({c}→{layer.out_channels}, {layer.k_size}×{layer.k_size})"
+                c = layer.out_channels
+                h, w = out_h, out_w
+            elif isinstance(layer, MaxPool2D):
+                out_h = (h - layer.pool_size) // layer.stride + 1 if h else None
+                out_w = (w - layer.pool_size) // layer.stride + 1 if w else None
+                params = 0
+                name = f"MaxPool({layer.pool_size}×{layer.pool_size})"
+                h, w = out_h, out_w
+            elif isinstance(layer, Flatten):
+                params = 0
+                flat_dim = c * h * w if (c and h and w) else None
+                name = "Flatten"
+            elif isinstance(layer, Dense):
+                name = f"Dense({layer.in_features}→{layer.out_features})"
+                params = layer.W.size + layer.b.size
+            elif isinstance(layer, ReLU):
+                name = "ReLU"
+                params = 0
+            else:
+                name = layer.__class__.__name__
+                params = 0
+
+            shape_str = f"({n}, {c}, {h}, {w})" if (c and h and w) else f"({n}, {flat_dim})" if isinstance(layer, Flatten) and flat_dim else "—"
+            print(f"{name:<20} {shape_str:<20} {params:<10}")
+            total_params += params
+        print("-" * 50)
+        print(f"{'Total params':<41} {total_params}")
 
     def _softmax(self, Z):
         """Stable softmax."""
