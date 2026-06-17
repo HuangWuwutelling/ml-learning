@@ -72,27 +72,27 @@
 
 ### 算法线 (`articles/ml/`)
 
-从零手写的 ML/DL 算法文章，numpy 实现，真实数据集验证。
+从 numpy 手写到深度学习，每个算法包含原理推导与代码实现。
 
-| # | 文章 |
-|---|------|
-| 00 | ML 算法选型指南 + ML Playground 介绍 |
-| 01 | 线性回归 |
-| 02 | 岭回归与 Lasso |
-| 03 | 逻辑回归 |
-| 04 | 决策树 CART |
-| 05 | 随机森林 |
-| 06 | GBDT / XGBoost |
-| 07 | K-Means 聚类 |
-| 08 | DBSCAN 密度聚类 |
-| 09 | SVM |
-| 10 | PCA 降维 |
-| 11 | MLP 神经网络 |
-| 12 | CNN 卷积神经网络 |
-| 13 | RNN 与 LSTM |
-| 14 | Word2Vec 词向量 |
-| 15 | Transformer (Attention) |
-| 16 | AutoEncoder 自编码器 |
+| # | 文章 | 状态 |
+|---|------|------|
+| 00 | ML 算法选型指南 + ML Playground 介绍 | ✅ 已发 |
+| 01 | 线性回归 | ✅ 已发 |
+| 02 | 岭回归与 Lasso | ✅ 已发 |
+| 03 | 逻辑回归 | ✅ 已发 |
+| 04 | 决策树 CART | ✅ 已发 |
+| 05 | 随机森林 | ✅ 已发 |
+| 06 | GBDT / XGBoost | ✅ 已发 |
+| 07 | K-Means 聚类 | ✅ 已发 |
+| 08 | DBSCAN 密度聚类 | ✅ 已发 |
+| 09 | SVM | ✅ 已发 |
+| 10 | PCA 降维 | ✅ 已发 |
+| 11 | MLP 神经网络 | ✅ 已发 |
+| 12 | CNN 卷积神经网络 | ✅ 已发 |
+| 13 | RNN 与 LSTM | ✅ 已发 |
+| 14 | Word2Vec 词向量 | ✅ 已发 |
+| 15 | Transformer (Attention) | 📝 草稿 |
+| 16 | AutoEncoder 自编码器 | 📝 草稿 |
 
 ### LLM 工具链线 (`articles/llm/`)
 
@@ -137,8 +137,6 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 ## 项目
 
-## 项目
-
 | 项目 | 描述 | 技术栈 |
 |------|------|--------|
 | **ML Playground** | 所有算法的 FastAPI + Gradio 统一平台 | FastAPI, Gradio, Matplotlib |
@@ -180,11 +178,6 @@ python projects/app_text_to_sql.py
 # RAG 法律问答
 cd 环境法律法规智能问答系统 && python app.py
 ```
-
-## 算法实现说明
-
-- sklearn 仅用于 `train_test_split` 等辅助功能
-- 环境模型为独立脚本，无类接口，直接运行输出结果
 
 ## 未跟踪的文件
 
