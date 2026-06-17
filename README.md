@@ -66,8 +66,7 @@
 | 01 | **AI 70 年：从图灵到大模型时代** | 一张时间线串起 11 个关键节点，搭起整个系列的框架 |
 | 02 | **AI 三起两落：同一个剧本，三个变量** | 三次热潮的重复模式，以及三个改变剧本的变量（✅ 已发） |
 | 03 | 当 AI 走出科技公司：ChatGPT 与 DeepSeek 的启示 | 普及的两个层级：交互（ChatGPT）+ 成本（DeepSeek）（✅ 已发） |
-<<<<<<< HEAD
-| 04 | 从词向量到大模型：NLP 进化路线图 | 技术线：从 one-hot → Word2Vec → RNN → Transformer → BERT/GPT（✅ 已发）
+| 04 | 从词向量到大模型：NLP 进化路线图 | 技术线：从 one-hot → Word2Vec → RNN → Transformer → BERT/GPT（✅ 已发） |
 
 ## 环境法医学系列
 
@@ -136,3 +135,20 @@ cd 环境法律法规智能问答系统 && python app.py
 - 所有算法基于 Numpy 实现，不使用 sklearn 等 ML 库进行训练
 - sklearn 仅用于 `train_test_split` 等辅助功能
 - 环境模型为独立脚本，无类接口，直接运行输出结果
+
+## 未跟踪的文件
+
+以下路径存在于本地但不会推送 GitHub：
+
+| 路径 | 说明 |
+|------|------|
+| `articles/` | 公众号文章内容 |
+| `scripts/` | Notebook 生成 & 封面图脚本 |
+| `plan.md` | 文章/项目状态清单 |
+| `.mcp.json` | MCP 配置文件（本地机器相关） |
+| `docs/` | 设计文档、笔记 |
+| `CLAUDE.md` | Claude Code 项目说明 |
+| `.venv/` | Python 虚拟环境 |
+| `.env` | API 密钥等环境变量 |
+| `projects/app_text_to_sql.py` | 个人项目 |
+| `projects/simple_agent.py` | 个人项目 |
