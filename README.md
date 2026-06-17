@@ -132,7 +132,6 @@ cd 环境法律法规智能问答系统 && python app.py
 
 ## 算法实现说明
 
-- 所有算法基于 Numpy 实现，不使用 sklearn 等 ML 库进行训练
 - sklearn 仅用于 `train_test_split` 等辅助功能
 - 环境模型为独立脚本，无类接口，直接运行输出结果
 
