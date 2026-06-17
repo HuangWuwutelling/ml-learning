@@ -36,3 +36,9 @@ CLAUDE.md
 
 # Claude Code worktrees & auto-memory
 .claude/
+
+# MCP config (local machine specific)
+.mcp.json
+
+# Docs (design specs, notes — not for GitHub)
+docs/
