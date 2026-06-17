@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境法律法规智能问答系统</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>环境法律法规智能问答系统</h1>
+            <p class="subtitle">基于RAG技术的中国环境法律智能助手</p>
+            <div class="status" id="status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">初始化中...</span>
+                <span id="docCount"></span>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message" id="welcomeMessage">
+                    <div class="welcome-icon">🌿</div>
+                    <h2>欢迎使用环境法规智能问答系统</h2>
+                    <p>本系统基于《中华人民共和国生态环境法典》提供智能问答服务，覆盖以下领域：</p>
+                    <ul class="law-list">
+                        <li>环境保护一般规定</li>
+                        <li>大气污染防治</li>
+                        <li>水污染防治</li>
+                        <li>固体废物污染环境防治</li>
+                        <li>噪声污染防治</li>
+                        <li>环境影响评价</li>
+                        <li>土壤污染防治</li>
+                        <li>排污许可管理</li>
+                    </ul>
+                    <p class="example-questions">例如："企业排污需要什么条件？" "大气污染防治的原则是什么？"</p>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <form id="queryForm" autocomplete="off">
+                    <input
+                        type="text"
+                        id="queryInput"
+                        placeholder="请输入您的环境法律问题..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" id="submitBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

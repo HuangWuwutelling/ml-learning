@@ -1,0 +1,7 @@
+numpy>=1.24
+pandas>=1.5
+matplotlib>=3.6
+scikit-learn>=1.2
+fastapi>=0.110
+uvicorn>=0.29
+gradio>=5.0

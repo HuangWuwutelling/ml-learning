@@ -1,0 +1,38 @@
+# 公众号文章（不上传 GitHub）
+articles/
+plan.md
+
+# 辅助脚本（封面图、notebook 生成等，与算法本身无关）
+scripts/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/*.png
+notebooks/_temp_*
+
+# Logs
+*.log
+
+# 自动下载的数据集
+data/chinook.db
+data/chinook_cache/
+
+# 项目文件（发表后上传）
+projects/app_text_to_sql.py
+projects/simple_agent.py
+notebooks/projects/text_to_sql.ipynb
+
+# OS
+Thumbs.db
+.DS_Store
+CLAUDE.md
+
+# Claude Code worktrees & auto-memory
+.claude/

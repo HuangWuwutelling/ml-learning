@@ -1,0 +1,17 @@
+# API密钥
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# 向量数据库（可重新生成）
+data/chroma_db/
+
+# 系统文件
+Thumbs.db
+.DS_Store
