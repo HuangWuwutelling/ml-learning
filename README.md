@@ -5,7 +5,7 @@
 ## 项目结构
 
 ```
-├── models/           # 算法实现（环境模型）
+├── models/           # 算法实现（ML 算法 + 环境模型）
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
 ├── projects/
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
@@ -179,19 +179,3 @@ python projects/app_text_to_sql.py
 cd 环境法律法规智能问答系统 && python app.py
 ```
 
-## 未跟踪的文件
-
-以下路径存在于本地但不会推送 GitHub：
-
-| 路径 | 说明 |
-|------|------|
-| `articles/` | 公众号文章内容 |
-| `scripts/` | Notebook 生成 & 封面图脚本 |
-| `plan.md` | 文章/项目状态清单 |
-| `.mcp.json` | MCP 配置文件（本地机器相关） |
-| `docs/` | 设计文档、笔记 |
-| `CLAUDE.md` | Claude Code 项目说明 |
-| `.venv/` | Python 虚拟环境 |
-| `.env` | API 密钥等环境变量 |
-| `projects/app_text_to_sql.py` | 个人项目 |
-| `projects/simple_agent.py` | 个人项目 |
