@@ -60,7 +60,7 @@
 
 ### AI 发展史线 (`articles/ai-history/`)
 
-千字科普短文，不涉及代码，把算法线零散的知识点串成时间线。
+千字科普短文，不涉及代码。
 
 | # | 文章 | 说明 |
 |---|------|------|
@@ -69,71 +69,69 @@
 | 02 | **AI 三起两落：同一个剧本，三个变量** | 三次热潮的重复模式，以及三个改变剧本的变量 |
 | 03 | 当 AI 走出科技公司：ChatGPT 与 DeepSeek 的启示 | 普及的两个层级：交互 + 成本 |
 | 04 | 从词向量到大模型：NLP 进化路线图 | One-hot → Word2Vec → RNN → Transformer → BERT/GPT |
+| 05 | 从 28% 到 2%：一场计算机视觉的革命 | LeNet → AlexNet → VGG/ResNet → ViT → 多模态；ImageNet 错误率从 28% 跌到 2% |
+| 06 | 他们坚持了三十年：Hinton、LeCun、Bengio | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持，学生的学生承包了今天大模型半壁江山 |
+| 07 | AlphaGo → AlphaFold：AI 改变科学的两次证明 | 1997 深蓝"算"出胜利、2024 诺奖"发现"科学；27 年 AI 能力从"算"走到"发现" |
 
 ### 算法线 (`articles/ml/`)
 
 从 numpy 手写到深度学习，每个算法包含原理推导与代码实现。
 
-| # | 文章 | 状态 |
-|---|------|------|
-| 00 | ML 算法选型指南 + ML Playground 介绍 | ✅ 已发 |
-| 01 | 线性回归 | ✅ 已发 |
-| 02 | 岭回归与 Lasso | ✅ 已发 |
-| 03 | 逻辑回归 | ✅ 已发 |
-| 04 | 决策树 CART | ✅ 已发 |
-| 05 | 随机森林 | ✅ 已发 |
-| 06 | GBDT / XGBoost | ✅ 已发 |
-| 07 | K-Means 聚类 | ✅ 已发 |
-| 08 | DBSCAN 密度聚类 | ✅ 已发 |
-| 09 | SVM | ✅ 已发 |
-| 10 | PCA 降维 | ✅ 已发 |
-| 11 | MLP 神经网络 | ✅ 已发 |
-| 12 | CNN 卷积神经网络 | ✅ 已发 |
-| 13 | RNN 与 LSTM | ✅ 已发 |
-| 14 | Word2Vec 词向量 | ✅ 已发 |
-| 15 | Transformer (Attention) | 📝 草稿 |
-| 16 | AutoEncoder 自编码器 | 📝 草稿 |
+| # | 文章 |
+|---|------|
+| 00 | ML 算法选型指南 + ML Playground 介绍 |
+| 01 | 线性回归 |
+| 02 | 岭回归与 Lasso |
+| 03 | 逻辑回归 |
+| 04 | 决策树 CART |
+| 05 | 随机森林 |
+| 06 | GBDT / XGBoost |
+| 07 | K-Means 聚类 |
+| 08 | DBSCAN 密度聚类 |
+| 09 | SVM |
+| 10 | PCA 降维 |
+| 11 | MLP 神经网络 |
+| 12 | CNN 卷积神经网络 |
+| 13 | RNN 与 LSTM |
+| 14 | Word2Vec 词向量 |
 
 ### LLM 工具链线 (`articles/llm/`)
 
 RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
-| 文章 | 涉及概念 | 状态 |
-|------|---------|------|
-| AI Agent 入门 | Agent, Tool Calling | ✅ 已发 |
-| RAG 实战：环境法典智能问答 | RAG, ChromaDB, DeepSeek | ✅ 已发 |
-| LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote | ✅ 已发 |
-| ML 入门 | ML 基础概念 | ✅ 已发 |
-| 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering | ✅ 已发 |
-| 从 Chain 到 Graph：LangGraph 构建 AI Agent | LangChain, LangGraph, Tracing | 📝 草稿 |
-| LoRA 微调：用低成本微调开源模型 | LoRA/QLoRA, PEFT | 📝 草稿 |
-| 向量数据库：不只是 RAG | Vector DB, Embedding, Rerank | 📝 草稿 |
+| 文章 | 涉及概念 |
+|------|---------|
+| AI Agent 入门 | Agent, Tool Calling |
+| RAG 实战：环境法典智能问答 | RAG, ChromaDB, DeepSeek |
+| LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote |
+| ML 入门 | ML 基础概念 |
+| 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering |
 
 ### 项目工程线 (`articles/engineering/`)
 
 从项目实战中总结的工程经验。
 
-| 文章 | 状态 |
-|------|------|
-| FastAPI 入门（以 ML Playground 为例） | ✅ 已发 |
-| Linux + Docker 部署 | 📝 草稿 |
-| LLM Text-to-SQL | 📝 草稿 |
+| # | 文章 |
+|---|------|
+| 01 | FastAPI 入门（以 ML Playground 为例） |
 
 ### 环境工程线 (`articles/env/`)
 
 利用环境工程专业背景 + 编程能力，展示跨领域建模与分析。
 
-| # | 文章 | 状态 |
-|---|------|------|
-| 01 | 河流底泥镉污染分布 | ✅ 已发 |
-| 02 | 大气镉沉降模拟 | ✅ 已发 |
-| 03 | 洪水底泥镉农田输入 | ✅ 已发 |
-| 04 | 室内甲醛通风模型 | ✅ 已发 |
-| 05 | 废石清理后底泥镉去哪了 | ✅ 已发 |
-| 06 | 杜邦 C-8 污染案：科学如何论证工厂与健康的因果链 | ✅ 已发 |
-| 07 | 科学能排除因果吗？泡花碱厂调查的解读（C8 姊妹篇） | ✅ 已发 |
-| 08 | 电镀厂酸雾：从工艺产污到大气扩散与沉降 | ✅ 已发 |
-| 09 | 电镀厂铬（Cr(VI)）：大气沉降与健康风险 | ✅ 已发 |
+| # | 文章 |
+|---|------|
+| 01 | 河流底泥镉污染分布 |
+| 02 | 大气镉沉降模拟 |
+| 03 | 洪水底泥镉农田输入 |
+| 04 | 室内甲醛通风模型 |
+| 05 | 废石清理后底泥镉去哪了 |
+| 06 | 杜邦 C-8 污染案：科学如何论证工厂与健康的因果链 |
+| 07 | 科学能排除因果吗？泡花碱厂调查的解读（C8 姊妹篇） |
+| 08 | 电镀厂酸雾：从工艺产污到大气扩散与沉降 |
+| 09 | 电镀厂铬（Cr(VI)）：大气沉降与健康风险 |
+| 10 | 甲酰胺是什么，它可能从哪里来 |
+| 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
 
 ## 项目
 
