@@ -194,11 +194,11 @@ def _predict_click(model_id_str, features_text):
 
 def create_ui():
     """Build the Gradio Blocks interface."""
-    with gr.Blocks(title="ML Playground", theme=gr.themes.Soft()) as demo:
+    with gr.Blocks(title="ML Playground") as demo:
         gr.Markdown(
             """
             # ML Playground
-            从线性回归到 PCA — 11 个算法的统一实验平台
+            从线性回归到 CNN — 14 个算法的统一实验平台
             """
         )
 
@@ -272,7 +272,7 @@ def create_ui():
                 """
                 ## ML Playground API
 
-                本平台将本系列已实现的 11 个算法统一为可调用的 API + 交互界面。
+                本平台将本系列已实现的 14 个算法统一为可调用的 API + 交互界面。
 
                 ### 已实现算法
 
