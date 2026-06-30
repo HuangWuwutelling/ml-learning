@@ -1,5 +1,13 @@
 """Tool functions for environmental compliance Agent."""
 import json
+import sqlite3
+import os
+
+# HuggingFace 离线加载（BGE 已缓存在 D:\Workspace\.cache\huggingface）
+os.environ.setdefault("HF_HOME", os.path.expanduser("D:\\Workspace\\.cache\\huggingface"))
+os.environ.setdefault("HF_HUB_CACHE", os.path.join(os.environ["HF_HOME"], "hub"))
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
 
 from typing import Optional
 
@@ -21,32 +29,114 @@ def _get_embedder():
     return _embedder
 
 
-# ── In-memory document store (loaded from ChromaDB SQLite) ──
+# ── ChromaDB SQLite document loader ──
+
+_CHROMA_DB_PATH = os.path.join(
+    config.CHROMA_DB_PATH, "chroma.sqlite3"
+)
+_EMBEDDINGS_CACHE_PATH = os.path.join(
+    config.CHROMA_DB_PATH, "..", "embeddings_cache.npz"
+)
+
+
+def _load_docs_from_chromadb():
+    """Load document chunks directly from ChromaDB SQLite (bypass Python API bug)."""
+    db_path = _CHROMA_DB_PATH
+    if not os.path.isfile(db_path):
+        print(f"ChromaDB not found at {db_path}, using fallback documents")
+        return FALLBACK_DOCUMENTS
+
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # embedding_metadata stores document text as 'chroma:document' and chunk metadata
+        cursor.execute("""
+            SELECT em.string_value, em2.string_value, em3.string_value
+            FROM embedding_metadata em
+            LEFT JOIN embedding_metadata em2 ON em.id = em2.id AND em2.key = 'law_name'
+            LEFT JOIN embedding_metadata em3 ON em.id = em3.id AND em3.key = 'source'
+            WHERE em.key = 'chroma:document'
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+
+        if not rows:
+            print("No documents found in ChromaDB, using fallback")
+            return FALLBACK_DOCUMENTS
+
+        docs = []
+        for text, law_name, source in rows:
+            if not text or not text.strip():
+                continue
+            docs.append({
+                "content": text.strip(),
+                "metadata": {
+                    "source": source or "中华人民共和国生态环境法典",
+                    "law_name": law_name or "中华人民共和国生态环境法典",
+                },
+            })
+
+        print(f"Loaded {len(docs)} documents from ChromaDB ({os.path.basename(db_path)})")
+        return docs
+
+    except Exception as e:
+        print(f"Error loading ChromaDB: {e}, using fallback documents")
+        return FALLBACK_DOCUMENTS
+
+
+# ── In-memory document store ──
 
 _documents = None
 _doc_embeddings = None
 
 
 def _get_documents():
-    """Load documents from built-in fallback data."""
+    """Load documents from ChromaDB SQLite, falling back to built-in data."""
     global _documents
     if _documents is not None:
         return _documents
-    _documents = FALLBACK_DOCUMENTS
-    print(f"Loaded {len(_documents)} documents")
+    _documents = _load_docs_from_chromadb()
     return _documents
 
 
 def _get_doc_embeddings():
-    """Get cached document embeddings, computing them on first call."""
+    """Get cached document embeddings, loading from disk cache or computing on first call."""
     global _doc_embeddings
     if _doc_embeddings is not None:
         return _doc_embeddings
+
     docs = _get_documents()
-    embedder = _get_embedder()
     doc_texts = [d["content"] for d in docs]
+    n_docs = len(doc_texts)
+
+    # Try loading from .npz cache
+    cache_path = os.path.abspath(_EMBEDDINGS_CACHE_PATH)
+    if os.path.isfile(cache_path):
+        try:
+            data = np.load(cache_path)
+            if data["doc_count"] == n_docs and data["embeddings"].shape[0] == n_docs:
+                _doc_embeddings = data["embeddings"]
+                print(f"Loaded {n_docs} embeddings from cache ({cache_path})")
+                return _doc_embeddings
+            else:
+                print(f"Cache stale (docs: {n_docs} vs cached: {data['doc_count']}), recomputing...")
+        except Exception as e:
+            print(f"Cache load failed ({e}), recomputing...")
+
+    # Compute embeddings
+    embedder = _get_embedder()
     _doc_embeddings = embedder.encode(doc_texts, show_progress_bar=False)
-    print(f"Cached {len(_doc_embeddings)} document embeddings")
+    print(f"Computed {len(_doc_embeddings)} document embeddings")
+
+    # Save to cache
+    try:
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        np.savez(cache_path, embeddings=_doc_embeddings, doc_count=n_docs)
+        print(f"Saved embeddings to cache ({cache_path})")
+    except Exception as e:
+        print(f"Cache save failed ({e}), continuing without cache")
+
     return _doc_embeddings
 
 
@@ -85,11 +175,11 @@ EMISSION_FACTORS = {
         "废气": {"unit": "m³/h", "so2": 50, "nox": 30, "description": "定型机废气含 SO₂、NOₓ"},
     },
     "化工": {
-        "废水": {"unit": "吨/天", "cod": 500, "nh3": 40, "description": "化工废水成分复杂，含高浓度 COD"},
+        "废水": {"unit": "吨/天", "cod": 100, "nh3": 40, "description": "化工（石油化学）废水成分复杂，含高浓度 COD"},
         "废气": {"unit": "m³/h", "so2": 100, "nox": 80, "description": "化工废气含 SO₂、NOₓ、VOCs"},
     },
     "造纸": {
-        "废水": {"unit": "吨/天", "cod": 800, "nh3": 10, "description": "造纸废水 COD 浓度高，含悬浮物"},
+        "废水": {"unit": "吨/天", "cod": 100, "nh3": 10, "description": "造纸废水含 COD、悬浮物"},
         "废气": {"unit": "m³/h", "so2": 80, "nox": 60, "description": "造纸锅炉废气含 SO₂、NOₓ"},
     },
     "钢铁": {
@@ -103,10 +193,10 @@ EMISSION_FACTORS = {
 }
 
 EMISSION_STANDARDS = {
-    "印染": "《纺织染整工业水污染物排放标准》(GB 4287-2012) COD ≤ 200 mg/L，NH₃-N ≤ 20 mg/L",
-    "化工": "《化学工业水污染物排放标准》(GB 31571-2015) COD ≤ 500 mg/L，NH₃-N ≤ 40 mg/L",
-    "造纸": "《制浆造纸工业水污染物排放标准》(GB 3544-2008) COD ≤ 800 mg/L，NH₃-N ≤ 10 mg/L",
-    "钢铁": "《钢铁工业水污染物排放标准》(GB 13456-2012) COD ≤ 100 mg/L，NH₃-N ≤ 15 mg/L",
+    "印染": "《纺织染整工业水污染物排放标准》(GB 4287-2012) 间接排放：COD ≤ 200 mg/L，NH₃-N ≤ 20 mg/L",
+    "化工": "《石油化学工业污染物排放标准》(GB 31571-2015) 间接排放：COD ≤ 100 mg/L，NH₃-N ≤ 40 mg/L",
+    "造纸": "《制浆造纸工业水污染物排放标准》(GB 3544-2008) 表2标准：COD ≤ 100 mg/L，NH₃-N ≤ 10 mg/L",
+    "钢铁": "《钢铁工业水污染物排放标准》(GB 13456-2012) 间接排放：COD ≤ 100 mg/L，NH₃-N ≤ 15 mg/L",
     "污水处理厂": "《城镇污水处理厂污染物排放标准》(GB 18918-2002) 一级A标准 COD ≤ 50 mg/L，NH₃-N ≤ 5 mg/L",
 }
 
@@ -127,14 +217,14 @@ def _match_industry(industry: str) -> Optional[str]:
 # ── Fallback documents if ChromaDB is not available ──
 
 FALLBACK_DOCUMENTS = [
-    {"content": "排放污染物的企业事业单位和其他生产经营者，应当采取措施防治环境污染。重点排污单位应当按照国家有关规定和监测规范安装使用监测设备，保证监测设备正常运行，保存原始监测记录。", "metadata": {"source": "生态环境法典"}},
-    {"content": "排放水污染物，不得超过国家或者地方规定的水污染物排放标准和重点水污染物排放总量控制指标。", "metadata": {"source": "生态环境法典"}},
-    {"content": "直接或者间接向水体排放工业废水和医疗污水以及其他按照规定应当取得排污许可证方可排放的废水、污水的企业事业单位和其他生产经营者，应当取得排污许可证。", "metadata": {"source": "生态环境法典"}},
-    {"content": "禁止向水体排放油类、酸液、碱液或者剧毒废液。禁止在水体清洗装贮过油类或者有毒污染物的车辆和容器。", "metadata": {"source": "生态环境法典"}},
-    {"content": "向大气排放污染物的单位，应当取得排污许可证。向大气排放污染物的单位，应当按照规定设置大气污染物排放口。", "metadata": {"source": "生态环境法典"}},
+    {"content": "排放污染物的企业事业单位和其他生产经营者，应当采取措施防治环境污染。重点排污单位应当按照国家有关规定和监测规范安装使用监测设备，保证监测设备正常运行，保存原始监测记录。", "metadata": {"source": "通用环保条款"}},
+    {"content": "排放水污染物，不得超过国家或者地方规定的水污染物排放标准和重点水污染物排放总量控制指标。", "metadata": {"source": "通用环保条款"}},
+    {"content": "直接或者间接向水体排放工业废水和医疗污水以及其他按照规定应当取得排污许可证方可排放的废水、污水的企业事业单位和其他生产经营者，应当取得排污许可证。", "metadata": {"source": "通用环保条款"}},
+    {"content": "禁止向水体排放油类、酸液、碱液或者剧毒废液。禁止在水体清洗装贮过油类或者有毒污染物的车辆和容器。", "metadata": {"source": "通用环保条款"}},
+    {"content": "向大气排放污染物的单位，应当取得排污许可证。向大气排放污染物的单位，应当按照规定设置大气污染物排放口。", "metadata": {"source": "通用环保条款"}},
     {"content": "纺织染整工业水污染物排放标准(GB 4287-2012)规定：COD排放限值200mg/L，氨氮排放限值20mg/L，pH值6-9，色度80倍。", "metadata": {"source": "纺织染整工业水污染物排放标准"}},
-    {"content": "化学工业水污染物排放标准(GB 31571-2015)规定：COD排放限值500mg/L，氨氮排放限值40mg/L，总磷排放限值5mg/L。", "metadata": {"source": "化学工业水污染物排放标准"}},
-    {"content": "制浆造纸工业水污染物排放标准(GB 3544-2008)规定：COD排放限值800mg/L，氨氮排放限值10mg/L，总氮排放限值15mg/L。", "metadata": {"source": "制浆造纸工业水污染物排放标准"}},
+    {"content": "石油化学工业污染物排放标准(GB 31571-2015)规定：COD排放限值100mg/L（间接排放），氨氮排放限值40mg/L（间接排放），总磷排放限值1.0mg/L。", "metadata": {"source": "石油化学工业污染物排放标准"}},
+    {"content": "制浆造纸工业水污染物排放标准(GB 3544-2008)规定（表2，新建企业）：COD排放限值100mg/L，氨氮排放限值12mg/L。", "metadata": {"source": "制浆造纸工业水污染物排放标准"}},
     {"content": "钢铁工业水污染物排放标准(GB 13456-2012)规定：COD排放限值100mg/L，氨氮排放限值15mg/L，总铁排放限值10mg/L。", "metadata": {"source": "钢铁工业水污染物排放标准"}},
     {"content": "城镇污水处理厂污染物排放标准(GB 18918-2002)一级A标准：COD≤50mg/L，氨氮≤5mg/L，总磷≤0.5mg/L，总氮≤15mg/L。", "metadata": {"source": "城镇污水处理厂污染物排放标准"}},
 ]

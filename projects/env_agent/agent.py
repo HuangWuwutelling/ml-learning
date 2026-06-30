@@ -1,7 +1,6 @@
 """LangGraph agent for environmental compliance declaration."""
 import os
 from langchain_openai import ChatOpenAI
-from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 
 from config import config
@@ -31,13 +30,10 @@ def build_agent():
         generate_report,
     ]
 
-    llm_with_tools = llm.bind_tools(tools)
-
     agent = create_react_agent(
-        model=llm_with_tools,
+        model=llm.bind_tools(tools),
         tools=tools,
         prompt=_load_prompt(),
-        checkpointer=MemorySaver(),
     )
 
     return agent

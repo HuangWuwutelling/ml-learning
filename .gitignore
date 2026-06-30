@@ -24,10 +24,16 @@ notebooks/_temp_*
 data/chinook.db
 data/chinook_cache/
 
-# 项目文件（发表后上传）
+# 项目调试 / 临时文件
+projects/env_agent/data/
+projects/ml_playground/_debug.py
+projects/ml_playground/_test_*
 projects/app_text_to_sql.py
 projects/simple_agent.py
 notebooks/projects/text_to_sql.ipynb
+
+# 项目 systemd 服务文件（本地部署用，不上传 GitHub）
+projects/ml_playground/ml-playground.service
 
 # OS
 Thumbs.db

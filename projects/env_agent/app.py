@@ -1,5 +1,10 @@
 """Gradio UI for environmental compliance AI Agent."""
-import uuid
+import os
+
+# 避免 Gradio 启动自检时被代理拦截（Windows 上用 httpx 会读取注册表代理设置）
+# NO_PROXY 始终设上绕过本地地址；HTTP_PROXY 从环境变量读取，不硬编码
+os.environ.setdefault("NO_PROXY", "127.0.0.1,localhost,0.0.0.0")
+
 import gradio as gr
 
 from agent import build_agent
@@ -8,18 +13,21 @@ agent = build_agent()
 
 
 def respond(message: str, history: list):
-    """Process a user message through the LangGraph agent and return the response."""
-    thread_id = str(uuid.uuid4())
-    result = agent.invoke(
-        {"messages": [{"role": "user", "content": message}]},
-        config={"configurable": {"thread_id": thread_id}},
-    )
+    """Process a user message through the LangGraph agent and return the response.
+
+    Gradio 6 passes history as a list of openai-style dicts
+    [{"role": "user"|"assistant", "content": str}, ...].
+    Pass the full conversation to the agent so it remembers context.
+    """
+    messages = list(history or [])
+    messages.append({"role": "user", "content": message})
+
+    result = agent.invoke({"messages": messages})
     return result["messages"][-1].content
 
 
 CUSTOM_CSS = """
 #title { text-align: center; margin-bottom: 0.5em; }
-#subtitle { text-align: center; color: #656d76; font-size: 14px; margin-bottom: 1em; }
 """
 
 EXAMPLES = [
@@ -45,4 +53,5 @@ with gr.Blocks(title="环保申报 AI 助手", fill_height=True) as demo:
 
 
 if __name__ == "__main__":
-    demo.launch(css=CUSTOM_CSS)
+    print("Starting env_agent on http://localhost:7861", flush=True)
+    demo.launch(css=CUSTOM_CSS, server_port=7861)

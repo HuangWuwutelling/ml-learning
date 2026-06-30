@@ -11,8 +11,8 @@ class Config:
 
     EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-small-zh-v1.5")
 
-    RAG_PROJECT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "环境法律法规智能问答系统")
-    CHROMA_DB_PATH = os.path.join(RAG_PROJECT_DIR, "data", "chroma_db")
+    # 本地 ChromaDB（projects/env_agent/data/chroma_db），包含排污许可管理办法和条例
+    CHROMA_DB_PATH = os.path.join(os.path.dirname(__file__), "data", "chroma_db")
     COLLECTION_NAME = "env_laws"
 
     TOP_K = int(os.getenv("TOP_K", "3"))
