@@ -70,7 +70,7 @@
 | 03 | 当 AI 走出科技公司：ChatGPT 与 DeepSeek 的启示 | 普及的两个层级：交互 + 成本 |
 | 04 | 从词向量到大模型：NLP 进化路线图 | One-hot → Word2Vec → RNN → Transformer → BERT/GPT |
 | 05 | 从 28% 到 2%：一场计算机视觉的革命 | LeNet → AlexNet → VGG/ResNet → ViT → 多模态；ImageNet 错误率从 28% 跌到 2% |
-| 06 | 他们坚持了三十年：Hinton、LeCun、Bengio | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持，学生的学生承包了今天大模型半壁江山 |
+| 06 | **深度学习三巨头的三十年**：Hinton、LeCun、Bengio 的坚持与分野 | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持，学生的学生承包了今天大模型半壁江山 |
 | 07 | AlphaGo → AlphaFold：AI 改变科学的两次证明 | 1997 深蓝"算"出胜利、2024 诺奖"发现"科学；27 年 AI 能力从"算"走到"发现" |
 
 ### 算法线 (`articles/ml/`)
@@ -106,6 +106,9 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote |
 | ML 入门 | ML 基础概念 |
 | 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering |
+| 我给 AI 请了个环保顾问（LangGraph 构建排污许可申报 Agent） | Agent + RAG + Tools + Gradio |
+| 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
+| 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
 
 ### 项目工程线 (`articles/engineering/`)
 
@@ -114,6 +117,9 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | # | 文章 |
 |---|------|
 | 01 | FastAPI 入门（以 ML Playground 为例） |
+| 02 | Linux 服务器部署：从 SSH 到 systemd |
+| 03 | Docker 容器化：一次构建，到处运行 |
+| 04 | Docker Compose：多服务编排实战 |
 
 ### 环境工程线 (`articles/env/`)
 
