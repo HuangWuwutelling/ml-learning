@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="risk-card {{levelClass}}">
+    <text class="risk-label">风险等级</text>
+    <text class="risk-level">{{data.riskLevel}}</text>
+    <text class="risk-pi" wx:if="{{data.maxPi}}">max(Pi) = {{data.maxPiText}}</text>
+  </view>
+
+  <view class="details">
+    <view class="details-title">各金属 Pi</view>
+    <view wx:for="{{data.details}}" wx:key="metal" class="detail-row">
+      <text class="metal">{{item.metal}}</text>
+      <text class="value">实测 {{item.measuredText}}</text>
+      <text class="pi {{item.pi > 1 ? 'over' : ''}}">Pi {{item.piText}}</text>
+    </view>
+  </view>
+
+  <view class="actions">
+    <button bindtap="onExportCSV">导出 CSV</button>
+    <button bindtap="onBack">返回</button>
+  </view>
+</view>

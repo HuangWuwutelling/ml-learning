@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="section">
+    <text class="label">作物类型</text>
+    <picker mode="selector" range="{{crops}}" bindchange="onCropChange">
+      <view class="picker">{{crop || '请选择作物'}}</view>
+    </picker>
+  </view>
+
+  <view class="section">
+    <text class="label">土壤 pH：{{pH}}</text>
+    <slider min="3" max="10" step="0.1" value="{{pH}}" bindchange="onPHChange" show-value/>
+  </view>
+
+  <view class="section">
+    <text class="label">8 种重金属浓度（mg/kg）</text>
+    <view class="metal-grid">
+      <block wx:for="{{metals}}" wx:key="key">
+        <view class="metal-row">
+          <text class="metal-name">{{item.key}}</text>
+          <input type="digit" value="{{item.value}}" data-key="{{item.key}}" bindinput="onMetalInput" placeholder="0.0"/>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <button type="primary" bindtap="onSubmit" disabled="{{!crop}}" loading="{{loading}}">评价</button>
+</view>

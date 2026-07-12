@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/single/single",
+    "pages/batch/batch",
+    "pages/result/result"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "GB 15618 评价",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#1890ff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/single/single",
+        "text": "单点评价"
+      },
+      {
+        "pagePath": "pages/batch/batch",
+        "text": "批量评价"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

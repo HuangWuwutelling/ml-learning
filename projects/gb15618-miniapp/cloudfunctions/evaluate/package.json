@@ -1,0 +1,9 @@
+{
+  "name": "evaluate",
+  "version": "1.0.0",
+  "description": "GB 15618 单点评价云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
