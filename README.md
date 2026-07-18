@@ -72,6 +72,10 @@
 | 05 | 从 28% 到 2%：一场计算机视觉的革命 | LeNet → AlexNet → VGG/ResNet → ViT → 多模态；ImageNet 错误率从 28% 跌到 2% |
 | 06 | **深度学习三巨头的三十年**：Hinton、LeCun、Bengio 的坚持与分野 | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持，学生的学生承包了今天大模型半壁江山 |
 | 07 | AlphaGo → AlphaFold：AI 改变科学的两次证明 | 1997 深蓝"算"出胜利、2024 诺奖"发现"科学；27 年 AI 能力从"算"走到"发现" |
+| 08 | **Hassabis 传：从国际象棋神童到诺贝尔化学奖** | 4 岁学棋 → 13 岁想"机器能不能思考" → 创办 DeepMind → AlphaGo → AlphaFold → 2024 诺奖 → 2026 三条 AGI 路线分化 |
+| 09 | **Token：LLM 的最小单元** | 从字符到 BPE：LLM 看到了什么、读懂了什么 |
+| 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段，1.3B 小模型如何超越 175B GPT-3，以及 Reward Hacking 的困境 |
+| 11 | **Scaling Law 走到头：越大≠越聪明，智能增长换了一条路** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling，慢思考和 MoE 两条新路 |
 
 ### 算法线 (`articles/ml/`)
 
@@ -106,6 +110,9 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote |
 | ML 入门 | ML 基础概念 |
 | 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering |
+| 从 Chain 到 Graph：一个环境申报 Agent 怎么把流程画成图 | LangChain, LangGraph, Tracing, env_agent |
+| LoRA 微调：用 4GB 显卡微调大模型 | LoRA/QLoRA, PEFT, Qwen2.5-0.5B |
+| 向量数据库：不只是 RAG 的存储 | Vector DB, Embedding, BGE, ChromaDB |
 | 我给 AI 请了个环保顾问（LangGraph 构建排污许可申报 Agent） | Agent + RAG + Tools + Gradio |
 | 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
 | 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
@@ -138,6 +145,8 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 09 | 电镀厂铬（Cr(VI)）：大气沉降与健康风险 |
 | 10 | 甲酰胺是什么，它可能从哪里来 |
 | 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
+| 12 | 微塑料：除了食物，外卖盒还给你加了什么料 |
+| 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
 
 ## 项目
 
