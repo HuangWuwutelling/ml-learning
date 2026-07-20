@@ -116,6 +116,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 我给 AI 请了个环保顾问（LangGraph 构建排污许可申报 Agent） | Agent + RAG + Tools + Gradio |
 | 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
 | 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
+| RAG 评估实战（RAGAS） | RAG Evaluation, RAGAS |
 
 ### 项目工程线 (`articles/engineering/`)
 
