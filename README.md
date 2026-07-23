@@ -10,7 +10,6 @@
 ├── projects/
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
 │   ├── env_agent/        # LangGraph 环保申报 Agent
-│   ├── app_text_to_sql.py
 │   └── simple_agent.py
 ├── articles/         # 公众号文章（ml/ | llm/ | engineering/ | env/ | ai-history/）
 ├── scripts/          # Notebook 生成 & 封面图脚本
@@ -117,6 +116,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
 | 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
 | RAG 评估实战（RAGAS） | RAG Evaluation, RAGAS |
+| 向量数据库进阶：Hybrid+Rerank 让法典问答 context_recall 从 0.35 推到 0.40 | Hybrid Search, BM25, RRF, Cross-Encoder, HNSW |
 
 ### 项目工程线 (`articles/engineering/`)
 
@@ -154,7 +154,6 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 项目 | 描述 | 技术栈 |
 |------|------|--------|
 | **ML Playground** | 所有算法的 FastAPI + Gradio 统一平台 | FastAPI, Gradio, Matplotlib |
-| **Text-to-SQL 助手** | 自然语言转 SQL 查询 | Gradio, DeepSeek API |
 | **环保申报 AI Agent** | 多轮对话 Agent，查法规 + 算排放 + 填表单 | LangGraph, DeepSeek, BGE |
 | **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
 | **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
@@ -185,9 +184,6 @@ uvicorn projects.ml_playground.app:app
 
 # 环保申报 Agent
 python projects/env_agent/app.py
-
-# Text-to-SQL
-python projects/app_text_to_sql.py
 
 # RAG 法律问答
 cd 环境法律法规智能问答系统 && python app.py
