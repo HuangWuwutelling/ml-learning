@@ -11,7 +11,7 @@
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
 │   ├── env_agent/        # LangGraph 环保申报 Agent
 │   └── simple_agent.py
-├── articles/         # 公众号文章（ml/ | llm/ | engineering/ | env/ | ai-history/）
+├── articles/         # 学习记录（ml/ | llm/ | engineering/ | env/ | ai-history/）
 ├── scripts/          # Notebook 生成 & 封面图脚本
 ├── data/             # 数据集
 ├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek
@@ -117,6 +117,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
 | RAG 评估实战（RAGAS） | RAG Evaluation, RAGAS |
 | 向量数据库进阶：Hybrid+Rerank 让法典问答 context_recall 从 0.35 推到 0.40 | Hybrid Search, BM25, RRF, Cross-Encoder, HNSW |
+| MCP 协议：统一 LLM 工具调用的标准接口 | MCP, JSON-RPC 2.0, stdio / HTTP+SSE |
 
 ### 项目工程线 (`articles/engineering/`)
 
