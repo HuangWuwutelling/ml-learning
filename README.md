@@ -97,6 +97,7 @@
 | 12 | CNN 卷积神经网络 |
 | 13 | RNN 与 LSTM |
 | 14 | Word2Vec 词向量 |
+| 15 | Transformer 自注意力 |
 
 ### LLM 工具链线 (`articles/llm/`)
 
