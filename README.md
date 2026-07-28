@@ -98,6 +98,7 @@
 | 13 | RNN 与 LSTM |
 | 14 | Word2Vec 词向量 |
 | 15 | Transformer 自注意力 |
+| 16 | AutoEncoder 自编码器 |
 
 ### LLM 工具链线 (`articles/llm/`)
 
