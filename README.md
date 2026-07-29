@@ -54,6 +54,7 @@
 | 废石清理后底泥 Cd 去向 | 活性层替换模型，追踪废石清理后底泥镉的三个去向（稀释/搬运/封存） | `models/floodplain_recovery.py` |
 | 电镀厂酸雾全过程 | 产污→集气→洗涤→高斯烟羽→干湿沉降→土壤酸化，全链条质量平衡与达标分析 | `models/electroplating_acid_mist.py` |
 | 电镀厂 Cr(VI) 健康风险 | 同一工厂 Cr(VI) 扩散、土壤累积、吸入/摄入致癌风险评估（US EPA IRIS） | `models/electroplating_cr.py` |
+| TCE/PCE 地下水羽流 | 1D 对流-弥散 Ogata-Banks 解析解，模拟 TCE/PCE 从泄漏到下游水井的污染范围 | `models/groundwater_tce_pce.py` |
 
 ## 文章系列
 
@@ -151,6 +152,11 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
 | 12 | 微塑料：除了食物，外卖盒还给你加了什么料 |
 | 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
+| 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
+| 15 | 把 GB 15618 装进口袋：微信云开发做一个农用地评价小程序 |
+| 16 | 从一块农用地到一份报表：GB 15618 评价小程序使用指南 |
+| 17 | 数据不出本机：用 Python + PyInstaller 把 GB 15618 评价做成 exe |
+| 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流 |
 
 ## 项目
 
