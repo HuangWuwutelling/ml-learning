@@ -40,6 +40,7 @@
 | 14 | Word2Vec（Skip-gram + Negative Sampling） | `models/word2vec.py` |
 | 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
 | 16 | AutoEncoder（编码器-解码器，无监督降维） | `models/autoencoder.py` |
+| 17 | kNN（k 近邻分类，懒惰学习） | `models/knn.py` |
 
 ## 环境模型
 
@@ -100,6 +101,7 @@
 | 14 | Word2Vec 词向量 |
 | 15 | Transformer 自注意力 |
 | 16 | AutoEncoder 自编码器 |
+| 17 | kNN 近邻分类 |
 
 ### LLM 工具链线 (`articles/llm/`)
 
