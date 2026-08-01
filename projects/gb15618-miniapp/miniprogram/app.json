@@ -7,7 +7,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "土壤标准速查",
+    "navigationBarTitleText": "瓦力的土壤限值速查",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
