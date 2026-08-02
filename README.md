@@ -9,12 +9,12 @@
 ├── notebooks/        # 训练 & 可视化 Jupyter notebook
 ├── projects/
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
-│   ├── env_agent/        # LangGraph 环保申报 Agent
-│   └── simple_agent.py
+│   ├── env_agent/        # LangGraph 环保申报 Agent（env-agent 旗舰）
+│   └── gb15618-miniapp/
+├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek（env-rag 旗舰）
 ├── articles/         # 学习记录（ml/ | llm/ | engineering/ | env/ | ai-history/）
 ├── scripts/          # Notebook 生成 & 封面图脚本
 ├── data/             # 数据集
-├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek
 ├── 环保类知识库LLM Wiki/      # YoudaoNote LLM Wiki
 ├── requirements.txt
 └── .gitignore
@@ -154,10 +154,6 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
 | 12 | 微塑料：除了食物，外卖盒还给你加了什么料 |
 | 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
-| 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
-| 15 | 把 GB 15618 装进口袋：微信云开发做一个农用地评价小程序 |
-| 16 | 从一块农用地到一份报表：GB 15618 评价小程序使用指南 |
-| 17 | 数据不出本机：用 Python + PyInstaller 把 GB 15618 评价做成 exe |
 | 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流 |
 
 ## 项目
