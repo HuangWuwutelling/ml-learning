@@ -21,6 +21,7 @@ from models.dbscan import DBSCAN
 from models.pca import PCA
 from models.mlp import MLP
 from models.cnn import CNN
+from models.knn import KNN
 
 
 ALGORITHMS = {
@@ -163,6 +164,16 @@ ALGORITHMS = {
         "needs_scaling": False,
         "supports_proba": True,
         "default_dataset": "digits",
+    },
+    "knn": {
+        "name": "kNN",
+        "type": "classification",
+        "description": "k 近邻分类，懒惰学习 + 多数投票",
+        "class": KNN,
+        "default_params": {"k": 5, "weights": "uniform", "metric": "euclidean"},
+        "needs_scaling": True,
+        "supports_proba": True,
+        "default_dataset": "iris",
     },
 }
 
