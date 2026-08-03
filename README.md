@@ -10,7 +10,7 @@
 ├── projects/
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
 │   ├── env_agent/        # LangGraph 环保申报 Agent（env-agent 旗舰）
-│   └── gb15618-miniapp/
+│   └── gb15618/          # 仅保留跳转 README，源码已迁至独立仓库 HuangWuwutelling/gb15618
 ├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek（env-rag 旗舰）
 ├── articles/         # 学习记录（ml/ | llm/ | engineering/ | env/ | ai-history/）
 ├── scripts/          # Notebook 生成 & 封面图脚本
@@ -154,6 +154,8 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
 | 12 | 微塑料：除了食物，外卖盒还给你加了什么料 |
 | 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
+| 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
+| 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 |
 | 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流 |
 
 ## 项目
@@ -164,6 +166,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **环保申报 AI Agent** | 多轮对话 Agent，查法规 + 算排放 + 填表单 | LangGraph, DeepSeek, BGE |
 | **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
 | **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
+| **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | Python, PyInstaller（独立仓库 [HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)） |
 
 ## 快速复现
 
@@ -194,5 +197,12 @@ python projects/env_agent/app.py
 
 # RAG 法律问答
 cd 环境法律法规智能问答系统 && python app.py
+
+# GB 15618 评价工具（库 + GUI）
+git clone https://github.com/HuangWuwutelling/gb15618.git
+cd gb15618 && pip install -e . && python -m gb15618
+
+# GB 15618 评价工具（Windows exe，免装 Python）
+# 从 https://github.com/HuangWuwutelling/gb15618/releases/latest 下载 gb15618.exe，双击运行
 ```
 
