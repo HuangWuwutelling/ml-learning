@@ -29,7 +29,7 @@ projects/env_agent/data/
 projects/ml_playground/_debug.py
 projects/ml_playground/_test_*
 
-# 未发布项目（gb15618 文章发表前不上传 GitHub）
+# 未发布项目（gb15618-miniapp 不上传 GitHub；gb15618 源码已迁移到独立仓库，目录中只保留跳转 README）
 projects/gb15618-miniapp/
 
 # 项目 systemd 服务文件（本地部署用，不上传 GitHub）
