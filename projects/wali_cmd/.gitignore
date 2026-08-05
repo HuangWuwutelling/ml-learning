@@ -1,0 +1,11 @@
+node_modules/
+cloudfunctions/*/node_modules/
+miniprogram_npm/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+.env
+.DS_Store
+*.log
