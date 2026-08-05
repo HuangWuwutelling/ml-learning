@@ -4,6 +4,8 @@ plan.md
 
 # 辅助脚本（封面图、notebook 生成等，与算法本身无关）
 scripts/
+# 例外：wali_cmd 项目自身的 scripts/（实现代码，需要追踪）
+!projects/wali_cmd/scripts/
 
 # Python
 __pycache__/
