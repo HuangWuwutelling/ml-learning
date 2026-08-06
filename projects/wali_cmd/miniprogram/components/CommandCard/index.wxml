@@ -1,0 +1,10 @@
+<view class="cmd-card" bindtap="onTap">
+  <view class="cmd-name">
+    <text class="name">{{command.name}}</text>
+    <text class="platform-tag" wx:if="{{command.platform}}">{{command.platform}}</text>
+  </view>
+  <view class="cmd-desc">{{command.description}}</view>
+  <view class="cmd-tags">
+    <text class="tag" wx:for="{{command.tags}}" wx:key="*this">{{item}}</text>
+  </view>
+</view>

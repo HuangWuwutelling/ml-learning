@@ -1,0 +1,10 @@
+<view class="search-bar">
+  <input
+    class="search-input"
+    value="{{value}}"
+    placeholder="{{placeholder}}"
+    bindinput="onInput"
+    confirm-type="search"
+  />
+  <view wx:if="{{value}}" class="clear-btn" bindtap="onClear">×</view>
+</view>

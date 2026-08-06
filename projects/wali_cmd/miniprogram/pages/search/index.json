@@ -1,3 +1,8 @@
 {
-  "navigationBarTitleText": "速查"
+  "navigationBarTitleText": "速查",
+  "usingComponents": {
+    "search-bar": "/components/SearchBar/index",
+    "command-card": "/components/CommandCard/index",
+    "empty-state": "/components/EmptyState/index"
+  }
 }

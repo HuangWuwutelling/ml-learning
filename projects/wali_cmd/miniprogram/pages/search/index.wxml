@@ -1,3 +1,42 @@
 <view class="container">
-  <text>search</text>
+  <search-bar
+    value="{{keyword}}"
+    bind:input="onSearchInput"
+    bind:clear="onSearchClear"
+  />
+
+  <view class="platform-tabs">
+    <view
+      class="tab {{platform === 'linux' ? 'active' : ''}}"
+      data-platform="linux"
+      bindtap="onPlatformChange"
+    >Linux</view>
+    <view
+      class="tab {{platform === 'windows' ? 'active' : ''}}"
+      data-platform="windows"
+      bindtap="onPlatformChange"
+    >Windows</view>
+  </view>
+
+  <view class="result-count" wx:if="{{keyword && !loading}}">
+    找到 {{results.length}} 条结果
+  </view>
+
+  <view class="results" wx:if="{{results.length > 0}}">
+    <command-card
+      wx:for="{{results}}"
+      wx:key="_id"
+      command="{{item}}"
+      bind:tap="onCardTap"
+    />
+  </view>
+
+  <empty-state
+    wx:elif="{{keyword && !loading}}"
+    message="没有找到匹配的命令，换个关键词试试"
+  />
+
+  <view class="hint" wx:if="{{!keyword}}">
+    <text>输入命令名或关键词开始搜索\n例如：find / ipconfig / 查找文件</text>
+  </view>
 </view>
