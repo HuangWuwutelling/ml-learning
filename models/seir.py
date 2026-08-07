@@ -81,8 +81,26 @@ Kermack-McKendrick 1927 仓室模型起源：
   theory of epidemics. Proc R Soc Lond A 115:700-721
   https://royalsocietypublishing.org/doi/10.1098/rspa.1927.0118
 
+文章案例数据来源（非模型参数；用于复现文章引言与第五节案例）：
+- Clemmons NS, Gastañaduy PA, Fiebelkorn AP, Redd SB, Seward JF (2015).
+  Measles - United States, January 4-April 2, 2015. MMWR 64(14):373-376
+  https://www.cdc.gov/mmwr/preview/mmwrhtml/mm6414a1.htm
+  （迪士尼麻疹：美国 147 例 = 加州 131 + 外州 6 州 16，共跨 7 个州）
+- National Institute of Infectious Diseases, Japan (2020). COVID-19
+  Diamond Princess cruise ship outbreak report
+  https://www.niid.go.jp/niid/en/2019-ncov-e/9417-covid-dp-fe-02.html
+  （3711 人中 712 例确诊，感染比例 19.2%）
+- WHO Ebola Response Team (2014). Ebola Virus Disease in West Africa -
+  The First 9 Months of the Epidemic and Forward Projections.
+  N Engl J Med 371:1481-1495
+  https://www.nejm.org/doi/full/10.1056/NEJMoa1411100
+  （埃博拉 R0 估计：几内亚 1.71、利比里亚 1.83、塞拉利昂 2.02）
+- WHO (2016). Ebola virus disease fact sheet
+  https://www.who.int/news-room/fact-sheets/detail/ebola-virus-disease
+  （2014-2016 西非疫情：约 2.8 万感染、超 1.1 万死亡，病死率接近一半）
+
 Usage:
-    >>> m = SEIR('measles')  # 用预置参数
+    >>> m = SEIR(virus='measles')  # 用预置参数
     >>> m.solve(days=200, dt=0.1)
     >>> m.peak_info()
     >>> df = SEIR.compare_viruses(['common_cold', 'seasonal_flu',
