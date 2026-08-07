@@ -27,8 +27,8 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "articles", "env",
 # (name, R0, latent_days, infect_days, peak_day, peak_height, color)
 VIRUSES = [
     ("普通感冒",   1.5,  2.0, 5.0, 120, 0.42, "#1f4e9c"),
-    ("季节性流感", 2.5,  2.0, 4.0,  70, 0.58, "#4ea1d3"),
-    ("COVID-19",   5.0,  5.0, 7.0,  35, 0.78, "#f39c12"),
+    ("季节性流感", 1.5,  2.0, 4.0,  70, 0.40, "#4ea1d3"),
+    ("COVID-19",   3.0,  5.0, 7.0,  35, 0.78, "#f39c12"),
     ("麻疹",      15.0, 12.0, 6.0,  16, 0.92, "#d6532b"),
 ]
 
@@ -100,8 +100,8 @@ def draw_curves_panel(ax, x0, y0, w, h):
     # 曲线末端图例: 用曲线末端位置贴标签, 错开避免重叠
     label_offsets = [
         ("普通感冒",   1.5, "#1f4e9c", 0.06),
-        ("季节性流感", 2.5, "#4ea1d3", 0.18),
-        ("COVID-19",   5.0, "#f39c12", 0.30),
+        ("季节性流感", 1.5, "#4ea1d3", 0.18),
+        ("COVID-19",   3.0, "#f39c12", 0.30),
         ("麻疹",      15.0, "#d6532b", 0.42),
     ]
     for name, R0, color, dy in label_offsets:
@@ -213,11 +213,11 @@ def article_cover():
             fontweight="bold", zorder=5, style="italic")
 
     # 主标题
-    ax.text(7.10, 2.95, "SEIR 与 R0",
-            fontsize=22, color="#1f2328", ha="center", va="center",
+    ax.text(7.10, 2.92, "麻疹为什么必须打疫苗",
+            fontsize=19, color="#1f2328", ha="center", va="center",
             fontweight="bold", zorder=5)
-    ax.text(7.10, 2.55, "感冒等病毒传染病传播模型",
-            fontsize=15, color="#1f2328", ha="center", va="center",
+    ax.text(7.10, 2.50, "感冒不用？从病毒的传染力说起",
+            fontsize=13, color="#1f2328", ha="center", va="center",
             fontweight="bold", zorder=5)
 
     # 关键数字 R0 范围
@@ -233,14 +233,6 @@ def article_cover():
     ax.text(7.10, 0.75, "4 仓室: 易感 → 暴露 → 感染 → 康复",
             fontsize=7.5, color="#4a525e", ha="center", va="center",
             zorder=5, style="italic")
-
-    # ── Bottom tag ───────────────────────────────────────────────────
-    ax.plot([4.5, 8.7], [0.32, 0.32], color="#d0d7de", lw=0.5, zorder=2)
-    ax.text(7.10, 0.20,
-            "Kermack-McKendrick 1927  ·  Heikkinen & Jarvinen 2003  ·  "
-            "Biggerstaff 2014  ·  Guerra 2017  ·  CDC 2024",
-            fontsize=5.5, color="#9ca3af",
-            ha="center", alpha=0.65, fontweight="bold", zorder=5)
 
     plt.savefig(OUT, dpi=100, facecolor="#fafbfc")
     plt.close(fig)
