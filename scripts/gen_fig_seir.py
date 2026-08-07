@@ -105,13 +105,13 @@ def fig2_compartments():
         ax.plot(t, result[key] / model.N, color=colors[key], linewidth=2.2,
                 label=labels[key], zorder=3)
 
-    # S 下降到约 30% 的位置，作为图中群体免疫阶段的直观提示。
+    # S 下降到约 1/3（=1/R0）的位置，作为群体免疫时刻的直观提示。
     s_ratio = result["S"] / model.N
-    target_idx = int(abs(s_ratio - 0.30).argmin())
+    target_idx = int(abs(s_ratio - 1 / 3).argmin())
     target_t = t[target_idx]
-    ax.axhline(0.30, color="#377eb8", linestyle=":", linewidth=1.0,
+    ax.axhline(1 / 3, color="#377eb8", linestyle=":", linewidth=1.0,
                alpha=0.8)
-    ax.annotate("S 衰减到约 30%\n群体免疫阶段",
+    ax.annotate("S 衰减到约 1/3\n群体免疫时刻",
                 xy=(target_t, s_ratio[target_idx]),
                 xytext=(target_t + 18, 0.42), fontsize=9,
                 color="#2d3748", ha="center",
