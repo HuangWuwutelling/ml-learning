@@ -90,14 +90,6 @@ Kermack-McKendrick 1927 仓室模型起源：
   Diamond Princess cruise ship outbreak report
   https://www.niid.go.jp/niid/en/2019-ncov-e/9417-covid-dp-fe-02.html
   （3711 人中 712 例确诊，感染比例 19.2%）
-- WHO Ebola Response Team (2014). Ebola Virus Disease in West Africa -
-  The First 9 Months of the Epidemic and Forward Projections.
-  N Engl J Med 371:1481-1495
-  https://www.nejm.org/doi/full/10.1056/NEJMoa1411100
-  （埃博拉 R0 估计：几内亚 1.71、利比里亚 1.83、塞拉利昂 2.02）
-- WHO (2016). Ebola virus disease fact sheet
-  https://www.who.int/news-room/fact-sheets/detail/ebola-virus-disease
-  （2014-2016 西非疫情：约 2.8 万感染、超 1.1 万死亡，病死率接近一半）
 
 Usage:
     >>> m = SEIR(virus='measles')  # 用预置参数
