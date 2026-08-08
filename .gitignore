@@ -7,6 +7,9 @@ scripts/
 # 例外：wali_cmd 项目自身的 scripts/（实现代码，需要追踪）
 !projects/wali_cmd/scripts/
 
+# 测试脚本（本地验证用，不上传 GitHub）
+tests/
+
 # Python
 __pycache__/
 *.pyc
