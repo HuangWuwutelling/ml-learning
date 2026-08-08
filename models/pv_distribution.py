@@ -89,6 +89,13 @@ References (all parameters verified by web lookup):
     - 本文用前者（与电压越限直接相关）
     参考：IEA PVPS 报告系列、IEEE 1547 评估指南
 
+[8] Braun M 等，2012《"Embedded Generation" German LV network voltage
+    with high PV penetration》
+    - IET Renewable Power Generation 6(6):604-614
+    - 高 PV 渗透率低压配电网实测：渗透率 50% 时电压峰值约 1.08-1.10 pu
+    - 用于校准模型 noon 场景（渗透率 50% → V3 ≈ 1.087 pu）
+    https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/iet-rpg.2010.0125
+
 Usage:
     >>> grid = DistributionGrid()
     >>> v = grid.solve_peak()           # 4 节点电压（pu）
@@ -140,9 +147,9 @@ PENETRATION_DEFINITION = "capacity"   # 装机渗透率（本文）
 NOON_LOAD_FACTOR = 0.0
 
 # 电压限值（GB/T 12325-2008）
-VOLTAGE_UPPER_LIMIT_PU = 1.07   # 220 V 上限 235 V
-VOLTAGE_LOWER_LIMIT_PU = 0.93   # 220 V 下限 198 V
-# IEEE 1547-2018 上限 1.10 pu（持续运行）
+VOLTAGE_UPPER_LIMIT_PU = 1.07   # 220 V 上限 235 V = +7%
+VOLTAGE_LOWER_LIMIT_PU = 0.90   # 220 V 下限 198 V = -10%
+# IEEE 1547-2018 Category A 正常运行范围上限 1.10 pu（ride-through 不脱网）
 
 
 class DistributionGrid:

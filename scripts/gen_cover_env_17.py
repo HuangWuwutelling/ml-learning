@@ -1,5 +1,5 @@
 """
-Cover for article 17: 分布式光伏对配电网的影响 (4 种渗透率临界点).
+Cover for article 17: 4 种渗透率下，屋顶光伏对末端电压的影响.
 figsize=(9, 3.83), dpi=100, no bbox_inches='tight' (per CLAUDE.md).
 
 Style reference: cover_env_16.py (SEIR sister article).
@@ -222,15 +222,15 @@ def article_cover():
 
     # ── Right: 标题 + 关键数字 ───────────────────────────────────────
     # 副标题 (上方一行)
-    ax.text(7.10, 3.32, "配电网电压临界点",
+    ax.text(7.10, 3.32, "4 种渗透率下",
             fontsize=11, color="#7b1fa2", ha="center", va="center",
             fontweight="bold", zorder=5, style="italic")
 
     # 主标题
-    ax.text(7.10, 2.95, "分布式光伏",
+    ax.text(7.10, 2.95, "屋顶光伏",
             fontsize=22, color="#1f2328", ha="center", va="center",
             fontweight="bold", zorder=5)
-    ax.text(7.10, 2.55, "对配电网的影响",
+    ax.text(7.10, 2.55, "对末端电压的影响",
             fontsize=17, color="#1f2328", ha="center", va="center",
             fontweight="bold", zorder=5)
 
