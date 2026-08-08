@@ -7,7 +7,18 @@ Page({
     loading: false
   },
 
-  onLoad() {},
+  onLoad(options) {
+    if (options.category) {
+      this.setData({ keyword: options.category });
+      this.doSearch(options.category);
+    }
+    if (options.platform) {
+      this.setData({ platform: options.platform });
+      if (this.data.keyword.trim()) {
+        this.doSearch(this.data.keyword);
+      }
+    }
+  },
 
   onSearchInput(e) {
     const keyword = e.detail.value;

@@ -1,0 +1,40 @@
+.platform-tabs {
+  display: flex;
+  margin-bottom: 24rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  overflow: hidden;
+  border: 1rpx solid #e5e5e5;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+}
+.tab.active {
+  background: #3cc51f;
+  color: #fff;
+}
+.category-list {
+  display: flex;
+  flex-direction: column;
+}
+.category-item {
+  background: #fff;
+  padding: 24rpx;
+  margin-bottom: 12rpx;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cat-name {
+  font-size: 30rpx;
+  color: #333;
+}
+.cat-count {
+  font-size: 24rpx;
+  color: #888;
+}
