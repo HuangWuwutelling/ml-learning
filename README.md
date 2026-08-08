@@ -56,7 +56,7 @@
 | 电镀厂酸雾全过程 | 产污→集气→洗涤→高斯烟羽→干湿沉降→土壤酸化，全链条质量平衡与达标分析 | `models/electroplating_acid_mist.py` |
 | 电镀厂 Cr(VI) 健康风险 | 同一工厂 Cr(VI) 扩散、土壤累积、吸入/摄入致癌风险评估（US EPA IRIS） | `models/electroplating_cr.py` |
 | TCE/PCE 地下水羽流 | 1D 对流-弥散 Ogata-Banks 解析解，模拟 TCE/PCE 从泄漏到下游水井的污染范围 | `models/groundwater_tce_pce.py` |
-| SEIR 传染病传播模型 | 4 仓室（S/E/I/R）常微分方程，预置 4 种呼吸道病毒 R0 参数，复现文章 env/16 疫情曲线 | `models/seir.py` |
+| SEIR 传染病传播模型 | 4 仓室（S/E/I/R）常微分方程，预置 4 种呼吸道病毒 R0 参数，复现 4 种疫情曲线 | `models/seir.py` |
 
 ## 文章系列
 
@@ -157,7 +157,6 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
 | 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
 | 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 |
-| 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0 |
 | 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流 |
 
 ## 项目
