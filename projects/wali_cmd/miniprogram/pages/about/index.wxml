@@ -1,3 +1,21 @@
 <view class="container">
-  <text>about</text>
+  <view class="app-name">瓦力的命令行速查</view>
+  <view class="version">v0.1.0</view>
+
+  <view class="section">
+    <view class="section-title">关于</view>
+    <view class="section-content">命令行命令速查工具，支持 Linux 与 Windows，含语法、示例与说明。</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">使用说明</view>
+    <view class="section-content">
+      <text>1. 在首页输入命令名或关键词\n2. 切换平台标签切换 Linux / Windows\n3. 点击命令卡片查看详情\n4. 详情页可复制语法和示例</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">反馈</view>
+    <view class="section-content">如需补充命令或修正错误，请联系：wali@example.com</view>
+  </view>
 </view>
