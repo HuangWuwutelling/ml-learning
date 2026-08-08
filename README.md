@@ -57,6 +57,7 @@
 | 电镀厂 Cr(VI) 健康风险 | 同一工厂 Cr(VI) 扩散、土壤累积、吸入/摄入致癌风险评估（US EPA IRIS） | `models/electroplating_cr.py` |
 | TCE/PCE 地下水羽流 | 1D 对流-弥散 Ogata-Banks 解析解，模拟 TCE/PCE 从泄漏到下游水井的污染范围 | `models/groundwater_tce_pce.py` |
 | SEIR 传染病传播模型 | 4 仓室（S/E/I/R）常微分方程，预置 4 种呼吸道病毒 R0 参数，复现 4 种疫情曲线 | `models/seir.py` |
+| 配电网分布式光伏越限 | 4 节点低压馈线，直流潮流简化，反向潮流 + 二分搜索找临界渗透率；中午末端电压可能越过 GB/T 12325 1.07 pu 上限 | `models/pv_distribution.py` |
 
 ## 文章系列
 
@@ -158,6 +159,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
 | 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 |
 | 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0（已发 2026-08-07） |
+| 17 | 屋顶光伏装多少，末端电压会越限？（待发） |
 | 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流（已发） |
 
 ## 项目
