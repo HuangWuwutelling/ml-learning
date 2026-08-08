@@ -1,7 +1,10 @@
 node_modules/
 cloudfunctions/*/node_modules/
-cloudfunctions/cloudImport/data/
 miniprogram_npm/
+
+# 开发者工具本地私有配置（含个人云开发 token，绝对不能入库）
+project.private.config.json
+miniprogram/project.private.config.json
 __pycache__/
 *.pyc
 .pytest_cache/

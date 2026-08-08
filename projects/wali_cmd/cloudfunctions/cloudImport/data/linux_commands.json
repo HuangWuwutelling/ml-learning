@@ -1,0 +1,593 @@
+[
+  {
+    "name": "cp",
+    "platform": "windows",
+    "category": "文件复制",
+    "subcategory": "",
+    "syntax": "cp [options] source... dest",
+    "example": [
+      "cp file.txt backup.txt",
+      "cp -r src/ dst/",
+      "cp -i *.txt /target/",
+      "cp -p /etc/passwd ./passwd.bak",
+      "cp -rv /var/log/ ./logs/"
+    ],
+    "description": "复制文件和目录。`-r` 递归复制目录，`-i` 覆盖前提示，`-v` 显示详情，`-p` 保留权限/时间戳，`-u` 只在源较新时覆盖。批量复制多个文件时 dest 必须是已存在的目录。",
+    "tags": [
+      "复制",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 95
+  },
+  {
+    "name": "find",
+    "platform": "windows",
+    "category": "文件查找",
+    "subcategory": "",
+    "syntax": "find [path] [expression]",
+    "example": [
+      "find /home -name '*.txt'",
+      "find . -type f -name '*.py'",
+      "find . -size +100M",
+      "find . -mtime -7",
+      "find . -maxdepth 2 -name '*.log' -delete"
+    ],
+    "description": "递归搜索目录树，按名称/大小/时间/类型等条件过滤文件或目录。GNU find 支持丰富的表达式（test、action、operator），是日常排查、日志归档、清理大文件时最常用的工具。",
+    "tags": [
+      "搜索",
+      "文件系统"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 95
+  },
+  {
+    "name": "ls",
+    "platform": "windows",
+    "category": "文件浏览",
+    "subcategory": "",
+    "syntax": "ls [options] [path...]",
+    "example": [
+      "ls -la",
+      "ls -lh",
+      "ls -ltr",
+      "ls -R /var/log",
+      "ls -F"
+    ],
+    "description": "列出目录内容。常用 `-l` 显示详情、`-a` 包含隐藏文件、`-h` 人类可读大小、`-R` 递归、`-t` 按时间排序。GNU coreutils 提供的 ls 几乎每个 Linux 用户每天都在用。",
+    "tags": [
+      "浏览",
+      "目录"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 100
+  },
+  {
+    "name": "mv",
+    "platform": "windows",
+    "category": "文件移动",
+    "subcategory": "",
+    "syntax": "mv [options] source... dest",
+    "example": [
+      "mv old.txt new.txt",
+      "mv file.txt /target/",
+      "mv -i src/* dst/",
+      "mv file1 file2 file3 /dst/",
+      "mv -n latest.log archive/"
+    ],
+    "description": "移动或重命名文件与目录。当目标不是已存在目录时为重命名；目标是已存在目录时把源放进去。`-i` 覆盖前提示，`-f` 强制覆盖不提示，`-n` 不覆盖已存在文件。同一文件系统内 mv 是 rename 系统调用，瞬时完成。",
+    "tags": [
+      "移动",
+      "重命名",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 92
+  },
+  {
+    "name": "rm",
+    "platform": "windows",
+    "category": "文件删除",
+    "subcategory": "",
+    "syntax": "rm [options] file...",
+    "example": [
+      "rm file.txt",
+      "rm -i *.log",
+      "rm -rf /tmp/build",
+      "rm -rf --preserve-root /",
+      "rm -v *.tmp"
+    ],
+    "description": "删除文件或目录。删除后无法恢复（无回收站）。`-r` 递归删除目录，`-f` 强制删除不提示，`-i` 每次删除前询问。`rm -rf` 是高危操作，使用前务必确认路径。",
+    "tags": [
+      "删除",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 90
+  },
+  {
+    "name": "awk",
+    "platform": "windows",
+    "category": "文本处理",
+    "subcategory": "",
+    "syntax": "awk [options] 'program' [file...]",
+    "example": [
+      "awk '{print $1, $NF}' file.txt",
+      "awk -F: '{print $1}' /etc/passwd",
+      "awk '{sum+=$1} END {print sum}' data.txt",
+      "awk '$3 > 100' file.txt",
+      "awk -F, 'NR>1 {print $1, $3}' data.csv"
+    ],
+    "description": "按行扫描输入、按字段（默认空白分割）处理的脚本语言。`$1`~`$NF` 表示各字段，`-F` 指定分隔符，`BEGIN/END` 是首尾处理块。常用来做列抽取、求和统计、格式化输出、报告生成。gawk 是 GNU 增强版。",
+    "tags": [
+      "文本",
+      "字段处理",
+      "脚本"
+    ],
+    "aliases": [],
+    "level": "进阶",
+    "popularity": 80
+  },
+  {
+    "name": "cat",
+    "platform": "windows",
+    "category": "文件查看",
+    "subcategory": "",
+    "syntax": "cat [options] [file...]",
+    "example": [
+      "cat file.txt",
+      "cat -n file.txt",
+      "cat file1.txt file2.txt",
+      "cat src/*.md > all.md",
+      "cat -A data.csv"
+    ],
+    "description": "把一个或多个文件内容输出到 stdout（POSIX 中是 concatenate 拼接）。`-n` 显示行号，`-b` 只对非空行编号，`-A` 显示制表符/行尾等不可见字符。大文件用 `less`/`more` 更合适。",
+    "tags": [
+      "查看",
+      "拼接",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 95
+  },
+  {
+    "name": "grep",
+    "platform": "windows",
+    "category": "文本搜索",
+    "subcategory": "",
+    "syntax": "grep [options] PATTERN [FILE...]",
+    "example": [
+      "grep -rn \"TODO\" --include=\"*.py\" .",
+      "grep -i \"error\" log.txt",
+      "grep -c \"404\" access.log",
+      "grep -E \"warn|error\" app.log",
+      "grep -v \"^#\" /etc/ssh/sshd_config"
+    ],
+    "description": "按模式（默认基本正则）在文件或 stdin 中查找匹配行并输出。`-i` 忽略大小写，`-r` 递归目录，`-n` 显示行号，`-c` 统计次数，`-v` 反向匹配，`-E` 扩展正则，`--color` 高亮匹配。GNU grep 是日志排查的瑞士军刀。",
+    "tags": [
+      "搜索",
+      "正则",
+      "文本"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 98
+  },
+  {
+    "name": "sed",
+    "platform": "windows",
+    "category": "文本替换",
+    "subcategory": "",
+    "syntax": "sed [options] 'script' [input-file...]",
+    "example": [
+      "sed 's/old/new/g' file.txt",
+      "sed -i 's/foo/bar/g' file.txt",
+      "sed -n '10,20p' file.txt",
+      "sed -i '/^#/d' config.txt",
+      "sed -E 's/([0-9]+)/[\\1]/g' data.txt"
+    ],
+    "description": "流编辑器，按脚本对输入的每一行做替换/删除/打印/插入等操作。常用 `s/old/new/g` 替换，`-i` 直接修改文件，`-n` 静默模式（配合 `p` 打印指定行），`-E` 扩展正则。默认输出到 stdout，原文件不动。",
+    "tags": [
+      "替换",
+      "流编辑",
+      "文本"
+    ],
+    "aliases": [],
+    "level": "进阶",
+    "popularity": 85
+  },
+  {
+    "name": "df",
+    "platform": "windows",
+    "category": "磁盘信息",
+    "subcategory": "",
+    "syntax": "df [options] [file...]",
+    "example": [
+      "df -h",
+      "df -T",
+      "df -h /home",
+      "df -i",
+      "df -h --total"
+    ],
+    "description": "报告各文件系统的磁盘空间使用情况。`-h` 人类可读（K/M/G），`-T` 显示文件系统类型，`-i` 看 inode 使用，`--total` 汇总。指定文件路径则只显示包含该文件的文件系统。",
+    "tags": [
+      "磁盘",
+      "空间",
+      "系统"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 85
+  },
+  {
+    "name": "ps",
+    "platform": "windows",
+    "category": "进程查看",
+    "subcategory": "",
+    "syntax": "ps [options]",
+    "example": [
+      "ps aux",
+      "ps aux | grep python",
+      "ps -ef",
+      "ps -u $USER -F",
+      "ps -eo pid,pcpu,pmem,comm --sort=-pcpu | head"
+    ],
+    "description": "快照式查看当前进程。常用组合：`ps aux` 列出所有进程（user/BSD 风格），`ps -ef` 完整格式列出所有进程。配合 `grep` 过滤具体程序；`ps -L` 看线程；`--sort` 按字段排序。",
+    "tags": [
+      "进程",
+      "查看",
+      "系统"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 88
+  },
+  {
+    "name": "top",
+    "platform": "windows",
+    "category": "系统监控",
+    "subcategory": "",
+    "syntax": "top [options]",
+    "example": [
+      "top",
+      "top -u www-data",
+      "top -p 1234,5678",
+      "top -bn1 | head -20",
+      "top -o %MEM"
+    ],
+    "description": "动态实时显示系统中进程的资源占用（CPU、内存、负载等）。`q` 退出，`P` 按 CPU 排序，`M` 按内存排序，`k <pid>` 给进程发信号，`1` 展开多核 CPU。`htop` 是更友好的替代品。",
+    "tags": [
+      "进程",
+      "监控",
+      "系统"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 80
+  },
+  {
+    "name": "uname",
+    "platform": "windows",
+    "category": "系统信息",
+    "subcategory": "",
+    "syntax": "uname [options]",
+    "example": [
+      "uname -a",
+      "uname -r",
+      "uname -m",
+      "uname -s",
+      "uname -n"
+    ],
+    "description": "打印系统与内核信息。`-a` 全部信息（内核名/主机名/内核版本/架构等），`-r` 内核 release，`-m` 机器架构（x86_64/aarch64），`-s` 内核名（Linux），`-o` 操作系统。`uname -a` 在排查环境时几乎是必敲命令。",
+    "tags": [
+      "内核",
+      "系统信息"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 70
+  },
+  {
+    "name": "curl",
+    "platform": "windows",
+    "category": "网络请求",
+    "subcategory": "",
+    "syntax": "curl [options] URL",
+    "example": [
+      "curl -I https://example.com",
+      "curl -O https://example.com/file.zip",
+      "curl -L -o page.html https://example.com",
+      "curl -X POST -d '{\"name\":\"bob\"}' -H \"Content-Type: application/json\" http://api.example.com/users",
+      "curl -u user:pass ftp://ftp.example.com/file"
+    ],
+    "description": "命令行数据传输工具，支持 HTTP/HTTPS/FTP/SCP/SFTP 等多种协议。`-O` 按 URL 保存文件，`-L` 跟随重定向，`-I` 只看响应头，`-d` POST 数据，`-H` 自定义 header，`-X` 指定方法，`-k` 跳过证书校验，`-u` 用户认证。API 调试与下载必备。",
+    "tags": [
+      "HTTP",
+      "下载",
+      "网络"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 92
+  },
+  {
+    "name": "ifconfig",
+    "platform": "windows",
+    "category": "网络配置",
+    "subcategory": "",
+    "syntax": "ifconfig [interface] [options]",
+    "example": [
+      "ifconfig",
+      "ifconfig -a",
+      "ifconfig eth0",
+      "ifconfig eth0 up",
+      "ifconfig eth0 192.168.1.100 netmask 255.255.255.0",
+      "ifconfig eth0 down"
+    ],
+    "description": "net-tools 套件中的网络接口配置工具，可查看/配置网卡 IP、掩码、MTU、启停接口。在新发行版中已被 `ip` 命令取代，但许多老脚本仍依赖它。`-a` 显示所有接口（含禁用），`up`/`down` 启停接口，可直接给接口配 IP。",
+    "tags": [
+      "网络",
+      "接口",
+      "配置"
+    ],
+    "aliases": [],
+    "level": "进阶",
+    "popularity": 60
+  },
+  {
+    "name": "ping",
+    "platform": "windows",
+    "category": "网络诊断",
+    "subcategory": "",
+    "syntax": "ping [options] destination",
+    "example": [
+      "ping example.com",
+      "ping -c 5 8.8.8.8",
+      "ping -i 0.5 google.com",
+      "ping -s 1024 1.1.1.1",
+      "ping -c 3 -W 2 192.168.1.1"
+    ],
+    "description": "向目标主机发送 ICMP ECHO_REQUEST 包并显示往返时间（RTT），用于检测网络连通性和延迟。`-c` 限制发送次数（默认一直发，`Ctrl+C` 停），`-i` 调整间隔秒数，`-s` 改包大小，`-W` 超时秒数。某些云环境会屏蔽 ICMP，ping 不通不一定代表不可达。",
+    "tags": [
+      "网络",
+      "诊断",
+      "ICMP"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 85
+  },
+  {
+    "name": "ssh",
+    "platform": "windows",
+    "category": "远程登录",
+    "subcategory": "",
+    "syntax": "ssh [options] [user@]host [command]",
+    "example": [
+      "ssh user@host",
+      "ssh -p 2222 user@host",
+      "ssh -i ~/.ssh/id_ed25519 user@host",
+      "ssh user@host \"ls -la /var/log\"",
+      "ssh -L 8080:localhost:80 user@host"
+    ],
+    "description": "OpenSSH 远程登录客户端，建立加密通道登录远程主机或执行命令。`-p` 指定端口（默认 22），`-i` 指定私钥文件，`-L` 本地端口转发，`-D` 动态转发（SOCKS 代理），`-N` 不执行远程命令，`-t` 强制分配 tty。`~/.ssh/config` 可配置别名简化参数。",
+    "tags": [
+      "SSH",
+      "远程",
+      "网络"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 90
+  },
+  {
+    "name": "chmod",
+    "platform": "windows",
+    "category": "权限修改",
+    "subcategory": "",
+    "syntax": "chmod [options] MODE FILE...",
+    "example": [
+      "chmod 755 script.sh",
+      "chmod +x script.sh",
+      "chmod -R 644 dir/",
+      "chmod u+rw,g-r file.txt",
+      "chmod 600 ~/.ssh/id_rsa"
+    ],
+    "description": "修改文件/目录的访问权限。MODE 两种写法：八进制数字（r=4、w=2、x=1，如 755 = rwxr-xr-x）或符号（u/g/o/a 配 +/-/= 与 r/w/x）。`-R` 递归。常见组合：脚本 755、配置文件 644、SSH 私钥 600。",
+    "tags": [
+      "权限",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 92
+  },
+  {
+    "name": "chown",
+    "platform": "windows",
+    "category": "所有权修改",
+    "subcategory": "",
+    "syntax": "chown [options] [OWNER][:[GROUP]] FILE...",
+    "example": [
+      "chown user file.txt",
+      "chown user:group file.txt",
+      "sudo chown -R www-data:www-data /var/www/",
+      "chown :devs project/",
+      "sudo chown -R root:root /etc/"
+    ],
+    "description": "修改文件/目录的所有者和所属组。`OWNER` 改所有者，`OWNER:GROUP` 同时改两者，`:GROUP` 只改组（用户名留空）。`-R` 递归。常需要 `sudo` 提升权限。",
+    "tags": [
+      "权限",
+      "所有者",
+      "文件"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 80
+  },
+  {
+    "name": "sudo",
+    "platform": "windows",
+    "category": "特权执行",
+    "subcategory": "",
+    "syntax": "sudo [options] command",
+    "example": [
+      "sudo apt update",
+      "sudo !!",
+      "sudo -i",
+      "sudo -u postgres psql",
+      "sudo systemctl restart nginx",
+      "sudo -E bash -c 'echo $PATH'"
+    ],
+    "description": "以超级用户（root）或其他用户的身份执行命令，前提是当前用户在 `/etc/sudoers` 中被授权。`-u` 指定目标用户，`-i` 启动登录 shell（加载 .profile 等），`-s` 启动非登录 shell，`-E` 保留环境变量。`!!` 可重跑上一条命令并加 sudo。",
+    "tags": [
+      "权限",
+      "提权",
+      "root"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 95
+  },
+  {
+    "name": "gzip",
+    "platform": "windows",
+    "category": "压缩解压",
+    "subcategory": "",
+    "syntax": "gzip [options] file...",
+    "example": [
+      "gzip file.txt",
+      "gzip -k file.txt",
+      "gzip -d file.txt.gz",
+      "gzip -c file.txt > file.txt.gz",
+      "zcat file.txt.gz"
+    ],
+    "description": "GNU 单文件压缩工具，使用 LZ77 + Huffman，输出 `.gz` 后缀（默认会删除原文件）。`-k` 保留原文件，`-d` 解压（等同 `gunzip`），`-c` 输出到 stdout，`-1`~`-9` 调压缩率（默认 6）。`zcat` 直接查看压缩文件内容不解压。",
+    "tags": [
+      "压缩",
+      "gzip"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 75
+  },
+  {
+    "name": "tar",
+    "platform": "windows",
+    "category": "打包归档",
+    "subcategory": "",
+    "syntax": "tar [options] [archive] [file...]",
+    "example": [
+      "tar czf archive.tar.gz dir/",
+      "tar cjf archive.tar.bz2 dir/",
+      "tar xzf archive.tar.gz",
+      "tar xf archive.tar.gz -C /target/",
+      "tar tf archive.tar.gz"
+    ],
+    "description": "归档工具，常与 gzip/bzip2/xz 组合实现打包+压缩。主选项：`c` 创建、`x` 解压、`t` 列表、`v` 详细、`f` 指定文件、`z` gzip、`j` bzip2、`J` xz。GNU tar 通过后缀自动识别格式，可省略压缩选项。",
+    "tags": [
+      "压缩",
+      "打包",
+      "归档"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 90
+  },
+  {
+    "name": "zip",
+    "platform": "windows",
+    "category": "压缩解压",
+    "subcategory": "",
+    "syntax": "zip [options] archive file...",
+    "example": [
+      "zip -r archive.zip dir/",
+      "zip -e secret.zip file.txt",
+      "zip -9 max.zip file.txt",
+      "zip archive.zip file1 file2",
+      "unzip archive.zip"
+    ],
+    "description": "创建/更新 PKZIP 格式的压缩包，跨平台（Windows/macOS/Linux）兼容性好。`-r` 递归目录，`-e` 加密（提示输入密码），`-9` 最高压缩率，`-@` 从 stdin 读取文件名。解压对应 `unzip`：解压、`-l` 列表、`-d` 指定目录。",
+    "tags": [
+      "压缩",
+      "zip"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 78
+  },
+  {
+    "name": "jobs",
+    "platform": "windows",
+    "category": "任务管理",
+    "subcategory": "",
+    "syntax": "jobs [options] [job_spec]",
+    "example": [
+      "jobs",
+      "jobs -l",
+      "jobs %1",
+      "sleep 100 &",
+      "jobs"
+    ],
+    "description": "显示当前 shell 会话中的后台任务（job）状态。`-l` 同时显示 PID，`-p` 只显示 PID，`-n` 只显示自上次通知后状态变化的任务。`%n` 引用第 n 个任务，配合 `fg %n` 调回前台、`bg %n` 在后台继续运行、`kill %n` 终止。shell 内置命令，无独立二进制。",
+    "tags": [
+      "shell",
+      "任务",
+      "后台"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 65
+  },
+  {
+    "name": "kill",
+    "platform": "windows",
+    "category": "进程控制",
+    "subcategory": "",
+    "syntax": "kill [options] <pid>...",
+    "example": [
+      "kill 1234",
+      "kill -9 1234",
+      "kill -TERM 1234",
+      "kill -l",
+      "kill -HUP $(pidof nginx)"
+    ],
+    "description": "向进程发送信号（默认 SIGTERM）。`-l` 列出所有信号名/编号；常见信号：`1 HUP`（重载配置）、`2 INT`（Ctrl+C 中断）、`9 KILL`（强制终止，不可拦截）、`15 TERM`（优雅终止，可被进程捕获处理）、`19 STOP`（暂停）。PID 可用 `ps`/`pgrep` 查到。",
+    "tags": [
+      "进程",
+      "信号",
+      "终止"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 90
+  },
+  {
+    "name": "nohup",
+    "platform": "windows",
+    "category": "后台运行",
+    "subcategory": "",
+    "syntax": "nohup command [arg]...",
+    "example": [
+      "nohup python train.py &",
+      "nohup python train.py > out.log 2>&1 &",
+      "nohup ./server.sh &",
+      "nohup java -jar app.jar > app.log 2>&1 &"
+    ],
+    "description": "让命令忽略 SIGHUP 信号，终端关闭/用户退出后进程继续运行。常与 `&` 配合放后台，默认输出到 `nohup.out`（可用 `> file 2>&1` 重定向）。需要长期运行的服务通常 `nohup ... &` 或用 systemd/supervisor。",
+    "tags": [
+      "后台",
+      "守护",
+      "进程"
+    ],
+    "aliases": [],
+    "level": "入门",
+    "popularity": 80
+  }
+]
