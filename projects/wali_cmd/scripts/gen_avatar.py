@@ -69,43 +69,29 @@ def draw_avatar():
             3.5, facecolor=color, edgecolor="none", zorder=3
         ))
 
-    # ── 中央提示符：> _ ──
-    # '>' 字符：绿色文字
-    # '_' 光标：绿色填充矩形（简化光标）
+    # ── 中央：cmd _（命令行速查主体）──
     cx = SIZE / 2
-    cy = SIZE / 2 - 4  # 略偏下，给顶部栏让位
+    cy = SIZE / 2 - 4
 
-    # ">" 符号
+    # "cmd" 文字（绿色加粗，monospace）
     ax.text(
-        cx - 18, cy, ">",
-        fontsize=52, color=FG_GREEN,
+        cx, cy, "cmd",
+        fontsize=42, color=FG_GREEN,
         fontfamily="monospace",
         fontweight="bold",
         ha="center", va="center",
         zorder=4,
     )
 
-    # 光标（绿色填充矩形，模拟闪烁光标）
+    # 下划线光标（绿色填充矩形，模拟闪烁光标，在 cmd 右侧）
     cursor = patches.Rectangle(
-        (cx + 2, cy - 16),
-        5, 24,
+        (cx + 36, cy - 14),
+        4, 22,
         facecolor=CURSOR_BG,
         edgecolor="none",
         zorder=5,
     )
     ax.add_patch(cursor)
-
-    # ── 底部"快捷"暗示：三个点（表示"还有更多命令"）──
-    # 放在终端窗口栏下方、提示符上方
-    dot_y_top = cy + 26
-    for i in range(3):
-        ax.add_patch(patches.Circle(
-            (cx - 8 + i * 8, dot_y_top),
-            1.8,
-            facecolor=FG_MUTED,
-            edgecolor="none",
-            zorder=4,
-        ))
 
     plt.savefig(OUT, dpi=DPI, facecolor="white", bbox_inches=None)
     plt.close(fig)
