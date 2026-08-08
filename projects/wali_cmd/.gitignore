@@ -1,5 +1,6 @@
 node_modules/
 cloudfunctions/*/node_modules/
+cloudfunctions/cloudImport/data/
 miniprogram_npm/
 __pycache__/
 *.pyc
