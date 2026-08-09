@@ -4,8 +4,6 @@ plan.md
 
 # 辅助脚本（封面图、notebook 生成等，与算法本身无关）
 scripts/
-# 例外：wali_cmd 项目自身的 scripts/（实现代码，需要追踪）
-!projects/wali_cmd/scripts/
 
 # 测试脚本（本地验证用，不上传 GitHub）
 tests/
@@ -38,8 +36,9 @@ projects/ml_playground/_test_*
 projects/gb15618-miniapp/
 
 # wali_cmd 是独立 git 仓库（本地管理，不上传），但保留一个 README 跳转到本地路径
-# 整个目录不跟踪
+# 整个目录不跟踪，但 README 例外（用于远端显示项目入口）
 projects/wali_cmd/
+!projects/wali_cmd/README.md
 
 # 项目 systemd 服务文件（本地部署用，不上传 GitHub）
 projects/ml_playground/ml-playground.service
