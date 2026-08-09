@@ -37,6 +37,10 @@ projects/ml_playground/_test_*
 # 未发布项目（gb15618-miniapp 不上传 GitHub；gb15618 源码已迁移到独立仓库，目录中只保留跳转 README）
 projects/gb15618-miniapp/
 
+# wali_cmd 是独立 git 仓库（本地管理，不上传），但保留一个 README 跳转到本地路径
+# 整个目录不跟踪
+projects/wali_cmd/
+
 # 项目 systemd 服务文件（本地部署用，不上传 GitHub）
 projects/ml_playground/ml-playground.service
 

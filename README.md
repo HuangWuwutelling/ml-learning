@@ -10,6 +10,7 @@
 ├── projects/
 │   ├── ml_playground/    # FastAPI + Gradio 统一平台
 │   ├── env_agent/        # LangGraph 环保申报 Agent（env-agent 旗舰）
+│   ├── wali_cmd/         # 瓦力的命令行速查（微信小程序 + 云开发，独立仓库，仅本地管理）
 │   └── gb15618/          # 仅保留跳转 README，源码已迁至独立仓库 HuangWuwutelling/gb15618
 ├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek（env-rag 旗舰）
 ├── articles/         # 学习记录（ml/ | llm/ | engineering/ | env/ | ai-history/）
@@ -171,6 +172,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
 | **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
 | **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | Python, PyInstaller（独立仓库 [HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)） |
+| **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 微信小程序, 微信云开发, BGE 语义搜索（本地仓库，不推送） |
 
 ## 快速复现
 

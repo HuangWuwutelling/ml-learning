@@ -1,3 +1,0 @@
-<view class="empty">
-  <text>{{message}}</text>
-</view>
