@@ -2,6 +2,8 @@
 
 机器学习 & 深度学习算法学习项目 + LLM 工程作品集。
 
+17 个 numpy 手写 ML 算法 + 13 个环境模型 + 60+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境），每个模型都有对应文章与可复现代码。
+
 ## 项目结构
 
 ```
@@ -20,46 +22,6 @@
 ├── requirements.txt
 └── .gitignore
 ```
-
-## 已实现算法
-
-| Day | 算法 | 模型文件 |
-|-----|------|----------|
-| 1 | 线性回归（单变量 → 多变量） | `models/linear_regression.py` |
-| 2 | Ridge & Lasso（L1/L2 正则化） | `models/ridge_regression.py` / `models/lasso_regression.py` |
-| 3 | 逻辑回归（二分类） | `models/logistic_regression.py` |
-| 4 | 决策树（CART 分类树） | `models/decision_tree.py` |
-| 5 | 随机森林（Bagging + 随机特征） | `models/random_forest.py` |
-| 6 | GBDT（梯度提升，串行回归树） | `models/gradient_boosting.py` |
-| 7 | K-Means（Lloyd 算法） | `models/kmeans.py` |
-| 8 | DBSCAN（密度聚类） | `models/dbscan.py` |
-| 9 | SVM（SMO + 核技巧） | `models/svm.py` |
-| 10 | PCA（主成分分析，SVD 分解） | `models/pca.py` |
-| 11 | MLP（多层感知机，反向传播） | `models/mlp.py` |
-| 12 | CNN（卷积神经网络，im2col） | `models/cnn.py` |
-| 13 | RNN / LSTM（循环神经网络，BPTT） | `models/rnn.py` |
-| 14 | Word2Vec（Skip-gram + Negative Sampling） | `models/word2vec.py` |
-| 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
-| 16 | AutoEncoder（编码器-解码器，无监督降维） | `models/autoencoder.py` |
-| 17 | kNN（k 近邻分类，懒惰学习） | `models/knn.py` |
-
-## 环境模型
-
-| 模型 | 描述 | 代码 |
-|------|------|------|
-| 河流底泥 Cd 污染分布 | 悬浮沉积物-污染物耦合模型，模拟 100km 河段 Cd 沿程分布 | `models/river_sediment_cd.py` |
-| 大气 Cd 沉降模拟 | 高斯烟羽模型，模拟焚烧厂 Cd 排放对周边农田的长期累积效应 | `models/atmo_cd_deposition.py` |
-| 洪水底泥 Cd 农田输入 | 漫滩沉积模型，模拟洪水将河床 Cd 输移至两岸农田 | `models/floodplain_cd_deposition.py` |
-| 室内甲醛通风模型 | 箱式模型，模拟通风/活性炭/活性锰对室内甲醛浓度的影响 | `models/indoor_formaldehyde.py` |
-| 多金属对比 | Cd, Pb, As 多金属迁移差异对比 | `models/multi_metal_comparison.py` |
-| 空间分布 | 变河床条件下的 Cd 空间分布 | `models/multi_metal_spatial.py` |
-| 废石清理后底泥 Cd 去向 | 活性层替换模型，追踪废石清理后底泥镉的三个去向（稀释/搬运/封存） | `models/floodplain_recovery.py` |
-| 电镀厂酸雾全过程 | 产污→集气→洗涤→高斯烟羽→干湿沉降→土壤酸化，全链条质量平衡与达标分析 | `models/electroplating_acid_mist.py` |
-| 电镀厂 Cr(VI) 健康风险 | 同一工厂 Cr(VI) 扩散、土壤累积、吸入/摄入致癌风险评估（US EPA IRIS） | `models/electroplating_cr.py` |
-| TCE/PCE 地下水羽流 | 1D 对流-弥散 Ogata-Banks 解析解，模拟 TCE/PCE 从泄漏到下游水井的污染范围 | `models/groundwater_tce_pce.py` |
-| SEIR 传染病传播模型 | 4 仓室（S/E/I/R）常微分方程，预置 4 种呼吸道病毒 R0 参数，复现 4 种疫情曲线 | `models/seir.py` |
-| 配电网分布式光伏越限 | 4 节点低压馈线，直流潮流简化，反向潮流 + 二分搜索找临界渗透率；中午末端电压可能越过 GB/T 12325 1.07 pu 上限 | `models/pv_distribution.py` |
-| UHVDC 特高压直流输电 | P_loss ∝ 1/V² 线路损耗模型：±500/±800/±1100 kV 三档电压对比 + 8 分裂导线，复现昌吉-古泉 ±1100 kV 总损耗 6.3%、效率 93.7% | `models/uhvdc.py` |
 
 ## 文章系列
 
@@ -82,30 +44,30 @@
 | 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段，1.3B 小模型如何超越 175B GPT-3，以及 Reward Hacking 的困境 |
 | 11 | **Scaling Law 走到头：越大≠越聪明，智能增长换了一条路** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling，慢思考和 MoE 两条新路 |
 
-### 算法线 (`articles/ml/`)
+### 算法线 (`articles/ml/`) — 已实现算法
 
 从 numpy 手写到深度学习，每个算法包含原理推导与代码实现。
 
-| # | 文章 |
-|---|------|
-| 00 | ML 算法选型指南 + ML Playground 介绍 |
-| 01 | 线性回归 |
-| 02 | 岭回归与 Lasso |
-| 03 | 逻辑回归 |
-| 04 | 决策树 CART |
-| 05 | 随机森林 |
-| 06 | GBDT / XGBoost |
-| 07 | K-Means 聚类 |
-| 08 | DBSCAN 密度聚类 |
-| 09 | SVM |
-| 10 | PCA 降维 |
-| 11 | MLP 神经网络 |
-| 12 | CNN 卷积神经网络 |
-| 13 | RNN 与 LSTM |
-| 14 | Word2Vec 词向量 |
-| 15 | Transformer 自注意力 |
-| 16 | AutoEncoder 自编码器 |
-| 17 | kNN 近邻分类 |
+| # | 算法 | 模型文件 |
+|---|------|----------|
+| 00 | ML 算法选型指南 + ML Playground 介绍 | — |
+| 01 | 线性回归（单变量 → 多变量） | `models/linear_regression.py` |
+| 02 | 岭回归与 Lasso（L1/L2 正则化） | `models/ridge_regression.py` / `models/lasso_regression.py` |
+| 03 | 逻辑回归（二分类） | `models/logistic_regression.py` |
+| 04 | 决策树（CART 分类树） | `models/decision_tree.py` |
+| 05 | 随机森林（Bagging + 随机特征） | `models/random_forest.py` |
+| 06 | GBDT（梯度提升，串行回归树） | `models/gradient_boosting.py` |
+| 07 | K-Means（Lloyd 算法） | `models/kmeans.py` |
+| 08 | DBSCAN（密度聚类） | `models/dbscan.py` |
+| 09 | SVM（SMO + 核技巧） | `models/svm.py` |
+| 10 | PCA（主成分分析，SVD 分解） | `models/pca.py` |
+| 11 | MLP（多层感知机，反向传播） | `models/mlp.py` |
+| 12 | CNN（卷积神经网络，im2col） | `models/cnn.py` |
+| 13 | RNN / LSTM（循环神经网络，BPTT） | `models/rnn.py` |
+| 14 | Word2Vec（Skip-gram + Negative Sampling） | `models/word2vec.py` |
+| 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
+| 16 | AutoEncoder（编码器-解码器，无监督降维） | `models/autoencoder.py` |
+| 17 | kNN（k 近邻分类，懒惰学习） | `models/knn.py` |
 
 ### LLM 工具链线 (`articles/llm/`)
 
@@ -143,27 +105,29 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 利用环境工程专业背景 + 编程能力，展示跨领域建模与分析。
 
-| # | 文章 |
-|---|------|
-| 01 | 河流底泥镉污染分布 |
-| 02 | 大气镉沉降模拟 |
-| 03 | 洪水底泥镉农田输入 |
-| 04 | 室内甲醛通风模型 |
-| 05 | 废石清理后底泥镉去哪了 |
-| 06 | 杜邦 C-8 污染案：科学如何论证工厂与健康的因果链 |
-| 07 | 科学能排除因果吗？泡花碱厂调查的解读（C8 姊妹篇） |
-| 08 | 电镀厂酸雾：从工艺产污到大气扩散与沉降 |
-| 09 | 电镀厂铬（Cr(VI)）：大气沉降与健康风险 |
-| 10 | 甲酰胺是什么，它可能从哪里来 |
-| 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 |
-| 12 | 微塑料：除了食物，外卖盒还给你加了什么料 |
-| 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 |
-| 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 |
-| 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 |
-| 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0（已发 2026-08-07） |
-| 17 | 屋顶光伏装多少，末端电压会越限？（已发 2026-08-08） |
-| 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流（已发） |
-| 19 | 为什么西电东送，必须升到 ±1100 kV 直流？（已发 2026-08-10） |
+| # | 文章 | 模型文件 |
+|---|------|----------|
+| 01 | 河流底泥镉污染分布 | `models/river_sediment_cd.py` |
+| 02 | 大气镉沉降模拟 | `models/atmo_cd_deposition.py` |
+| 03 | 洪水底泥镉农田输入 | `models/floodplain_cd_deposition.py` |
+| 04 | 室内甲醛通风模型 | `models/indoor_formaldehyde.py` |
+| 05 | 废石清理后底泥镉去哪了 | `models/floodplain_recovery.py` |
+| 06 | 杜邦 C-8 污染案：科学如何论证工厂与健康的因果链 | — |
+| 07 | 科学能排除因果吗？泡花碱厂调查的解读（C8 姊妹篇） | — |
+| 08 | 电镀厂酸雾：从工艺产污到大气扩散与沉降 | `models/electroplating_acid_mist.py` |
+| 09 | 电镀厂铬（Cr(VI)）：大气沉降与健康风险 | `models/electroplating_cr.py` |
+| 10 | 甲酰胺是什么，它可能从哪里来 | — |
+| 11 | 邻苯二甲酸酯：用了八十年的增塑剂，二十年监管路 | — |
+| 12 | 微塑料：除了食物，外卖盒还给你加了什么料 | — |
+| 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 | — |
+| 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 | — |
+| 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 | — |
+| 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0（已发 2026-08-07） | `models/seir.py` |
+| 17 | 屋顶光伏装多少，末端电压会越限？（已发 2026-08-08） | `models/pv_distribution.py` |
+| 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流（已发） | `models/groundwater_tce_pce.py` |
+| 19 | 为什么西电东送，必须升到 ±1100 kV 直流？（已发 2026-08-10） | `models/uhvdc.py` |
+
+> 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
 ## 项目
 
@@ -213,4 +177,3 @@ cd gb15618 && pip install -e . && python -m gb15618
 # GB 15618 评价工具（Windows exe，免装 Python）
 # 从 https://github.com/HuangWuwutelling/gb15618/releases/latest 下载 gb15618.exe，双击运行
 ```
-
