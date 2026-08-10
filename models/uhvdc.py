@@ -6,10 +6,10 @@ UHVDC vs HVAC：
 - HVAC：500-1000 km 短距离、网状互联、长距离损耗 8-15%
 - 长距离 + 大容量 + 异步联网 → UHVDC 唯一可行方案
 
-核心物理：
-    输电容量        P = V·I       (视在功率近似)
-    电流            I = P / V_dc
-    线路损耗        P_line = 2 · I² · R_dc           (双线返回)
+核心物理（双极直流，V 为单极对地电压，±1100 kV 即 V = 1100 kV）：
+    输电容量        P = 2·V·I     (双极两线，各带电流 I)
+    电流            I = P / (2·V)
+    线路损耗        P_line = 2 · I² · R_dc           (双线返回，R_dc 为单根导线等效电阻)
     换流站损耗      P_conv = (per-station %) × P     (两端各一次 AC/DC 变换)
     总损耗          P_loss = P_line + P_conv
     输电效率        η = (P - P_loss) / P
@@ -45,6 +45,14 @@ References (all parameters verified by web lookup):
     - 昌吉换流站 2024 输电数据：https://www.sohu.com/a/846803405_121072318
     - 工程院论文：https://www.engineering.org.cn/sscae/attachs/2019/04/24/07-cai.pdf
     - 百度百科：https://baike.baidu.com/item/昌吉—古泉±1100千伏特高压直流输电工程/20269684
+
+[1b] 交流对比基准（引言：500 kV 一回线满载约 1000 MW）
+    - 500 kV 常规型单回交流线路自然输送功率约 1000 MW（紧凑型约 1300-1370 MW）
+    - 对比：昌吉-古泉 ±1100 kV 直流单线 12000 MW ≈ 12 回 500 kV 交流
+    - 1000+ km + 大容量是交流的天花板（电容充电 + 同步稳定两条约束）
+    - 特高压与超高压交流输电经济比较研究：
+      https://www.china5e.com/energy/news-928930-1.html
+      https://shupeidian.bjx.com.cn/html/20150709/639954.shtml
 
 [2] 4 条参考 UHVDC 线路（±800 kV 与 ±1100 kV）
     - 锡盟-泰州：±800 kV, 10000 MW, ~1620 km, 2017 投运
@@ -96,9 +104,15 @@ References (all parameters verified by web lookup):
       （other bituminous coal 烟煤，含碳量 ~55-60%）
     - 中国煤电实际范围 2.4-2.8 kg CO2/kg 煤，本文取中位 2.66
     - 单条 12000 MW UHVDC 满载年输电：
-      12000 × 8760 × 0.95 / 1e6 = ~100 亿 kWh（容量系数 95%）
+      12000 × 8760 × 0.95 = 99,864,000 MWh ≈ 998.64 亿 kWh（容量系数 95%）
     - 国家能源局 / 中电联 2024 年报：
       https://www.cpnn.com.cn/news/hy/202501/t20250126_1769420.html
+    - 中国 2024 年 CO2 排放总量 ~111.7 亿 t（BP 口径，多机构引用；文章取约数 110 亿 t）：
+      https://www.worldometers.info/co2-emissions/china-co2-emissions/
+    - 深圳市 2024 年全社会用电量 1214.9 亿 kWh（南方电网深圳供电局，年用电量首破 1200 亿 kWh）；
+      按 320 g 煤/kWh × 2.66 kg CO2/kg 煤 ≈ 1.03 亿 t CO2（文章取约 1 亿 t）：
+      https://www.sz.gov.cn/cn/xxgk/zfxxgj/zwdt/content/post_11955463.html
+      https://www.news.cn/fortune/20250111/25883bdcd51445edb7280dd3593ce852/c.html
 
 [7] 中国 2024 跨区跨省输电 / 总用电量
     - 跨区跨省合计约 2.5 万亿 kWh（跨区 8506 亿 + 跨省 1.59 万亿，2024 年 1-11 月）
@@ -508,12 +522,29 @@ if __name__ == "__main__":
     annual_gwh = cg.annual_transmission()
     coal_t = cg.annual_coal_saved()
     co2_t = cg.annual_co2_reduced()
-    print(f"  年输电量        = {annual_gwh:.0f} GWh ({annual_gwh/1e4:.2f} 亿 kWh)")
+    print(f"  年输电量        = {annual_gwh:.0f} GWh ({annual_gwh/1e2:.2f} 亿 kWh)")
     print(f"  年替代煤量      = {coal_t:.0f} t ({coal_t/1e4:.1f} 万 t/年)")
     print(f"  年 CO2 减排     = {co2_t:.0f} t ({co2_t/1e4:.1f} 万 t/年)")
     print()
     print(f"  预期区间：替代煤 3000-3500 万 t/年 → 实际 {coal_t/1e4:.0f} 万 t/年")
     print(f"  预期区间：CO2 减排 7800-9100 万 t/年 → 实际 {co2_t/1e4:.0f} 万 t/年")
+    print()
+
+    # ------------------------------------------------------------------
+    # 1b) 昌吉-古泉（每极等效电阻 = 8 分分裂场景）→ 对齐文章 callout
+    # ------------------------------------------------------------------
+    # 上例用单根 R = 0.025 Ω/km（保守高估，演示极端）；实际昌吉-古泉用
+    # 8×JL/G3A-1250/70 八分裂导线，每极等效 ≈ 0.003 Ω/km。
+    print("=" * 78)
+    print("昌吉-古泉（每极等效 R=0.003 Ω/km，8×JL/G3A-1250/70 八分裂）")
+    print("=" * 78)
+    cg_real = UHVDC(voltage_kV=1100, capacity_MW=12000, distance_km=3293,
+                    line_resistance_ohm_per_km=0.003)
+    print(f"  线路总电阻      = {cg_real.line_resistance_total_ohm:.2f} Ω")
+    print(f"  线路损耗        = {cg_real.line_loss():.1f} MW ({cg_real.line_loss()/cg_real.capacity_MW*100:.2f}%)")
+    print(f"  换流站损耗      = {cg_real.converter_loss():.1f} MW ({cg_real.converter_loss()/cg_real.capacity_MW*100:.2f}%)")
+    print(f"  总损耗          = {cg_real.total_loss():.1f} MW ({cg_real.total_loss()/cg_real.capacity_MW*100:.2f}%)")
+    print(f"  输电效率        = {cg_real.efficiency()*100:.2f}%")
     print()
 
     # ------------------------------------------------------------------
