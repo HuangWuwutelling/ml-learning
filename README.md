@@ -100,6 +100,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 02 | Linux 服务器部署：从 SSH 到 systemd |
 | 03 | Docker 容器化：一次构建，到处运行 |
 | 04 | Docker Compose：多服务编排实战 |
+| 05 | 一个人用 vibe coding 做小程序：步骤与架构 |
 
 ### 环境工程线 (`articles/env/`)
 
