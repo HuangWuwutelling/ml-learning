@@ -101,6 +101,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 03 | Docker 容器化：一次构建，到处运行 |
 | 04 | Docker Compose：多服务编排实战 |
 | 05 | 一个人用 vibe coding 做小程序：步骤与架构 |
+| 06 | 139 条数据的小程序搜索，真的需要向量数据库吗 |
 
 ### 环境工程线 (`articles/env/`)
 
@@ -139,7 +140,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
 | **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
 | **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | Python, PyInstaller（独立仓库 [HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)） |
-| **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 微信小程序, 微信云开发, BGE 语义搜索（本地仓库，不推送） |
+| **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 微信小程序, 微信云开发, NoSQL 模糊搜索（本地仓库，不推送） |
 
 ## 快速复现
 
