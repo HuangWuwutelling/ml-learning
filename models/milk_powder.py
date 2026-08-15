@@ -5,6 +5,17 @@ Simplified Noyes-Whitney one-compartment dissolution model with first-order
 kinetics, calibrated to four water temperatures (25/40/60/70 degC) and four
 milk-powder compositions (infant / adult whole-fat / skim / middle-aged).
 
+Article structure (articles/env/22_奶粉溶解.md, revised 2026-08-15):
+    一、溶解方程：Noyes-Whitney 一行        -> Noyes-Whitney equation (fig 1)
+    二、水温：最要紧的旋钮                   -> 4-temperature k table (fig 2)
+    三、40°C：溶解与营养的平衡点             -> default-temperature rationale
+    四、70°C：WHO 的 kill-step 什么时候用     -> WHO 2007 application
+    五、回到那罐奶粉                         -> recap + practical tips
+
+Note: MILK_TYPES / compare_4_milk_types() are kept as an auxiliary
+capability (4-composition comparison) but are NO LONGER part of the
+article's main line (removed in the 2026-08-15 revision).
+
 Core equation:
     dC/dt = k * (Cs - C)
         => C(t) = Cs * (1 - exp(-k * t))
