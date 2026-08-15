@@ -1,6 +1,8 @@
-# 公众号文章（不上传 GitHub）
+# 公众号文章（不上传 GitHub，本地有独立 git 仓库）
 articles/
-plan.md
+
+# 项目本地元数据（plan.md 等），不上传 GitHub，本地有独立 git 仓库
+_local/
 
 # 辅助脚本（封面图、notebook 生成等，与算法本身无关）
 scripts/
