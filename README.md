@@ -128,6 +128,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 17 | 屋顶光伏装多少，末端电压会越限？（已发 2026-08-08） | `models/pv_distribution.py` |
 | 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流（已发） | `models/groundwater_tce_pce.py` |
 | 19 | 为什么西电东送，必须升到 ±1100 kV 直流？（已发 2026-08-10） | `models/uhvdc.py` |
+| 21 | 半衰期：为什么布洛芬 4-6 小时吃一次，而不是 24 小时（已发 2026-08-15） | `models/ibuprofen_pk.py` |
 
 > 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
