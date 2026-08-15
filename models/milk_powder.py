@@ -25,7 +25,9 @@ parameters: k = D * A / (V * h).
 
 D (diffusion coefficient) and h (diffusion layer thickness) both depend on
 temperature; in water the self-diffusion coefficient climbs from ~2.3e-5
-cm2/s at 25 degC to ~6.5e-5 cm2/s at 70 degC (Stokes-Einstein, D ~ T/eta),
+cm2/s at 25 degC to ~5.5e-5 cm2/s at 70 degC (tracer-method data,
+    see Refs [4], [10]; a constant-Ea Arrhenius extrapolation would
+    overestimate the 70 degC point to ~6.5e-5),
 and we encode four operating points as coarse k_per_min values:
 
     temperature  k_per_min   80% saturation time
@@ -97,11 +99,15 @@ References (every parameter verified by web lookup):
     - Drug dissolution lab notes: https://www.drugdissolution.com/factors-affecting-dissolution/
 
 [4] Self-diffusion coefficient of water vs temperature. Standard
-    literature values used to motivate the four-temperature k step:
+    literature values (tracer-method data compiled by Holz et al. 2000;
+    the 70 degC point is from Easteal, Price & Woolf 1989, J Chem Soc
+    Faraday Trans 1 85:1091). Used to motivate the four-temperature k
+    step (values corrected 2026-08-15; earlier draft used a constant-Ea
+    Arrhenius extrapolation that overestimates high-T D):
         25 degC: 2.30e-9 m2/s  (= 2.30e-5 cm2/s)
-        40 degC: 3.37e-9 m2/s  (= 3.37e-5 cm2/s)  ratio 1.46
-        60 degC: 5.27e-9 m2/s  (= 5.27e-5 cm2/s)  ratio 2.29
-        70 degC: 6.46e-9 m2/s  (= 6.46e-5 cm2/s)  ratio 2.81
+        40 degC: 3.23e-9 m2/s  (= 3.23e-5 cm2/s)  ratio 1.40
+        60 degC: 4.77e-9 m2/s  (= 4.77e-5 cm2/s)  ratio 2.07
+        70 degC: 5.50e-9 m2/s  (= 5.50e-5 cm2/s)  ratio 2.39
     - Holz M, Heil SR, Sacco A (2000). Phys Chem Chem Phys 2:4740-4742
       (cited in Nature Sci Rep 2021 review):
       https://www.nature.com/articles/s41598-021-95620-0
@@ -168,6 +174,14 @@ References (every parameter verified by web lookup):
       defaults 40-50 degC):
       https://www.mama.cn/z/wiki/29086/
 
+[10] Easteal AJ, Price WE, Woolf LA (1989). Diaphragm cell for
+    high-temperature diffusion measurements. Tracer diffusion
+    coefficients for water to 363 K. J Chem Soc Faraday Trans 1
+    85:1091-1097. Source of the high-temperature (40-100 degC)
+    water self-diffusion data compiled in Ref [4]; at 70 degC the
+    measured self-diffusion coefficient is about 5.5e-9 m2/s.
+    - RSC landing: https://pubs.rsc.org/en/Content/ArticleLanding/1989/F1/F19898501091
+
 Usage:
     >>> d40 = Dissolution(K_PER_MIN[40])                   # 40 degC
     >>> print(f"80% saturation time: {d40.time_to_dissolve():.2f} min")
@@ -220,9 +234,9 @@ K_PER_MIN = {
 # not the absolute k values above.
 D_RELATIVE = {
     25: 1.0,
-    40: 1.6,
-    60: 2.4,
-    70: 2.8,
+    40: 1.4,
+    60: 2.1,
+    70: 2.4,
 }
 
 # Water dynamic viscosity (mPa*s) at the 4 temperatures, used to
