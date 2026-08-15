@@ -9,7 +9,7 @@
     五    收束                       — 一条链 (t½ ← CL × Vd)
 
 几何规则就一条: 走过 n 个半衰期, 浓度乘 (1/2)^n. 无论 t½ 是 1.5 h (儿童)、
-2.0 h (成人)、2.5 h (老年)、4.0 h (肝损), 这条规则都成立, 变的只是 n 的值.
+2.0 h (成人)、2.5 h (老年)、3.4 h (肝损), 这条规则都成立, 变的只是 n 的值.
 
 注: 多次给药蓄积函数 (accumulation_ratio / steady_state_cmax /
 multiple_dose_curve) 不再被当前文章引用, 保留为通用 PK 工具.
@@ -166,8 +166,8 @@ class IbuprofenPK:
             self.vd_per_kg = 0.18
             self.cl_L_per_h = 3.2
         elif age_group == "hepatic" and vd_per_kg == DEFAULT_VD_PER_KG:
-            # 肝损: Vd 不变, CL 降 ~50% (CYP2C9 活性下降).
-            self.cl_L_per_h = 2.0
+            # 肝损: Vd 不变, CL 降约一半 (4.0→2.1 L/h; t½ = 0.693·Vd/CL ≈ 3.4 h).
+            self.cl_L_per_h = 2.1
 
         # 派生常数
         self.k_per_h = np.log(2) / self.half_life_h      # 消除速率常数, 文章三 3.1
@@ -408,7 +408,7 @@ class IbuprofenPK:
 #   adult_overdose_800mg_q6h   六 6.5    红        处方上限 3.2 g/d
 #   child_meilin_10mgkg        七 / 五 5.3  —      t½=1.5, Vd/kg=0.30
 #   elderly_70yo_400mg         七 / 五 5.3  —      t½=2.5, CL=3.2
-#   hepatic_impairment_400mg   七 / 五 5.3  —      t½=4.0, CL=2.0
+#   hepatic_impairment_400mg   七 / 五 5.3  —      t½=3.4, CL=2.1
 #
 # 几何规则就一条: (1/2)^n.  变的只是 n 的值.
 
@@ -476,13 +476,14 @@ def elderly_70yo_400mg():
 def hepatic_impairment_400mg():
     """肝功能不全 0.4 g — 对应文章五 5.3 / 七收束.
 
-    CYP2C9 活性下降 → CL 减半 → t½ 翻倍到 4 h. Vd 不变 (肝损不改分布).
-    几何规则不变, 11.25 那个数字里的 t½ 用 4 代入, n = 22.5/4 ≈ 5.6, 即
-    24 h 后残留 ≈ (1/2)^5.6 ≈ 2%, 远高于健康成人的 0.04%.
+    CYP2C9 活性下降 → CL 降约一半 (4.0→2.1 L/h) → t½ 从 2 h 延到约 3.4 h
+    (文献: 肝功能受损者 t½ 延至 3.1-3.4 h). Vd 不变 (肝损不改分布).
+    几何规则不变, 11.25 那个数字里的 t½ 用 3.4 代入, n = 22.5/3.4 ≈ 6.6, 即
+    24 h 后残留 ≈ (1/2)^6.6 ≈ 1%, 远高于健康成人的 0.04%.
     """
     return IbuprofenPK(
         dose_g=0.4, body_weight_kg=70.0, age_group="hepatic",
-        half_life_h=4.0,
+        half_life_h=3.4,
     )
 
 
