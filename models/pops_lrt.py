@@ -55,17 +55,39 @@ Dieldrin (CAS 60-57-1, PubChem CID 969491)
   https://www.atsdr.cdc.gov/toxprofiles/tp1-c4.pdf
 
 Box model framework:
-- Mackay 2001 "Multimedia Environmental Models: The Fugacity Approach"
-  2nd ed. CRC Press
+- Wania & Mackay 1995 "Global fractionation and cold condensation of
+  low volatility organochlorine compounds in polar regions" Sci Total
+  Environ 160-161:565-570
+  https://doi.org/10.1016/0048-9697(95)04466-6
 - Wania & Mackay 1996 "Tracking the distribution of persistent organic
   pollutants" Crit Rev Env Sci Technol 26:335
   https://www.tandfonline.com/doi/abs/10.1080/10643389609388485
+- Mackay 2001 "Multimedia Environmental Models: The Fugacity Approach"
+  2nd ed. CRC Press
+
+Field calibration / observational evidence of long-range transport
+(used to sanity-check the predicted Arctic enrichment):
+- AMAP Assessment 2020: POPs in the Arctic
+  https://www.amap.no/documents/doc/amap-assessment-2020-pops-in-the-arctic/870
+- Col du Dome ice core HCB 1923-2018 (Alps, 4250 m)
+  https://www.sciencedirect.com/science/article/abs/pii/S0048969724037283
+- Antarctic Peninsula atmospheric HCB and HCH
+  https://www.sciencedirect.com/science/article/abs/pii/S135223101300592X
+- Inuit breast milk PCB (Canadian Arctic, first detected 1989)
+  https://link.springer.com/article/10.1007/BF01701981
+- Polar bear fat Sigma-DDT (Svalbard, E Greenland, Russian Arctic)
+  https://www.sciencedirect.com/science/article/pii/S0269749120365478
+  https://www.sciencedirect.com/science/article/abs/pii/S0269749120310709
+- Tibetan Plateau atmospheric HCH/DDT long-range transport
+  https://pubs.acs.org/doi/10.1021/es902797n
 
 Usage:
     >>> m = POPsLRT(species="HCB")
     >>> m.solve_steady_state(emissions={2: 5e-2})  # 500 t/y at box 2 (mid-N)
     >>> m.summary()
     >>> results = POPsLRT.compare_species(["HCB", "DDT", "PCB-153", "dieldrin"])
+    >>> frac = POPsLRT.compare_fractionation(
+    ...     ["HCB", "DDT", "PCB-153", "dieldrin"], scavenging_power=0.5)
 """
 
 import numpy as np
@@ -311,10 +333,20 @@ class POPsLRT:
     The "cold condensation" enrichment of polar surface comes from
     smaller Kaw at low T (HCB has lower volatility from water at cold
     T), so the same air fugacity drives higher water/soil concentration.
+
+    Two modes:
+    - Default (scavenging_power=0): v_dep is the same constant for every
+      box, so air mixes nearly uniformly and the only latitudinal signal
+      is the cold-condensation enrichment of the surface media.
+    - Fractionation mode (scavenging_power > 0): v_dep_eff scales with
+      Kaw (less volatile compounds removed more readily en route), so
+      compounds sort by volatility: volatile ones reach the pole almost
+      undiminished, non-volatile ones are rained out mid-latitude. Use
+      transport_efficiency() / compare_fractionation() for this signal.
     """
 
     def __init__(self, species="HCB", k_atm=None, bl_height=None,
-                 v_dep=None):
+                 v_dep=None, scavenging_power=0.0):
         self.species = species
         if species not in SPECIES:
             raise ValueError(f"species must be one of {list(SPECIES)}")
@@ -322,6 +354,14 @@ class POPsLRT:
         self.k_atm = k_atm if k_atm is not None else K_ATM_VELOCITY
         self.bl_height = bl_height if bl_height is not None else BL_HEIGHT_M
         self.v_dep = v_dep if v_dep is not None else V_DEP_M_S
+        # Fractionation mode: scavenging_power > 0 scales the effective
+        # en-route removal by Kaw (less volatile compounds are removed
+        # more readily). The effective velocity lumps repeated
+        # deposition/retention of the grasshopper cycle into a single
+        # removal rate; it is a teaching approximation, not a literal
+        # dry-deposition speed.
+        self.scavenging_power = scavenging_power
+        self.v_dep_eff = None
         # Phase densities (g/m^3) for converting concentrations to ng/g.
         self.phase_density_g_m3 = {
             "air": 1.2e3,
@@ -399,6 +439,14 @@ class POPsLRT:
         n = len(BOX_NAMES)
         T_K = np.array([t + 273.15 for t in BOX_TEMPS_C])
         delta_lat_m = np.deg2rad(30) * EARTH_R  # ~3330 km
+        # Effective en-route removal (fractionation mode scales with Kaw).
+        if self.scavenging_power > 0:
+            Kaw_ref = SPECIES["HCB"]["H_Pa_m3_mol_25C"] / (R * 298.15)
+            Kaw_sp = self.params["H_Pa_m3_mol_25C"] / (R * 298.15)
+            self.v_dep_eff = (self.v_dep
+                              * (Kaw_ref / Kaw_sp) ** self.scavenging_power)
+        else:
+            self.v_dep_eff = self.v_dep
         # Per-box air mass balance (per m^2 surface)
         A = np.zeros((n, n))
         rhs = np.zeros(n)
@@ -406,7 +454,7 @@ class POPsLRT:
             T_i = T_K[i]
             k_deg_air_i = np.log(2) / (self.half_life("air", T_i) * 86400.0)
             # Local loss: degradation * h + deposition + out-advection
-            A[i, i] = k_deg_air_i * self.bl_height + self.v_dep
+            A[i, i] = k_deg_air_i * self.bl_height + self.v_dep_eff
             nbrs = []
             if i - 1 >= 0:
                 nbrs.append(i - 1)
@@ -464,6 +512,19 @@ class POPsLRT:
         return (self.concentrations[box_i - 1][key]
                 / self.concentrations[source_box - 1][key])
 
+    def transport_efficiency(self, target_box=1, source_box=2):
+        """Fraction of source-box air concentration surviving transport to
+        the target box (the fractionation / arrival-efficiency metric).
+
+        In fractionation mode (scavenging_power > 0) this decreases with
+        volatility: more volatile compounds (high Kaw) arrive almost
+        undiminished, less volatile ones are removed en route.
+        """
+        if self.concentrations is None:
+            raise RuntimeError("Call solve_steady_state first.")
+        return (self.concentrations[target_box - 1]["air_mol_m3"]
+                / self.concentrations[source_box - 1]["air_mol_m3"])
+
     def summary(self):
         """Print 5-box summary + enrichment factors (air, water, soil)."""
         if self.concentrations is None:
@@ -473,7 +534,8 @@ class POPsLRT:
         print(f"Emissions (mol/s TOTAL): {self.ss_emissions}")
         print(f"Temperatures (degC): {BOX_TEMPS_C}")
         print(f"k_atm = {self.k_atm} m/s, BL height = {self.bl_height} m, "
-              f"v_dep = {self.v_dep} m/s")
+              f"v_dep = {self.v_dep} m/s, v_dep_eff = {self.v_dep_eff:.3e} m/s"
+              f" (scavenging_power={self.scavenging_power})")
         print()
         print(f"{'Box':<8}{'T_C':<8}{'air_pg_m3':<14}{'water_pg_L':<14}{'soil_ng_g':<14}{'logKaw':<10}")
         for i, name in enumerate(BOX_NAMES):
@@ -602,6 +664,62 @@ class POPsLRT:
 
         return pd.DataFrame(rows).set_index("species")
 
+    @classmethod
+    def compare_fractionation(cls, species_list=None, scavenging_power=0.5):
+        """Run each species in fractionation mode and compare air arrival.
+
+        Fractionation mode scales the effective en-route removal with Kaw
+        (scavenging_power > 0): less volatile compounds are removed more
+        readily, so their air concentration declines with distance from the
+        source. The comparison highlights which compounds reach the pole.
+
+        Parameters
+        ----------
+        species_list : list[str], optional
+            Defaults to ["HCB", "DDT", "PCB-153", "dieldrin"].
+        scavenging_power : float
+            Exponent in v_dep_eff = v_dep * (Kaw_HCB / Kaw)^p.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Rows = species. Columns = per-box air concentration (mol/m^3),
+            air normalized to the source box, log Kaw at 25 degC, effective
+            v_dep, and arrival efficiency (air Polar-N / source).
+        """
+        try:
+            import pandas as pd
+        except ImportError as e:
+            raise ImportError(
+                "compare_fractionation requires pandas; install with "
+                "`python -m pip install pandas`."
+            ) from e
+
+        if species_list is None:
+            species_list = ["HCB", "DDT", "PCB-153", "dieldrin"]
+
+        rows = []
+        for sp in species_list:
+            m = cls(species=sp, scavenging_power=scavenging_power)
+            e = cls.historical_emissions(sp)
+            m.solve_steady_state(emissions=e)
+            src = max(m.ss_emissions, key=m.ss_emissions.get)
+            src_air = m.concentrations[src - 1]["air_mol_m3"]
+            row = {"species": sp}
+            for i, name in enumerate(BOX_NAMES):
+                row[f"air_mol_m3_{name}"] = m.concentrations[i]["air_mol_m3"]
+            for i, name in enumerate(BOX_NAMES):
+                row[f"norm_air_{name}"] = (
+                    m.concentrations[i]["air_mol_m3"] / src_air)
+            Kaw25 = m.partition_coefficients(298.15)[0]
+            row["log_Kaw_25C"] = np.log10(Kaw25)
+            row["v_dep_eff_m_s"] = m.v_dep_eff
+            row["arrival_efficiency"] = m.transport_efficiency(
+                target_box=1, source_box=src)
+            rows.append(row)
+
+        return pd.DataFrame(rows).set_index("species")
+
 
 if __name__ == "__main__":
     # Primary species smoke test (HCB)
@@ -627,3 +745,17 @@ if __name__ == "__main__":
     print("Soil enrichment factor vs source box (cold condensation signal):")
     cols_es = [c for c in results.columns if c.startswith("EF_soil_")]
     print(results[cols_es].to_string())
+
+    # Fractionation mode: volatility-dependent removal sorts by latitude
+    print()
+    print(">>> Fractionation mode (scavenging_power=0.5)")
+    frac = POPsLRT.compare_fractionation(["HCB", "DDT", "PCB-153", "dieldrin"],
+                                         scavenging_power=0.5)
+    print()
+    print("Arrival efficiency (air Polar-N / source box):")
+    cols_ar = [c for c in frac.columns if c.startswith("arrival")]
+    print(frac[["log_Kaw_25C", "v_dep_eff_m_s", "arrival_efficiency"]].to_string())
+    print()
+    print("Normalized air concentration vs source box:")
+    cols_n = [c for c in frac.columns if c.startswith("norm_air_")]
+    print(frac[cols_n].to_string())
