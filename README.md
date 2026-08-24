@@ -145,6 +145,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 02 | 提了最低工资反加人手，NJ 怎么算出来的？ | DID 双重差分、平行趋势假设、Card & Krueger 1994 |
 | 03 | 过线就拐弯？断点回归怎么估出 60 岁处的真实跳跃 | RDD 断点回归、Sharp RDD、局部线性回归、带宽选择、placebo test |
 | 04 | 1 个州提了烟草税，怎么从 38 个对照州里拼出一个虚拟加州？（草稿 2026-08-24） | SCM 合成控制、加州 99 号提案、Abadie 2010 |
+| 05 | 推荐 v2 想估增量，PSM/DID/RDD 该调什么变量？（草稿 2026-08-24） | DAG 因果图、d-separation、backdoor 准则、Pearl 1995 |
 
 ## 项目
 
