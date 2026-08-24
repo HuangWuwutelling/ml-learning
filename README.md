@@ -134,6 +134,18 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 > 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
+### 因果推断线 (`articles/causal/`)
+
+经典论文配实际数据，每篇从零跑通一个因果推断方法。
+
+| # | 文章 | 涉及概念 |
+|---|------|---------|
+| 00 | 相关不等于因果：怎么从数据里找到因果关系？（已发 2026-08-23） | 因果推断概念、Pearl 因果阶梯、confounder |
+| 01 | 推荐 v2 上线，业务组说涨了 30%，这是 v2 带来的吗？ | PSM 倾向得分匹配、SMD 平衡性检验、Rosenbaum & Rubin 1983 |
+| 02 | 提了最低工资反加人手，NJ 怎么算出来的？ | DID 双重差分、平行趋势假设、Card & Krueger 1994 |
+| 03 | 过线就拐弯？断点回归怎么估出 60 岁处的真实跳跃 | RDD 断点回归、Sharp RDD、局部线性回归、带宽选择、placebo test |
+| 04 | 1 个州提了烟草税，怎么从 38 个对照州里拼出一个虚拟加州？（草稿 2026-08-24） | SCM 合成控制、加州 99 号提案、Abadie 2010 |
+
 ## 项目
 
 | 项目 | 描述 | 技术栈 |
