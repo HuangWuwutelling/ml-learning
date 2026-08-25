@@ -2,7 +2,7 @@
 
 机器学习 & 深度学习算法学习项目 + LLM 工程作品集。
 
-17 个 numpy 手写 ML 算法 + 14 个环境模型 + 60+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境），每个模型都有对应文章与可复现代码。
+18 个 numpy 手写 ML 算法 + 14 个环境模型 + 60+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境），每个模型都有对应文章与可复现代码。
 
 ## 项目结构
 
@@ -68,6 +68,7 @@
 | 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
 | 16 | AutoEncoder（编码器-解码器，无监督降维） | `models/autoencoder.py` |
 | 17 | kNN（k 近邻分类，懒惰学习） | `models/knn.py` |
+| 18 | 倾向得分匹配（PSM, Propensity Score Matching） | `models/propensity_score_matching.py` |
 
 ### LLM 工具链线 (`articles/llm/`)
 
