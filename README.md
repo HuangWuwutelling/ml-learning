@@ -2,23 +2,28 @@
 
 机器学习 & 深度学习算法学习项目 + LLM 工程作品集。
 
-18 个 numpy 手写 ML 算法 + 14 个环境模型 + 60+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境），每个模型都有对应文章与可复现代码。
+18 个 numpy 手写 ML 算法 + 14 个环境模型 + 60+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境 / 因果推断），每个模型都有对应文章与可复现代码。
+
+> 项目主旗舰 + 求职叙事：见 [_local/plan.md](_local/plan.md)（gitignored）。
+>
+> **当前主旗舰**：fastapi-rag（代码仓库双源 RAG，文章 #15-#19 已内部定稿，待真实发布到公众号）。项目代码在 `projects/fastapi-rag/`，本 README 在文章未真实发布前不收录该项目。
 
 ## 项目结构
 
 ```
-├── models/           # 算法实现（ML 算法 + 环境模型）
-├── notebooks/        # 训练 & 可视化 Jupyter notebook
+├── models/              # 18 个手写算法 + 环境模型
+├── notebooks/           # 训练 & 可视化 Jupyter notebook
 ├── projects/
-│   ├── ml_playground/    # FastAPI + Gradio 统一平台
-│   ├── env_agent/        # LangGraph 环保申报 Agent（env-agent 旗舰）
-│   ├── wali_cmd/         # 瓦力的命令行速查（微信小程序 + 云开发，独立仓库，仅本地管理）
-│   └── gb15618/          # 仅保留跳转 README，源码已迁至独立仓库 HuangWuwutelling/gb15618
-├── 环境法律法规智能问答系统/   # RAG + ChromaDB + DeepSeek（env-rag 旗舰）
-├── articles/         # 学习记录（ml/ | llm/ | engineering/ | env/ | ai-history/）
-├── scripts/          # Notebook 生成 & 封面图脚本
-├── data/             # 数据集
+│   ├── ml_playground/   # FastAPI + Gradio 统一平台
+│   ├── fastapi-rag/     # 主旗舰（文章未真实发布，README 暂不收录）
+│   ├── wali_cmd/        # 微信小程序（本地仓库）
+│   └── gb15618/         # 行业案例（源码已迁独立仓库）
+├── 环境法律法规智能问答系统/   # 旧 RAG 项目（降级为知识点库）
+├── articles/            # 学习记录（独立 git 仓库）
+├── scripts/             # 封面图 / notebook 生成脚本（按系列子目录）
+├── data/                # 数据集
 ├── 环保类知识库LLM Wiki/      # YoudaoNote LLM Wiki
+├── _local/              # 发文计划 + 求职叙事（gitignored）
 ├── requirements.txt
 └── .gitignore
 ```
@@ -37,12 +42,12 @@
 | 03 | 当 AI 走出科技公司：ChatGPT 与 DeepSeek 的启示 | 普及的两个层级：交互 + 成本 |
 | 04 | 从词向量到大模型：NLP 进化路线图 | One-hot → Word2Vec → RNN → Transformer → BERT/GPT |
 | 05 | 从 28% 到 2%：一场计算机视觉的革命 | LeNet → AlexNet → VGG/ResNet → ViT → 多模态；ImageNet 错误率从 28% 跌到 2% |
-| 06 | **深度学习三巨头的三十年**：Hinton、LeCun、Bengio 的坚持与分野 | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持，学生的学生承包了今天大模型半壁江山 |
-| 07 | AlphaGo → AlphaFold：AI 改变科学的两次证明 | 1997 深蓝"算"出胜利、2024 诺奖"发现"科学；27 年 AI 能力从"算"走到"发现" |
-| 08 | **Hassabis 传：从国际象棋神童到诺贝尔化学奖** | 4 岁学棋 → 13 岁想"机器能不能思考" → 创办 DeepMind → AlphaGo → AlphaFold → 2024 诺奖 → 2026 三条 AGI 路线分化 |
+| 06 | **深度学习三巨头的三十年**：Hinton、LeCun、Bengio 的坚持与分野 | 2018 图灵奖 + 2024 诺奖；30 年寒冬坚持 |
+| 07 | AlphaGo → AlphaFold：AI 改变科学的两次证明 | 1997 深蓝"算"出胜利、2024 诺奖"发现"科学 |
+| 08 | **Hassabis 传：从国际象棋神童到诺贝尔化学奖** | 4 岁学棋 → 创办 DeepMind → AlphaGo → AlphaFold → 2024 诺奖 |
 | 09 | **Token：LLM 的最小单元** | 从字符到 BPE：LLM 看到了什么、读懂了什么 |
-| 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段，1.3B 小模型如何超越 175B GPT-3，以及 Reward Hacking 的困境 |
-| 11 | **Scaling Law 走到头：越大≠越聪明，智能增长换了一条路** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling，慢思考和 MoE 两条新路 |
+| 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段 |
+| 11 | **Scaling Law 走到头：越大≠越聪明** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling |
 
 ### 算法线 (`articles/ml/`) — 已实现算法
 
@@ -137,23 +142,32 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 ### 因果推断线 (`articles/causal/`)
 
-经典论文配实际数据，每篇从零跑通一个因果推断方法。
+经典论文配实际数据，每篇从零跑通一个因果推断方法。文章讲思路和结果，完整代码放 GitHub。
 
 | # | 文章 | 涉及概念 |
 |---|------|---------|
 | 00 | 相关不等于因果：怎么从数据里找到因果关系？（已发 2026-08-23） | 因果推断概念、Pearl 因果阶梯、confounder |
 | 01 | 推荐 v2 上线，业务组说 GMV 涨了 30%，这是 v2 带来的吗？（已发 2026-08-25） | PSM 倾向得分匹配、logistic 倾向得分、NN k=4 + 卡尺（0.2×PS std）、SMD 平衡性检验、朴素对比 vs PSM、Rosenbaum & Rubin 1983 / Austin 2011 / Stuart 2010 |
+| 02 | 提了最低工资反加人手，NJ 怎么算出来的？ | DID 双重差分、平行趋势假设、2x2 表、ATT、Card & Krueger 1994、Bertrand et al. 2004、Neumark & Wascher 2000 |
+| 03 | 过线就拐弯？断点回归怎么估出 60 岁处的真实跳跃 | RDD 断点回归、Sharp RDD、局部线性回归、带宽选择、placebo test、Lee & Lemieux 2010、Imbens & Lemieux 2008、Mastrobuoni 2009、Calonico et al. 2014 |
+| 04 | 1 个州提了烟草税，怎么从 38 个对照州里拼出一个虚拟加州？ | SCM 合成控制、约束最小二乘、W 权重、pre-treatment fit、ATT、placebo permutation、Abadie-Diamond-Hainmueller 2010、Abadie-Gardeazabal 2003 |
+| 05 | 推荐 v2 想估增量，PSM/DID/RDD 该调什么变量？ | DAG 因果图、节点/边/无环、d-separation、链/叉/对撞、backdoor 准则、Pearl 1995、Spirtes 2000、Shpitser & Pearl 2006、Imbens & Rubin 2015 |
+
+> 因果线 02-05 已完成内部 polish + verify（朴素对比/调错变量反例 + 缩写中文注 + 双引号 + 文献核实 + 数字对齐），待用户手动真实发布。
 
 ## 项目
 
-| 项目 | 描述 | 技术栈 |
-|------|------|--------|
-| **ML Playground** | 所有算法的 FastAPI + Gradio 统一平台 | FastAPI, Gradio, Matplotlib |
-| **环保申报 AI Agent** | 多轮对话 Agent，查法规 + 算排放 + 填表单 | LangGraph, DeepSeek, BGE |
-| **环境法规智能问答** | RAG 知识库问答系统 | ChromaDB, BGE, DeepSeek, FastAPI |
-| **LLM Wiki 知识库** | AI 自动构建的环保知识库 | YoudaoNote, LLM Wiki 范式 |
-| **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | Python, PyInstaller（独立仓库 [HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)） |
-| **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 微信小程序, 微信云开发, NoSQL 模糊搜索（本地仓库，不推送） |
+| 项目 | 描述 | 状态 |
+|------|------|------|
+| **ML Playground** | 18 个手写算法的 FastAPI + Gradio 统一演示平台 | 演示 |
+| **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | 行业案例 |
+| **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 副线 |
+| 环境法规智能问答（旧） | ChromaDB + DeepSeek RAG 知识库（env-rag 旧旗舰，已降级） | 降级 |
+| LLM Wiki 知识库 | AI 自动构建的环保知识库（YoudaoNote） | 工具 |
+
+> 主旗舰 **fastapi-rag**（W1-W7 已跑通，代码 + 部署 + RAGAS 评估齐备）暂未收录，待 #15-#19 文章真实发布后再补登。
+>
+> 降级项目代码保留在 `环境法律法规智能问答系统/` 和 `projects/env_agent/`，不再维护、不进面试稿，方法论沉淀到 fastapi-rag 复用。
 
 ## 快速复现
 
@@ -166,7 +180,7 @@ pip install -r requirements.txt
 ### 2. 运行 Notebook
 
 ```bash
-# Day 1-15: 从线性回归到 Transformer
+# Day 1-17: 从线性回归到 Transformer
 python -m jupyter nbconvert --to notebook --execute --inplace notebooks/dayN_*.ipynb
 
 # 或逐个运行
@@ -176,13 +190,10 @@ jupyter notebook notebooks/day1_linear_regression.ipynb
 ### 3. 运行项目
 
 ```bash
-# ML Playground
-uvicorn projects.ml_playground.app:app
+# ML Playground（演示平台）
+uvicorn projects/ml_playground.app:app
 
-# 环保申报 Agent
-python projects/env_agent/app.py
-
-# RAG 法律问答
+# RAG 旧旗舰（降级项目，代码保留）
 cd 环境法律法规智能问答系统 && python app.py
 
 # GB 15618 评价工具（库 + GUI）

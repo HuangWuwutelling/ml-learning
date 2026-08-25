@@ -12,6 +12,7 @@ tests/
 
 # Python
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 .env
@@ -55,6 +56,3 @@ CLAUDE.md
 
 # MCP config (local machine specific)
 .mcp.json
-
-# Docs (design specs, notes — not for GitHub)
-docs/
