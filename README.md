@@ -149,11 +149,9 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 00 | 相关不等于因果：怎么从数据里找到因果关系？（已发 2026-08-23） | 因果推断概念、Pearl 因果阶梯、confounder |
 | 01 | 推荐 v2 上线，业务组说 GMV 涨了 30%，这是 v2 带来的吗？（已发 2026-08-25） | PSM 倾向得分匹配、logistic 倾向得分、NN k=4 + 卡尺（0.2×PS std）、SMD 平衡性检验、朴素对比 vs PSM、Rosenbaum & Rubin 1983 / Austin 2011 / Stuart 2010 |
 | 02 | 涨最低工资反而不裁员？DID 怎么算出 +2.75 FTE（已发 2026-08-27） | DID 双重差分、平行趋势假设、2x2 表、ATT、Card & Krueger 1994、Bertrand et al. 2004、Neumark & Wascher 2000 |
-| 03 | 过线就拐弯？断点回归怎么估出 60 岁处的真实跳跃 | RDD 断点回归、Sharp RDD、局部线性回归、带宽选择、placebo test、Lee & Lemieux 2010、Imbens & Lemieux 2008、Mastrobuoni 2009、Calonico et al. 2014 |
-| 04 | 1 个州提了烟草税，怎么从 38 个对照州里拼出一个虚拟加州？ | SCM 合成控制、约束最小二乘、W 权重、pre-treatment fit、ATT、placebo permutation、Abadie-Diamond-Hainmueller 2010、Abadie-Gardeazabal 2003 |
-| 05 | 推荐 v2 想估增量，PSM/DID/RDD 该调什么变量？ | DAG 因果图、节点/边/无环、d-separation、链/叉/对撞、backdoor 准则、Pearl 1995、Spirtes 2000、Shpitser & Pearl 2006、Imbens & Rubin 2015 |
+| 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么（已发 2026-08-30） | DID 双重差分、企业出口复杂度（export sophistication）、低复杂度产品退出机制、异质性处理效应、Li, Peng, Huang & Zhou 2022；对照文献 Jia 2014、Card & Krueger 1994 |
 
-> 因果线 03-05 已完成内部 polish + verify（朴素对比/调错变量反例 + 缩写中文注 + 双引号 + 文献核实 + 数字对齐），待用户手动真实发布。
+> **关于 02**：causal 系列里 5 个 notebook 中唯一完全 self-contained 的——Card & Krueger 1994 Table 2 的 4 行均值数据直接内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1，单 notebook 即可跑通。其他 4 篇（01 PSM / 03 RDD / 04 SCM / 05 DAG）依赖真实数据集，需要 `articles/causal/data/` 配套。
 
 ## 项目
 
