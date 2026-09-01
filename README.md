@@ -151,7 +151,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 02 | 涨最低工资反而不裁员？DID 怎么算出 +2.75 FTE（已发 2026-08-27） | DID 双重差分、平行趋势假设、2x2 表、ATT、Card & Krueger 1994、Bertrand et al. 2004、Neumark & Wascher 2000 |
 | 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么（已发 2026-08-30） | DID 双重差分、企业出口复杂度（export sophistication）、低复杂度产品退出机制、异质性处理效应、Li, Peng, Huang & Zhou 2022；对照文献 Jia 2014、Card & Krueger 1994 |
 
-> **关于 02**：causal 系列里 5 个 notebook 中唯一完全 self-contained 的——Card & Krueger 1994 Table 2 的 4 行均值数据直接内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1，单 notebook 即可跑通。其他 4 篇（01 PSM / 03 RDD / 04 SCM / 05 DAG）依赖真实数据集，需要 `articles/causal/data/` 配套。
+> **关于 02**：causal 系列里 4 个 notebook 中唯一完全 self-contained 的——Card & Krueger 1994 Table 2 的 4 行均值数据直接内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1，单 notebook 即可跑通。其他 3 篇（01 PSM / 04 SCM / 05 DAG）依赖真实数据集，需要 `articles/causal/data/` 配套；03 RDD 为纯概念文，无 notebook、无数据依赖。
 
 ## 项目
 
