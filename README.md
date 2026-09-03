@@ -152,7 +152,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 03 | 只差高考 1 分：一本线背后，断点回归如何识别精英大学入学的因果效应（已发 2026-09-02） | RDD 断点回归、running variable=分数差、cutoff c=0、连续性假设、局部线性回归、带宽 ±20 分、LATE at cutoff、placebo、density test、Ruixue Jia & Hongbin Li *JPubE* 2021（5.2%-9.7% 起薪溢价 / IV 28.3%-45.6% / 信号假说）、Lee & Lemieux 2010、Imbens & Kalyanaraman 2012、McCrary 2008 |
 | 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么（已发 2026-08-30） | DID 双重差分、企业出口复杂度（export sophistication）、低复杂度产品退出机制、异质性处理效应、Li, Peng, Huang & Zhou 2022；对照文献 Jia 2014、Card & Krueger 1994 |
 
-> **关于 02**：causal 系列里 4 个 notebook 中唯一完全 self-contained 的——Card & Krueger 1994 Table 2 的 4 行均值数据直接内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1，单 notebook 即可跑通。其他 3 篇（01 PSM / 04 SCM / 05 DAG）依赖真实数据集，需要 `articles/causal/data/` 配套；03 RDD 为纯概念文，无 notebook、无数据依赖。
+> **关于 notebook**：causal 系列 4 个 notebook，其中 01 PSM 与 02 DID 已 self-contained，clone 后在仓库根目录跑 nbconvert 即可复现。02 把 Card & Krueger 1994 Table 2 的 4 行均值数据内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1；01 把 MovieLens 1M 原始数据放进 git-tracked 的 `data/ml-1m/`，loader 一并内联进 `notebooks/causal_01_PSM.ipynb` 的 cell-1。04 SCM / 05 DAG 对应文章尚未发布，notebook 仍依赖本地 `articles/causal/data/` 配套；03 RDD 为纯概念文，无 notebook、无数据依赖。
 
 ## 项目
 
