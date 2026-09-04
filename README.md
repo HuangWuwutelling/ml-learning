@@ -150,9 +150,10 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 01 | 推荐 v2 上线，业务组说 GMV 涨了 30%，这是 v2 带来的吗？（已发 2026-08-25） | PSM 倾向得分匹配、logistic 倾向得分、NN k=4 + 卡尺（0.2×PS std）、SMD 平衡性检验、朴素对比 vs PSM、Rosenbaum & Rubin 1983 / Austin 2011 / Stuart 2010 |
 | 02 | 涨最低工资反而不裁员？DID 怎么算出 +2.75 FTE（已发 2026-08-27） | DID 双重差分、平行趋势假设、2x2 表、ATT、Card & Krueger 1994、Bertrand et al. 2004、Neumark & Wascher 2000 |
 | 03 | 只差高考 1 分：一本线背后，断点回归如何识别精英大学入学的因果效应（已发 2026-09-02） | RDD 断点回归、running variable=分数差、cutoff c=0、连续性假设、局部线性回归、带宽 ±20 分、LATE at cutoff、placebo、density test、Ruixue Jia & Hongbin Li *JPubE* 2021（5.2%-9.7% 起薪溢价 / IV 28.3%-45.6% / 信号假说）、Lee & Lemieux 2010、Imbens & Kalyanaraman 2012、McCrary 2008 |
+| 04 | 加州人均卷烟 12 年腰斩，但同期全国都在降，合成控制法怎么把这层「背景」扣掉？（已发 2026-09-04） | SCM 合成控制、约束优化求 W 权重、pre-treatment fit / post-ATT / placebo 三步检验、对照池失灵 + 同期被冲击（99 号提案是加税 + 媒体宣传 + 1994-95 AB 13/AB 846 禁烟令的政策包）、Abadie-Diamond-Hainmueller 2010 *JASA*、Abadie-Gardeazabal 2003 *AER*、Arkhangelsky et al. 2021 *AER* |
 | 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么（已发 2026-08-30） | DID 双重差分、企业出口复杂度（export sophistication）、低复杂度产品退出机制、异质性处理效应、Li, Peng, Huang & Zhou 2022；对照文献 Jia 2014、Card & Krueger 1994 |
 
-> **关于 notebook**：causal 系列 4 个 notebook，其中 01 PSM 与 02 DID 已 self-contained，clone 后在仓库根目录跑 nbconvert 即可复现。02 把 Card & Krueger 1994 Table 2 的 4 行均值数据内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1；01 把 MovieLens 1M 原始数据放进 git-tracked 的 `data/ml-1m/`，loader 一并内联进 `notebooks/causal_01_PSM.ipynb` 的 cell-1。04 SCM / 05 DAG 对应文章尚未发布，notebook 仍依赖本地 `articles/causal/data/` 配套；03 RDD 为纯概念文，无 notebook、无数据依赖。
+> **关于 notebook**：causal 系列 4 个 notebook，其中 01 PSM / 02 DID / 04 SCM 已 self-contained，clone 后在仓库根目录跑 nbconvert 即可复现。02 把 Card & Krueger 1994 Table 2 的 4 行均值数据内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1；01 把 MovieLens 1M 原始数据放进 git-tracked 的 `data/ml-1m/`，loader 一并内联进 `notebooks/causal_01_PSM.ipynb` 的 cell-1；04 把 California tobacco panel 数据与 SCM 求解内嵌进 `notebooks/causal_04_SCM.ipynb` 的 cell-1，独立可运行（实测 ATT = -21.93 packs/人/年 vs 论文 -19.4，因 3+1 预测变量与 V=I 简化）。05 DAG 对应文章尚未发布，notebook 仍依赖本地 `articles/causal/data/` 配套；03 RDD 为纯概念文，无 notebook、无数据依赖。
 
 ## 项目
 
