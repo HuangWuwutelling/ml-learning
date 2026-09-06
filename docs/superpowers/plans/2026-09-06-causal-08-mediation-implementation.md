@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 新增 `articles/causal/08_*.md`，从"从上网频繁到把互联网当主要信息源，中间发生了什么"切入，用 6 节点 DAG（07 的 5 节点 + 新增 M' = a285 互联网使用强度）演示 mediation 机制，**用 CGSS 2023 真实数据**跑 Baron & Kenny 1986 三步法，把 07 的总效应 +0.393 拆成 NDE（直接效应）+ NIE（间接效应），用 Sobel 1982 检验 + bootstrap CI 验证间接效应显著性。
+**Goal:** 新增 `articles/causal/08_*.md`，从"从上网频繁到把互联网当主要信息源，中间发生了什么"切入，用 6 节点 DAG（07 的 5 节点 + 新增 M' = a285 互联网使用强度）演示 mediation 机制，**用 CGSS 2023 真实数据**跑 Baron & Kenny 1986 三步法，把 07 的总效应 +0.561 拆成 NDE（直接效应）+ NIE（间接效应），用 Sobel 1982 检验 + bootstrap CI 验证间接效应显著性。
 
 **Architecture:** 单篇文章 + 1 张封面 + 2 张概念图（6 节点 DAG + 三步法路径系数对比）。数据完全复用 07 的 CGSS 2023 STATA .dta（47.6MB，gitignored）；新增 mediator 变量 `a285` 互联网使用强度（CGSS 现有题项"过去一年您对以下媒体的使用情况-互联网"，5 级 Likert）。脚本 `gen_cover_causal_08.py` 复用 07 的 `_try_load_cgss` 函数骨架（同 single-intersection mask 模式），新增三步回归 + Sobel + bootstrap CI。
 
@@ -30,7 +30,7 @@
 | **W** 社会信任 | a33 总的来说大多数人可以信任 | 5 级 Likert | 同 07 |
 | **M** 生活幸福 | a36 总的来说您觉得生活是否幸福 | 5 级 Likert | 标注但不调（07 collider） |
 
-- **核心校验**：第二步 c_total 应**严格等于 07 Backdoor +0.393**。如果不等立即排查（mask 对齐、Z/W 编码、intercept 列）。
+- **核心校验**：第二步 c_total 应**严格等于 07 Backdoor +0.561**（07 在 2026-09-06 修正了 _estimate_effects return-order bug 后）。如果不等立即排查（mask 对齐、Z/W 编码、intercept 列）。
 - **配色与字体**（继承 07）：`C_L1='#4A6FA5'` / `C_L2='#D67D3E'` / `C_X='#2E5C8A'` / `C_Y='#A23B3A'` / `C_M='#888888'` / `C_CUT='#8a3030'` / `BG='#F5F2EC'` / `INK='#2A2A2A'` / `SUB='#888888'`；字体 `'Microsoft YaHei', 'SimHei'`
 - **生成规格**：封面 `(9, 3.83) dpi=100` 不带 `bbox_inches='tight'`；6 节点 DAG 图 `(9, 4.5) dpi=150` 带 `bbox_inches='tight'`；三步法对比图 `(9, 4.0) dpi=150` 带 `bbox_inches='tight'`
 - **数据来源**（文中内联引用）：CGSS 2023 + CNNIC《第54次报告》2024-06 + Baron & Kenny 1986 + Sobel 1982 + Pearl 2001（边界）+ VanderWeele 2015（背景）+ MacKinnon et al. 2002（背景）
@@ -260,7 +260,7 @@ def _estimate_mediation(X, Y, Z, W, M_prime):
     """Run 3-step mediation, return dict with all estimates.
 
     Step 1: M' ~ X + Z + W  -> a, SE_a
-    Step 2: Y ~ X + Z + W   -> c_total (MUST equal 07 Backdoor +0.393)
+    Step 2: Y ~ X + Z + W   -> c_total (MUST equal 07 Backdoor +0.561)
     Step 3: Y ~ X + M' + Z + W -> c_prime (NDE), b (M' coefficient)
 
     Sobel test for indirect effect IE = a * b.
@@ -534,8 +534,8 @@ if __name__ == '__main__':
     print(f'NIE 占比          = {values["share_NIE"]*100:.2f}%')
     print('===================================\n')
 
-    # **Sanity check**: c_total should equal 07 Backdoor +0.393
-    expected_c_total = 0.393
+    # **Sanity check**: c_total should equal 07 Backdoor +0.561 (after 07 unpack-bug fix 2026-09-06)
+    expected_c_total = 0.561
     if abs(values['c_total'] - expected_c_total) > 0.005:
         print(f'[FAIL] c_total = {values["c_total"]:+.4f} ≠ expected {expected_c_total}')
         print('       This means Step 2 regression differs from 07 Backdoor.')
@@ -566,7 +566,7 @@ cd "D:\Workspace\ml-learning" && python scripts/causal/gen_cover_causal_08.py
 n                  = 5734
 a  (X→M')         = -X.XXXX  (SE=X.XXXX)
 b  (M'→Y)         = +X.XXXX  (SE=X.XXXX)
-c_total (总效应)   = +0.393X  (SE=0.0XXX)
+c_total (总效应)   = +0.561X  (SE=0.0XXX)
 c_prime (直接效应) = +X.XXXX  (SE=0.0XXX)
 IE (间接效应 a×b)  = +X.XXXX
 Sobel Z           = +X.XXXX
@@ -576,7 +576,7 @@ NDE 占比          = XX.XX%
 NIE 占比          = XX.XX%
 ===================================
 
-[PASS] c_total = +0.393X ≈ 07 Backdoor 0.393 ✓
+[PASS] c_total = +0.561X matches 07 Backdoor 0.561 (within tolerance)
 
 Cover saved: ...
 6-node DAG figure saved: ...
@@ -585,7 +585,7 @@ Done.
 ```
 
 **关键检查**：
-1. `[PASS] c_total ≈ 07 Backdoor 0.393` 必须出现
+1. `[PASS] c_total ≈ 07 Backdoor 0.561` 必须出现
 2. Sobel p < 0.05（间接效应显著）
 3. bootstrap CI 不含 0
 4. NDE + NIE 应近似 = c_total（拆解恒等式）
@@ -638,7 +638,7 @@ cd "D:\Workspace\ml-learning\articles" && git add "scripts/causal/gen_cover_caus
 ```markdown
 # [定稿标题]
 
-> [引言 blockquote：2-3 句话，包含 CNNIC 数据 + 机制问句 + 总效应数字 0.393]
+> [引言 blockquote：2-3 句话，包含 CNNIC 数据 + 机制问句 + 总效应数字 0.561]
 
 <div align="center"><img src="cover_causal_08.png" alt="封面" width="700"></div>
 <p align="center" style="color:#656d76;font-size:14px;margin-top:2px;">[封面 caption：用 Task 1 实测数字替换占位]</p>
@@ -666,7 +666,7 @@ cd "D:\Workspace\ml-learning\articles" && git add "scripts/causal/gen_cover_caus
 ## 四、CGSS 2023 实证拆解（n=5734）
 
 - **第一步**：M' ~ X + Z + W → a 值（**用 Task 1 输出**），解释高强度上网者互联网使用强度差异
-- **第二步**：Y ~ X + Z + W → c_total ≈ +0.393（**应等于 07 Backdoor，文章核心校验点**）
+- **第二步**：Y ~ X + Z + W → c_total ≈ +0.561（**应等于 07 Backdoor，文章核心校验点**）
 - **第三步**：Y ~ X + M' + Z + W → c'（直接）+ b（间接路径系数）
 - **间接效应 IE = a × b** + Sobel Z 值 + p 值（**全部用 Task 1 输出**）
 - **bootstrap 95% CI**（**用 Task 1 输出**）
@@ -768,11 +768,11 @@ cd "D:\Workspace\ml-learning" && git add _local/plan.md && git commit -m "chore(
    ```
    预期：n = 5734
 
-2. **第二步 c_total ≈ 07 Backdoor +0.393**（Task 1 sanity check）：
+2. **第二步 c_total ≈ 07 Backdoor +0.561**（Task 1 sanity check）：
    ```bash
    cd "D:\Workspace\ml-learning" && python scripts/causal/gen_cover_causal_08.py 2>&1 | grep "PASS\|FAIL"
    ```
-   预期：`[PASS] c_total = +0.39XX ≈ 07 Backdoor 0.393 ✓`
+   预期：`[PASS] c_total = +0.561X matches 07 Backdoor 0.561`
 
 3. **Sobel p < 0.05**（间接效应显著）：
    ```bash
