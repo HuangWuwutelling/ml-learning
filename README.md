@@ -6,7 +6,7 @@
 
 > 项目主旗舰 + 求职叙事：见 [_local/plan.md](_local/plan.md)（gitignored）。
 >
-> **当前主旗舰**：fastapi-rag（代码仓库双源 RAG，文章 #15-#19 已内部定稿，待真实发布到公众号）。项目代码在 `projects/fastapi-rag/`，本 README 在文章未真实发布前不收录该项目。
+> **当前主旗舰**：空缺（待定新方向）。
 
 ## 项目结构
 
@@ -15,9 +15,10 @@
 ├── notebooks/           # 训练 & 可视化 Jupyter notebook
 ├── projects/
 │   ├── ml_playground/   # FastAPI + Gradio 统一平台
-│   ├── fastapi-rag/     # 主旗舰（文章未真实发布，README 暂不收录）
+│   ├── lora_finetune/   # QLoRA 微调演示（Qwen2.5-0.5B + 4-bit）
 │   ├── wali_cmd/        # 微信小程序（本地仓库）
-│   └── gb15618/         # 行业案例（源码已迁独立仓库）
+│   ├── gb15618/         # 行业案例（源码已迁独立仓库）
+│   └── env_agent/       # LangGraph 旧 Agent 旗舰（已降级）
 ├── 环境法律法规智能问答系统/   # 旧 RAG 项目（降级为知识点库）
 ├── articles/            # 学习记录（独立 git 仓库）
 ├── scripts/             # 封面图 / notebook 生成脚本（按系列子目录）
@@ -161,14 +162,15 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 项目 | 描述 | 状态 |
 |------|------|------|
 | **ML Playground** | 18 个手写算法的 FastAPI + Gradio 统一演示平台 | 演示 |
+| **LoRA 微调演示** | 环境违法严重度 3 分类，Qwen2.5-0.5B + 4-bit + LoRA r=16（4GB 显卡可跑） | 演示 |
 | **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | 行业案例 |
 | **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 副线 |
-| 环境法规智能问答（旧） | ChromaDB + DeepSeek RAG 知识库（env-rag 旧旗舰，已降级） | 降级 |
+| 环境法规智能问答（旧） | ChromaDB + DeepSeek RAG + LangGraph ReAct Agent（env-rag + env_agent 旧旗舰，已降级） | 降级 |
 | LLM Wiki 知识库 | AI 自动构建的环保知识库（YoudaoNote） | 工具 |
 
-> 主旗舰 **fastapi-rag**（W1-W7 已跑通，代码 + 部署 + RAGAS 评估齐备）暂未收录，待 #15-#19 文章真实发布后再补登。
+> 主旗舰位空缺（待定新方向）。当前展示项目：gb15618 + wali_cmd + ml_playground + lora_finetune。
 >
-> 降级项目代码保留在 `环境法律法规智能问答系统/` 和 `projects/env_agent/`，不再维护、不进面试稿，方法论沉淀到 fastapi-rag 复用。
+> 降级项目代码保留在 `环境法律法规智能问答系统/`（env-rag RAG 旗舰）和 `projects/env_agent/`（env_agent Agent 旗舰），不再维护、不进面试稿。
 
 ## 快速复现
 
@@ -195,7 +197,7 @@ jupyter notebook notebooks/day1_linear_regression.ipynb
 uvicorn projects/ml_playground.app:app
 
 # RAG 旧旗舰（降级项目，代码保留）
-cd 环境法律法规智能问答系统 && python app.py
+cd "环境法律法规智能问答系统" && python app.py
 
 # GB 15618 评价工具（库 + GUI）
 git clone https://github.com/HuangWuwutelling/gb15618.git
