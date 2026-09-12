@@ -30,20 +30,9 @@ def build_prompt(text: str) -> str:
     )
 
 
-def evaluate(model, tokenizer, items):
-    correct = 0
-    y_true, y_pred = [], []
-    preds = []
-    for it in items:
-        true = it["label"]
-        pred = predict_label(model, tokenizer, it["text"])
-        y_true.append(true)
-        y_pred.append(pred)
-        preds.append({"text": it["text"], "true": true, "pred": pred})
-        if pred == true:
-            correct += 1
-    acc = correct / len(items)
-    return acc, y_true, y_pred, preds
+def evaluate(*args, **kwargs):
+    """占位：Task 2 将用 run_benchmark 重写主入口."""
+    raise NotImplementedError("eval 重构中，见 Task 2 run_benchmark")
 
 
 def per_class_metrics(y_true, y_pred):
@@ -69,64 +58,5 @@ def confusion_matrix_data(y_true, y_pred):
     return matrix
 
 
-def main():
-    print("Loading test set...")
-    items = []
-    with open(TEST_PATH, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                items.append(json.loads(line))
-    print(f"Test samples: {len(items)}")
-
-    print("Loading base model (4-bit)...")
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-    )
-    base = AutoModelForCausalLM.from_pretrained(
-        MODEL_NAME, quantization_config=bnb_config, device_map="auto", trust_remote_code=True,
-    )
-    tok = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
-    if tok.pad_token is None:
-        tok.pad_token = tok.eos_token
-
-    print("Evaluating BASE model...")
-    base_acc, base_true, base_pred, base_preds = evaluate(base, tok, items)
-    base_metrics = per_class_metrics(base_true, base_pred)
-    base_cm = confusion_matrix_data(base_true, base_pred)
-    print(f"Base accuracy: {base_acc:.3f}")
-
-    with open(os.path.join(os.path.dirname(__file__), "base_predictions.jsonl"), "w", encoding="utf-8") as f:
-        for p in base_preds:
-            f.write(json.dumps(p, ensure_ascii=False) + "\n")
-
-    print("Loading LoRA adapter...")
-    lora_model = PeftModel.from_pretrained(base, ADAPTER_DIR)
-    print("Evaluating LORA model...")
-    lora_acc, lora_true, lora_pred, lora_preds = evaluate(lora_model, tok, items)
-    lora_metrics = per_class_metrics(lora_true, lora_pred)
-    lora_cm = confusion_matrix_data(lora_true, lora_pred)
-    print(f"LoRA accuracy: {lora_acc:.3f}")
-
-    with open(os.path.join(os.path.dirname(__file__), "lora_predictions.jsonl"), "w", encoding="utf-8") as f:
-        for p in lora_preds:
-            f.write(json.dumps(p, ensure_ascii=False) + "\n")
-
-    results = {
-        "test_size": len(items),
-        "base": {"accuracy": base_acc, "per_class": base_metrics, "confusion_matrix": base_cm},
-        "lora": {"accuracy": lora_acc, "per_class": lora_metrics, "confusion_matrix": lora_cm},
-        "improvement": lora_acc - base_acc,
-    }
-    with open(os.path.join(os.path.dirname(__file__), "eval_results.json"), "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-
-    print(f"\nImprovement: {lora_acc - base_acc:+.3f}")
-    print("Done!")
-
-
 if __name__ == "__main__":
-    main()
+    evaluate()
