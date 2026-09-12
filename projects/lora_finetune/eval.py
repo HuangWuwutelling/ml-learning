@@ -12,6 +12,7 @@ import json
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
+from structured_output import predict_prompt_only, predict_response_format, predict_tool_choice, Severity  # noqa: F401
 
 MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
 ADAPTER_DIR = os.path.join(os.path.dirname(__file__), "lora_adapter")
@@ -27,25 +28,6 @@ def build_prompt(text: str) -> str:
         f"<|im_start|>user\n{text}<|im_end|>\n"
         f"<|im_start|>assistant\n"
     )
-
-
-def predict_label(model, tokenizer, text: str) -> str:
-    """Greedy decode, take first character of output, map to known label."""
-    prompt = build_prompt(text)
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    with torch.no_grad():
-        out = model.generate(
-            **inputs,
-            max_new_tokens=4,
-            do_sample=False,
-            pad_token_id=tokenizer.eos_token_id,
-        )
-    gen = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-    # Take first non-whitespace char; if it's a known label, return it; else "中" (fallback)
-    for ch in gen.strip():
-        if ch in LABELS:
-            return ch
-    return "中"
 
 
 def evaluate(model, tokenizer, items):
