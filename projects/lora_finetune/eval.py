@@ -1,62 +1,53 @@
-"""
-Evaluate LoRA adapter vs base model on environment violation classification test set.
+"""Benchmark 3 个 Structured Output 方法在 test_set.jsonl 上的表现.
 
-Outputs:
-  - eval_results.json: accuracy, per-class precision/recall/F1
-  - base_predictions.jsonl: base model predictions
-  - lora_predictions.jsonl: lora model predictions
-  - confusion matrix data for plotting
+输出 eval_results.json: 3 方法 × {total, valid_count, correct_count, schema_validity, accuracy}.
+
+predict 函数本身在 structured_output.py，模型加载和 tokenizer 都在那里做。
+本模块只负责遍历测试集 + 统计指标 + 落盘。
 """
-import os
 import json
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-from peft import PeftModel
-from structured_output import predict_prompt_only, predict_response_format, predict_tool_choice, Severity  # noqa: F401
-
-MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
-ADAPTER_DIR = os.path.join(os.path.dirname(__file__), "lora_adapter")
-TEST_PATH = os.path.join(os.path.dirname(__file__), "test_set.jsonl")
-
-LABELS = ["高", "中", "低"]
+from pathlib import Path
+from structured_output import predict_prompt_only, predict_response_format, predict_tool_choice
 
 
-def build_prompt(text: str) -> str:
-    return (
-        f"<|im_start|>system\n你是一名环境合规审核员，请根据违规描述判断严重程度。"
-        f"严重程度分为三级：高、中、低。严格只回复一个汉字。<|im_end|>\n"
-        f"<|im_start|>user\n{text}<|im_end|>\n"
-        f"<|im_start|>assistant\n"
-    )
+def run_benchmark():
+    """跑 3 方法在 test_set.jsonl 上，记录 schema_validity + accuracy."""
+    test_path = Path(__file__).parent / "test_set.jsonl"
+    results = {}
+    methods = {
+        "prompt_only": predict_prompt_only,
+        "response_format": predict_response_format,
+        "tool_choice": predict_tool_choice,
+    }
 
+    for name, fn in methods.items():
+        valid_count = 0
+        correct_count = 0
+        total = 0
+        with open(test_path, encoding="utf-8") as f:
+            for line in f:
+                item = json.loads(line)
+                pred = fn(item["text"])
+                total += 1
+                if pred is not None:
+                    valid_count += 1
+                    if pred == item["label"]:
+                        correct_count += 1
+        results[name] = {
+            "total": total,
+            "valid_count": valid_count,
+            "correct_count": correct_count,
+            "schema_validity": round(valid_count / total, 4),
+            "accuracy": round(correct_count / total, 4),
+        }
+        print(f"{name}: schema_validity={results[name]['schema_validity']}, accuracy={results[name]['accuracy']}")
 
-def evaluate(*args, **kwargs):
-    """占位：Task 2 将用 run_benchmark 重写主入口."""
-    raise NotImplementedError("eval 重构中，见 Task 2 run_benchmark")
-
-
-def per_class_metrics(y_true, y_pred):
-    metrics = {}
-    for lbl in LABELS:
-        tp = sum(1 for t, p in zip(y_true, y_pred) if t == lbl and p == lbl)
-        fp = sum(1 for t, p in zip(y_true, y_pred) if t != lbl and p == lbl)
-        fn = sum(1 for t, p in zip(y_true, y_pred) if t == lbl and p != lbl)
-        prec = tp / (tp + fp) if (tp + fp) > 0 else 0
-        rec = tp / (tp + fn) if (tp + fn) > 0 else 0
-        f1 = 2 * prec * rec / (prec + rec) if (prec + rec) > 0 else 0
-        metrics[lbl] = {"precision": prec, "recall": rec, "f1": f1, "support": y_true.count(lbl)}
-    return metrics
-
-
-def confusion_matrix_data(y_true, y_pred):
-    """Return 3x3 matrix: rows=true, cols=pred."""
-    matrix = [[0]*3 for _ in range(3)]
-    for t, p in zip(y_true, y_pred):
-        ti = LABELS.index(t)
-        pi = LABELS.index(p)
-        matrix[ti][pi] += 1
-    return matrix
+    out_path = Path(__file__).parent / "eval_results.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+    print(f"Results saved: {out_path}")
+    return results
 
 
 if __name__ == "__main__":
-    evaluate()
+    run_benchmark()
