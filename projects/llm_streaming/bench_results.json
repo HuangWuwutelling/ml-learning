@@ -1,0 +1,148 @@
+{
+  "n_prompts": 20,
+  "avg_ttft_ms": 573.3,
+  "avg_tpot_ms": 140.2,
+  "avg_tokens": 191.9,
+  "results": [
+    {
+      "prompt": "印染企业部分车间应急照明灯个别亮度不足",
+      "ttft_ms": 989.3,
+      "avg_tpot_ms": 129.6,
+      "total_ms": 27292.0,
+      "token_count": 204
+    },
+    {
+      "prompt": "造纸厂部分车间应急灯个别亮度不足",
+      "ttft_ms": 524.1,
+      "avg_tpot_ms": 130.1,
+      "total_ms": 26669.4,
+      "token_count": 202
+    },
+    {
+      "prompt": "造纸厂部分车间应急喷淋头有轻微堵塞",
+      "ttft_ms": 591.9,
+      "avg_tpot_ms": 127.3,
+      "total_ms": 27579.6,
+      "token_count": 213
+    },
+    {
+      "prompt": "造纸厂部分车间电缆桥架有轻微积灰",
+      "ttft_ms": 638.9,
+      "avg_tpot_ms": 150.7,
+      "total_ms": 27158.7,
+      "token_count": 177
+    },
+    {
+      "prompt": "电镀企业车间通风系统效率下降",
+      "ttft_ms": 481.1,
+      "avg_tpot_ms": 138.1,
+      "total_ms": 26987.7,
+      "token_count": 193
+    },
+    {
+      "prompt": "污水处理厂在线监测数据上传偶有延迟",
+      "ttft_ms": 533.4,
+      "avg_tpot_ms": 130.6,
+      "total_ms": 27044.3,
+      "token_count": 204
+    },
+    {
+      "prompt": "造纸厂部分车间工具柜门有轻微变形",
+      "ttft_ms": 535.6,
+      "avg_tpot_ms": 151.1,
+      "total_ms": 27424.3,
+      "token_count": 179
+    },
+    {
+      "prompt": "污水处理厂化验室药品管理不规范",
+      "ttft_ms": 411.6,
+      "avg_tpot_ms": 129.1,
+      "total_ms": 27005.4,
+      "token_count": 207
+    },
+    {
+      "prompt": "印染企业部分车间地面有轻微起皮",
+      "ttft_ms": 469.2,
+      "avg_tpot_ms": 136.0,
+      "total_ms": 27267.8,
+      "token_count": 198
+    },
+    {
+      "prompt": "钢铁厂部分车间消防软管盘卷不规范",
+      "ttft_ms": 623.3,
+      "avg_tpot_ms": 144.1,
+      "total_ms": 27289.0,
+      "token_count": 186
+    },
+    {
+      "prompt": "化工企业部分车间安全出口指示灯个别不亮",
+      "ttft_ms": 614.7,
+      "avg_tpot_ms": 133.6,
+      "total_ms": 27209.5,
+      "token_count": 200
+    },
+    {
+      "prompt": "钢铁厂转炉煤气回收系统存在泄漏",
+      "ttft_ms": 485.0,
+      "avg_tpot_ms": 145.0,
+      "total_ms": 27027.4,
+      "token_count": 184
+    },
+    {
+      "prompt": "化工企业部分车间楼梯防滑条个别缺失",
+      "ttft_ms": 536.0,
+      "avg_tpot_ms": 155.2,
+      "total_ms": 26927.5,
+      "token_count": 171
+    },
+    {
+      "prompt": "印染企业清洁生产水平低下单位产品水耗远超行业基准",
+      "ttft_ms": 686.9,
+      "avg_tpot_ms": 127.6,
+      "total_ms": 27354.8,
+      "token_count": 210
+    },
+    {
+      "prompt": "钢铁厂烧结工序烟气中二氧化硫浓度超标4倍",
+      "ttft_ms": 581.9,
+      "avg_tpot_ms": 185.8,
+      "total_ms": 31233.1,
+      "token_count": 166
+    },
+    {
+      "prompt": "化工企业部分车间地漏盖有轻微锈蚀",
+      "ttft_ms": 613.2,
+      "avg_tpot_ms": 135.5,
+      "total_ms": 21757.5,
+      "token_count": 157
+    },
+    {
+      "prompt": "造纸厂部分车间配电箱标识牌有脱落",
+      "ttft_ms": 595.4,
+      "avg_tpot_ms": 131.9,
+      "total_ms": 27240.3,
+      "token_count": 203
+    },
+    {
+      "prompt": "电镀企业部分车间排水沟盖板个别有松动",
+      "ttft_ms": 673.4,
+      "avg_tpot_ms": 145.8,
+      "total_ms": 27355.9,
+      "token_count": 184
+    },
+    {
+      "prompt": "化工企业危险废物标识不规范",
+      "ttft_ms": 337.2,
+      "avg_tpot_ms": 132.5,
+      "total_ms": 28556.5,
+      "token_count": 214
+    },
+    {
+      "prompt": "印染企业废水处理设施运行不正常出水超标",
+      "ttft_ms": 543.9,
+      "avg_tpot_ms": 144.9,
+      "total_ms": 27489.5,
+      "token_count": 187
+    }
+  ]
+}
