@@ -33,14 +33,6 @@ def load_model():
     return _tokenizer, _model
 
 
-async def format_sse(prompt: str, content: str = "") -> AsyncIterator[str]:
-    """简化版 SSE 格式化（测试用）。"""
-    if prompt:
-        yield f"data: {prompt}\n\n"
-    if content:
-        yield f"data: {content}\n\n"
-
-
 async def format_sse_from(prompt: str, token_iter) -> AsyncIterator[str]:
     """把上游 token 迭代器包装成 SSE 格式。跳过空字符串。支持 sync/async 迭代器。"""
     if hasattr(token_iter, "__aiter__"):

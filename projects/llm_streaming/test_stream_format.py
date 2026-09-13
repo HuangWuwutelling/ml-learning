@@ -1,19 +1,6 @@
 """Test stream.py output format. Run: python test_stream_format.py"""
 import asyncio
-from stream import format_sse, format_sse_from
-
-
-async def collect():
-    out = []
-    async for chunk in format_sse("hello", "world"):
-        out.append(chunk)
-    return out
-
-
-def test_sse_format_each_chunk():
-    """每个 chunk 应是 'data: {content}\n\n' 格式。"""
-    chunks = asyncio.run(collect())
-    assert chunks == ["data: hello\n\n", "data: world\n\n"]
+from stream import format_sse_from
 
 
 def test_sse_format_empty():
@@ -30,6 +17,5 @@ def test_sse_format_empty():
 
 
 if __name__ == "__main__":
-    test_sse_format_each_chunk()
     test_sse_format_empty()
     print("OK: stream format tests passed")

@@ -46,11 +46,14 @@ async def run_benchmark():
         results.append(r)
         print(f"[{i}/{len(prompts)}] TTFT={r['ttft_ms']}ms, TPOT={r['avg_tpot_ms']}ms, tokens={r['token_count']}")
 
+    ttfts = [r["ttft_ms"] for r in results if r["ttft_ms"] is not None]
+    tpots = [r["avg_tpot_ms"] for r in results if r["avg_tpot_ms"] is not None]
+    tokens = [r["token_count"] for r in results]
     summary = {
         "n_prompts": len(results),
-        "avg_ttft_ms": round(sum(r["ttft_ms"] for r in results if r["ttft_ms"]) / len(results), 1),
-        "avg_tpot_ms": round(sum(r["avg_tpot_ms"] for r in results if r["avg_tpot_ms"]) / len(results), 1),
-        "avg_tokens": round(sum(r["token_count"] for r in results) / len(results), 1),
+        "avg_ttft_ms": round(sum(ttfts) / len(ttfts), 1),
+        "avg_tpot_ms": round(sum(tpots) / len(tpots), 1),
+        "avg_tokens": round(sum(tokens) / len(tokens), 1),
         "results": results,
     }
     out_path = Path(__file__).parent / "bench_results.json"
