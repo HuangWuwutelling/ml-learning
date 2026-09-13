@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>LLM Streaming Demo</title>
+  <style>
+    body { font-family: "Microsoft YaHei", sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    #prompt { width: 70%; padding: 8px; font-size: 14px; }
+    button { padding: 8px 16px; font-size: 14px; cursor: pointer; }
+    #output { margin-top: 20px; padding: 16px; border: 1px solid #ccc; min-height: 100px; white-space: pre-wrap; font-size: 14px; line-height: 1.6; }
+    .stat { margin-top: 16px; font-size: 12px; color: #888; }
+  </style>
+</head>
+<body>
+  <h2>LLM 流式输出 Demo</h2>
+  <input id="prompt" placeholder="输入问题..." value="用一句话解释什么是 LLM">
+  <button onclick="ask()">发送</button>
+  <div id="output"></div>
+  <div class="stat" id="stat"></div>
+
+  <script>
+    let startTime = 0;
+
+    async function ask() {
+      const prompt = document.getElementById('prompt').value;
+      const output = document.getElementById('output');
+      const stat = document.getElementById('stat');
+      output.textContent = '';
+      startTime = performance.now();
+
+      const resp = await fetch('/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let firstToken = true;
+      let tokenCount = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value);
+        // SSE 格式: data: {token}\n\n
+        for (const line of text.split('\n')) {
+          if (line.startsWith('data: ')) {
+            const token = line.slice(6);
+            output.textContent += token;
+            if (firstToken) {
+              const ttft = (performance.now() - startTime).toFixed(0);
+              stat.textContent = `TTFT: ${ttft}ms | `;
+              firstToken = false;
+            }
+            tokenCount++;
+          }
+        }
+      }
+      const total = (performance.now() - startTime).toFixed(0);
+      const tpot = tokenCount > 1 ? ((total - parseFloat(stat.textContent.match(/TTFT: (\d+)/)[1])) / (tokenCount - 1)).toFixed(1) : 'N/A';
+      stat.textContent += `总耗时: ${total}ms | tokens: ${tokenCount} | 平均 TPOT: ${tpot}ms`;
+    }
+  </script>
+</body>
+</html>

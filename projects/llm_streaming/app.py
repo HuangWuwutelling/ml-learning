@@ -5,8 +5,13 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 from stream import generate, load_model
+
+
+class StreamRequest(BaseModel):
+    prompt: str
 
 app = FastAPI(title="LLM Streaming Demo")
 
@@ -35,6 +40,16 @@ async def stream_endpoint(prompt: str):
             "Cache-Control": "no-cache",
             "X-Accel-Buffering": "no",  # 禁用 NGINX buffering
         },
+    )
+
+
+@app.post("/stream")
+async def stream_post(req: StreamRequest):
+    """POST 版流式端点（前端 fetch 用）。"""
+    return StreamingResponse(
+        generate(req.prompt),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
 
 
