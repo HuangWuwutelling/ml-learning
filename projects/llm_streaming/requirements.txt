@@ -1,0 +1,7 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+transformers>=4.40
+torch>=2.0
+accelerate>=0.27
+bitsandbytes>=0.42  # 4-bit 可选
+pydantic>=2.0
