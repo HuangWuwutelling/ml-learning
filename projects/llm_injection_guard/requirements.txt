@@ -1,0 +1,4 @@
+transformers>=4.40
+torch>=2.0
+accelerate>=0.27
+bitsandbytes>=0.42  # 4-bit 可选
