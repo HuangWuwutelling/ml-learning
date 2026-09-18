@@ -28,8 +28,15 @@ def load_model():
         kwargs["device_map"] = "auto"
     else:
         kwargs["torch_dtype"] = torch.float16
-        kwargs["device_map"] = "auto"
+        # 不用 device_map="auto"：内存不够时它会静默把权重卸载到磁盘，
+        # 逐 token 速度掉到 1/8 却不报错，测出来的数全是垃圾。直接加载，装不下就报错。
     _model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, **kwargs)
+
+    offloaded = [n for n, p in _model.named_parameters() if p.device.type == "meta"]
+    if offloaded:
+        raise RuntimeError(
+            f"{len(offloaded)} 个参数被卸载到 meta device，测速结果不可用，先腾出内存再跑"
+        )
     return _tokenizer, _model
 
 

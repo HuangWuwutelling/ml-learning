@@ -1,4 +1,10 @@
-"""Benchmark LLM 流式输出: 20 题，TTFT + TPOT 实测."""
+"""Benchmark LLM 流式输出: 20 题，TTFT + TPOT 实测.
+
+用法: python bench.py [--out bench_results.json]
+每次跑存一份，别覆盖上一次。同一台机器、同一份代码跑两遍，时间类指标能差 20% 以上，
+只留一份结果就看不出这个波动。
+"""
+import argparse
 import asyncio
 import json
 import time
@@ -7,6 +13,7 @@ from pathlib import Path
 from stream import generate, load_model
 
 TEST_SET = Path(__file__).parent / "test_set.jsonl"
+DEFAULT_OUT = "bench_results.json"
 
 
 async def measure_one(prompt: str) -> dict:
@@ -31,7 +38,7 @@ async def measure_one(prompt: str) -> dict:
     }
 
 
-async def run_benchmark():
+async def run_benchmark(out_name: str = DEFAULT_OUT):
     load_model()
     prompts = []
     with open(TEST_SET, encoding="utf-8") as f:
@@ -56,7 +63,7 @@ async def run_benchmark():
         "avg_tokens": round(sum(tokens) / len(tokens), 1),
         "results": results,
     }
-    out_path = Path(__file__).parent / "bench_results.json"
+    out_path = Path(__file__).parent / out_name
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
     print(f"\nSummary: avg TTFT={summary['avg_ttft_ms']}ms, avg TPOT={summary['avg_tpot_ms']}ms, avg tokens={summary['avg_tokens']}")
@@ -64,4 +71,6 @@ async def run_benchmark():
 
 
 if __name__ == "__main__":
-    asyncio.run(run_benchmark())
+    parser = argparse.ArgumentParser(description="LLM 流式输出 bench")
+    parser.add_argument("--out", default=DEFAULT_OUT, help=f"结果文件名（相对本目录），默认 {DEFAULT_OUT}")
+    asyncio.run(run_benchmark(parser.parse_args().out))
