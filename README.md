@@ -98,6 +98,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | MCP 协议：统一 LLM 工具调用的标准接口 | MCP, JSON-RPC 2.0, stdio / HTTP+SSE |
 | 从 demo 到生产，你的 LLM 项目卡在哪一层？（已发 2026-09-12） | System Design, 3 层级（demo/上线/撑量）, 决策树（RAG / Agent / 微调）, 8 件事清单 |
 | 让 LLM 必返回 JSON：3 种方法把输出约束为 JSON（已发 2026-09-13） | Structured Output, Function Calling, JSON Schema, Constrained Decoding, Pydantic, retry 循环 |
+| 为什么 ChatGPT 逐 token 输出：LLM 流式输出的本质与拼装（已发 2026-09-19） | SSE, FastAPI streaming, fetch+ReadableStream, transformers TextIteratorStreamer, TTFT, TPOT |
 
 ### 项目工程线 (`articles/engineering/`)
 
