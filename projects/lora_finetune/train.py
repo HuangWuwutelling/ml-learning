@@ -1,7 +1,7 @@
 """
 LoRA fine-tuning of Qwen2.5-0.5B-Instruct for environment violation severity classification.
 
-Dataset: data/env_violations.jsonl  (text, label) -- 150 samples
+Dataset: data/env_violations.jsonl  (text, label) -- 174 samples, 8:2 split -> 140 train / 34 test
 Output: projects/lora_finetune/lora_adapter/
 
 Hardware: designed for 4GB VRAM (QLoRA 4-bit).
