@@ -40,7 +40,8 @@ def init_database():
     store.add_documents(all_chunks, all_metadatas, embeddings)
 
     import re
-    articles = re.findall(r'第[一二三四五六七八九十百千零]+条', text)
+    # 条文标题 = 行首「第X条」+ 全角空格；正文里的「依照第X条」等交叉引用不算
+    articles = set(re.findall(r'^第[一二三四五六七八九十百千零]+条　', text, re.M))
 
     print(f"\n✅ 向量数据库初始化完成！")
     print(f"   法律文件: 中华人民共和国生态环境法典")
