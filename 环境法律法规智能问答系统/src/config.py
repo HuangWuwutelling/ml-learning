@@ -19,6 +19,15 @@ class Config:
     CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "500"))
     CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
 
+    # 检索模式：dense（默认，直接向量检索）| hybrid | hybrid_rerank
+    # hybrid / hybrid_rerank 对应 articles/llm/13 里的三层检索，比 dense 慢
+    # （重排模型 CPU 上每条约 200ms），演示默认走 dense
+    RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "dense").strip().lower()
+    RETRIEVAL_CANDIDATES = int(os.getenv("RETRIEVAL_CANDIDATES", "50"))  # 单路召回宽度
+    RRF_K = int(os.getenv("RRF_K", "60"))                                # RRF 平滑常数
+    RERANKER_MODEL_NAME = os.getenv("RERANKER_MODEL_NAME", "BAAI/bge-reranker-v2-m3")
+    RERANK_MAX_LENGTH = int(os.getenv("RERANK_MAX_LENGTH", "512"))
+
     MAX_HISTORY_ROUNDS = int(os.getenv("MAX_HISTORY_ROUNDS", "5"))
 
     @property

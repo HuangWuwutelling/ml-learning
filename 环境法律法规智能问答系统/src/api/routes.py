@@ -15,6 +15,8 @@ qa_engine = QAEngine()
 
 class QueryRequest(BaseModel):
     query: str
+    # 可选，覆盖 config.RETRIEVAL_MODE：dense | hybrid | hybrid_rerank
+    mode: str | None = None
 
 
 class QueryResponse(BaseModel):
@@ -53,7 +55,7 @@ def query(request: QueryRequest):
         raise HTTPException(status_code=400, detail="查询内容不能为空")
 
     start = time.time()
-    result = qa_engine.answer(request.query)
+    result = qa_engine.answer(request.query, mode=request.mode)
     elapsed = int((time.time() - start) * 1000)
 
     logger.info(f"查询: '{request.query}' -> 耗时{elapsed}ms, 来源: {result['sources']}")

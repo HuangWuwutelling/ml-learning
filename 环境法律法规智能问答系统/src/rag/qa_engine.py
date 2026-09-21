@@ -10,6 +10,8 @@ import requests
 
 from src.config import config
 from src.data.processor import VectorStore
+from src.rag.bm25_index import load_bm25_index
+from src.rag.hybrid import Reranker, doc_to_item, rrf_fuse
 
 
 class EmbeddingModel:
@@ -50,12 +52,61 @@ class QAEngine:
         self.vector_store = VectorStore()
         # 连续对话历史，每项是 {"role": "user"/"assistant", "content": "..."}
         self._history: List[dict] = []
+        # hybrid 检索要用的 BM25 索引和重排模型都懒加载，dense 模式下完全不碰
+        self._bm25 = None
+        self._reranker = None
 
-    def retrieve(self, query: str, top_k: int = None) -> List[dict]:
-        """检索相关文档片段"""
+    @property
+    def bm25(self):
+        """BM25 索引，首次用到时才加载"""
+        if self._bm25 is None:
+            self._bm25 = load_bm25_index()
+        return self._bm25
+
+    @property
+    def reranker(self):
+        """Cross-Encoder 重排模型，首次用到时才加载"""
+        if self._reranker is None:
+            self._reranker = Reranker(
+                config.RERANKER_MODEL_NAME, config.RERANK_MAX_LENGTH
+            )
+        return self._reranker
+
+    def _bm25_search(self, query: str, n: int) -> List[dict]:
+        """BM25 关键词召回，转成与向量检索一致的 dict 结构"""
+        self.bm25.k = n
+        return [doc_to_item(d) for d in self.bm25.invoke(query)]
+
+    def retrieve(self, query: str, top_k: int = None, mode: str = None) -> List[dict]:
+        """检索相关文档片段
+
+        mode: dense | hybrid | hybrid_rerank，默认取 config.RETRIEVAL_MODE。
+        未知取值记一条 warning 后按 dense 处理。
+        """
+        mode = (mode or config.RETRIEVAL_MODE or "dense").strip().lower()
+        if top_k is None:
+            top_k = config.TOP_K
+
+        if mode not in ("dense", "hybrid", "hybrid_rerank"):
+            logger.warning(f"未知检索模式 {mode!r}，按 dense 处理")
+            mode = "dense"
+
+        if mode == "dense":
+            query_embedding = self.embedding_model.encode_query(query)
+            return self.vector_store.search(query_embedding, top_k=top_k)
+
+        # 两路各召回 candidates 条，宽于最终要的 top_k
+        candidates = max(config.RETRIEVAL_CANDIDATES, top_k)
         query_embedding = self.embedding_model.encode_query(query)
-        results = self.vector_store.search(query_embedding, top_k=top_k)
-        return results
+        dense_results = self.vector_store.search(query_embedding, top_k=candidates)
+        bm25_results = self._bm25_search(query, candidates)
+        fused = rrf_fuse(dense_results, bm25_results, k=config.RRF_K, top_n=candidates)
+
+        if mode == "hybrid":
+            return fused[:top_k]
+
+        # hybrid_rerank：在融合结果里精排出 top_k
+        return self.reranker.rerank(query, fused, top_k=top_k)
 
     def build_prompt(self, query: str, contexts: List[dict], history: List[dict] = None) -> str:
         """构建LLM提示词"""
@@ -120,10 +171,10 @@ class QAEngine:
                 logger.error(f"响应内容: {e.response.text}")
             return f"抱歉，AI服务暂时不可用（{str(e)}），请稍后再试。"
 
-    def answer(self, query: str, top_k: int = None) -> dict:
+    def answer(self, query: str, top_k: int = None, mode: str = None) -> dict:
         """完整问答流程：检索 -> 生成"""
         # 检索
-        contexts = self.retrieve(query, top_k=top_k)
+        contexts = self.retrieve(query, top_k=top_k, mode=mode)
 
         if not contexts:
             self._history.append({"role": "user", "content": query})
@@ -158,7 +209,9 @@ class QAEngine:
                 {
                     "content": c["content"][:200] + "..." if len(c["content"]) > 200 else c["content"],
                     "law_name": c["metadata"].get("law_name", "未知"),
-                    "relevance": round((1 - c["distance"]) * 100, 1) if c.get("distance") else 0
+                    # dense 用向量距离换算；hybrid 的候选来自 BM25/RRF，没有
+                    # distance，此时给 None 而不是 0，免得把「没有这个数」显示成「相关度 0」
+                    "relevance": round((1 - c["distance"]) * 100, 1) if c.get("distance") is not None else None
                 }
                 for c in contexts[:3]
             ]

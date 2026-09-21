@@ -2,6 +2,8 @@
 .env
 
 # Python
+.venv*/
+venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -11,6 +13,9 @@ build/
 
 # 向量数据库（可重新生成）
 data/chroma_db/
+
+# BM25 索引（可由 ChromaDB 重建，load_bm25_index() 会自动兜底）
+data/bm25_index.pkl
 
 # 系统文件
 Thumbs.db
