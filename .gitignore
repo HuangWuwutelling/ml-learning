@@ -51,6 +51,9 @@ projects/wali_cmd/
 # 项目 systemd 服务文件（本地部署用，不上传 GitHub）
 projects/ml_playground/ml-playground.service
 
+# env_agent 评测运行产物（脚本 eval_agent.py 跟踪，结果 JSON 是每次跑完的账，不跟踪）
+projects/env_agent/eval_results/
+
 # OS
 Thumbs.db
 .DS_Store

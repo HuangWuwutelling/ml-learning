@@ -201,13 +201,31 @@ EMISSION_STANDARDS = {
 }
 
 
+# 关键字后面跟着这些词，说明它是修饰语、行业主体是后面那个行当：
+# 「化工机械」是机械制造业，「化工」只是它服务的对象，不能按化工行业算。
+# 反过来「化工企业」「钢铁冶炼」后面跟的不是行当名，照常命中。
+_NON_INDUSTRY_SUFFIXES = (
+    "机械", "设备", "装备", "仪器", "仪表", "器材", "贸易", "物流",
+    "销售", "商贸", "咨询", "设计", "软件", "信息", "安装", "维修",
+    "检测", "大学", "学院", "协会", "展会",
+)
+
+
 def _match_industry(industry: str) -> Optional[str]:
-    """匹配行业类型，精确匹配优先，较长关键字优先避免误匹配。"""
+    """匹配行业类型：精确最优先，其次按关键字包含匹配，长的关键字先试。"""
+    if not industry:
+        return None
     if industry in EMISSION_FACTORS:
         return industry
-    for key in sorted(EMISSION_FACTORS.keys(), key=len, reverse=True):
-        if key in industry:
-            return key
+
+    # 长关键字先试：「化工园区污水处理厂」该命中污水处理厂，不是化工
+    for key in sorted(EMISSION_FACTORS, key=len, reverse=True):
+        pos = industry.find(key)
+        if pos < 0:
+            continue
+        if industry[pos + len(key):].startswith(_NON_INDUSTRY_SUFFIXES):
+            continue
+        return key
     return None
 
 
