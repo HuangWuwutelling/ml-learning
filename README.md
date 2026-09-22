@@ -84,26 +84,26 @@
 
 RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
-| 文章 | 涉及概念 |
-|------|---------|
-| AI Agent 入门 | Agent, Tool Calling |
-| RAG 实战：环境法典智能问答 | RAG, ChromaDB, DeepSeek |
-| LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote |
-| ML 入门 | ML 基础概念 |
-| 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering |
-| 从 Chain 到 Graph：一个环境申报 Agent 怎么把流程画成图 | LangChain, LangGraph, Tracing, env_agent |
-| LoRA 微调：用 4GB 显卡微调大模型 | LoRA/QLoRA, PEFT, Qwen2.5-0.5B |
-| 向量数据库：不只是 RAG 的存储 | Vector DB, Embedding, BGE, ChromaDB |
-| 我给 AI 请了个环保顾问（LangGraph 构建排污许可申报 Agent） | Agent + RAG + Tools + Gradio |
-| 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
-| 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
-| RAG 评估实战（RAGAS） | RAG Evaluation, RAGAS |
-| 向量数据库进阶：Hybrid+Rerank 让法典问答 context_recall 从 0.35 推到 0.40 | Hybrid Search, BM25, RRF, Cross-Encoder, HNSW |
-| MCP 协议：统一 LLM 工具调用的标准接口 | MCP, JSON-RPC 2.0, stdio / HTTP+SSE |
-| 从 demo 到生产，你的 LLM 项目卡在哪一层？（已发 2026-09-12） | System Design, 3 层级（demo/上线/撑量）, 决策树（RAG / Agent / 微调）, 8 件事清单 |
-| 让 LLM 必返回 JSON：3 种方法把输出约束为 JSON（已发 2026-09-13） | Structured Output, Function Calling, JSON Schema, Constrained Decoding, Pydantic, retry 循环 |
-| 为什么 ChatGPT 逐 token 输出：LLM 流式输出的本质与拼装（已发 2026-09-19） | SSE, FastAPI streaming, fetch+ReadableStream, transformers TextIteratorStreamer, TTFT, TPOT |
-| 为什么 ChatGPT 会被骗：6 层防线抵御 Prompt Injection（已发 2026-09-19） | 输入预处理, 攻击检测, Prompt 隔离, System 加固, 输出验证, 行动沙盒, Qwen2.5-0.5B |
+| # | 文章 | 涉及概念 |
+|---|------|---------|
+| 01 | AI Agent 入门 | Agent, Tool Calling |
+| 02 | RAG 实战：环境法典智能问答 | RAG, ChromaDB, DeepSeek |
+| 03 | LLM Wiki：用 AI 构建知识库 | LLM Wiki, YoudaoNote |
+| 04 | ML 入门 | ML 基础概念 |
+| 05 | 你写的 Prompt 为什么不 work？5 个反模式自查 | Prompt Engineering |
+| 06 | 从 Chain 到 Graph：一个环境申报 Agent 怎么把流程画成图 | LangChain, LangGraph, Tracing, env_agent |
+| 07 | LoRA 微调：用 4GB 显卡微调大模型 | LoRA/QLoRA, PEFT, Qwen2.5-0.5B |
+| 08 | 向量数据库：不只是 RAG 的存储 | Vector DB, Embedding, BGE, ChromaDB |
+| 09 | 我给 AI 请了个环保顾问（LangGraph 构建排污许可申报 Agent） | Agent + RAG + Tools + Gradio |
+| 10 | 让 AI 学会"一次只问一个问题"（System Prompt 中的决策状态机） | Prompt Engineering, System Prompt |
+| 11 | 把法规喂给 AI（从 HTML 到向量检索的全链路实现） | RAG, ChromaDB, BGE |
+| 12 | RAG 评估实战（RAGAS） | RAG Evaluation, RAGAS |
+| 13 | 向量数据库进阶：Hybrid+Rerank 让法典问答 context_recall 从 0.35 推到 0.40 | Hybrid Search, BM25, RRF, Cross-Encoder, HNSW |
+| 14 | MCP 协议：统一 LLM 工具调用的标准接口 | MCP, JSON-RPC 2.0, stdio / HTTP+SSE |
+| 15 | 从 demo 到生产，你的 LLM 项目卡在哪一层？ | System Design, 3 层级（demo/上线/撑量）, 决策树（RAG / Agent / 微调）, 8 件事清单 |
+| 16 | 让 LLM 必返回 JSON：3 种方法把输出约束为 JSON | Structured Output, Function Calling, JSON Schema, Constrained Decoding, Pydantic, retry 循环 |
+| 17 | 为什么 ChatGPT 逐 token 输出：LLM 流式输出的本质与拼装 | SSE, FastAPI streaming, fetch+ReadableStream, transformers TextIteratorStreamer, TTFT, TPOT |
+| 18 | 为什么 ChatGPT 会被骗：6 层防线抵御 Prompt Injection | 输入预处理, 攻击检测, Prompt 隔离, System 加固, 输出验证, 行动沙盒, Qwen2.5-0.5B |
 
 ### 项目工程线 (`articles/engineering/`)
 
@@ -117,8 +117,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 04 | Docker Compose：多服务编排实战 |
 | 05 | 一个人用 vibe coding 做小程序：步骤与架构 |
 | 06 | 139 条数据的小程序搜索，真的需要向量数据库吗 |
-| 07 | fund-tracker 工具架构：5 个核心选型与 AI 辅助搭建（外部仓库 [HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker)） |
-| 08 | fund-tracker：个人投资记录工具，记持仓、算收益、自动出报表（同上） |
+| 07-08 | fund-tracker：工具架构（4 层 + 5 个核心选型）+ 工具介绍（4 个核心功能 + 4 步上手）。外部仓库 [HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker) |
 
 ### 环境工程线 (`articles/env/`)
 
@@ -141,13 +140,13 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 13 | 从 PFOA 到 GenX：PFAS 家族为什么禁不完 | — |
 | 14 | 一块农用地到底算不算污染？GB 15618-2018 的判定逻辑 | — |
 | 15 | GB 15618 自动化评价工具：不用装 Python，exe 双击就能跑 | — |
-| 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0（已发 2026-08-07） | `models/seir.py` |
-| 17 | 屋顶光伏装多少，末端电压会越限？（已发 2026-08-08） | `models/pv_distribution.py` |
-| 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流（已发） | `models/groundwater_tce_pce.py` |
-| 19 | 为什么西电东送，必须升到 ±1100 kV 直流？（已发 2026-08-10） | `models/uhvdc.py` |
-| 20 | 从没在极地用过，POPs 是怎么到的北极？（已发 2026-08-17） | `models/pops_lrt.py` |
-| 21 | 半衰期：为什么布洛芬 4-6 小时吃一次，而不是 24 小时（已发 2026-08-15） | `models/ibuprofen_pk.py` |
-| 22 | 同一罐奶粉，为什么冲出来不一样？一个方程讲清溶解的原理（已发 2026-08-16） | `models/milk_powder.py` |
+| 16 | 麻疹为什么必须打疫苗，普通感冒不用：SEIR 与 R0 | `models/seir.py` |
+| 17 | 屋顶光伏装多少，末端电压会越限？ | `models/pv_distribution.py` |
+| 18 | 三氯乙烯/四氯乙烯：地下水看不见的羽流 | `models/groundwater_tce_pce.py` |
+| 19 | 为什么西电东送，必须升到 ±1100 kV 直流？ | `models/uhvdc.py` |
+| 20 | 从没在极地用过，POPs 是怎么到的北极？ | `models/pops_lrt.py` |
+| 21 | 半衰期：为什么布洛芬 4-6 小时吃一次，而不是 24 小时 | `models/ibuprofen_pk.py` |
+| 22 | 同一罐奶粉，为什么冲出来不一样？一个方程讲清溶解的原理 | `models/milk_powder.py` |
 
 > 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
@@ -157,15 +156,15 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 | # | 文章 | 涉及概念 |
 |---|------|---------|
-| 00 | 相关不等于因果：怎么从数据里找到因果关系？（已发 2026-08-23） | 因果推断概念、Pearl 因果阶梯、confounder |
-| 01 | 推荐 v2 上线，业务组说 GMV 涨了 30%，这是 v2 带来的吗？（已发 2026-08-25） | PSM 倾向得分匹配、logistic 倾向得分、NN k=4 + 卡尺（0.2×PS std）、SMD 平衡性检验、朴素对比 vs PSM、Rosenbaum & Rubin 1983 / Austin 2011 / Stuart 2010 |
-| 02 | 涨最低工资反而不裁员？DID 怎么算出 +2.75 FTE（已发 2026-08-27） | DID 双重差分、平行趋势假设、2x2 表、ATT、Card & Krueger 1994、Bertrand et al. 2004、Neumark & Wascher 2000 |
-| 03 | 只差高考 1 分：一本线背后，断点回归如何识别精英大学入学的因果效应（已发 2026-09-02） | RDD 断点回归、running variable=分数差、cutoff c=0、连续性假设、局部线性回归、带宽 ±20 分、LATE at cutoff、placebo、density test、Ruixue Jia & Hongbin Li *JPubE* 2021（5.2%-9.7% 起薪溢价 / IV 28.3%-45.6% / 信号假说）、Lee & Lemieux 2010、Imbens & Kalyanaraman 2012、McCrary 2008 |
-| 04 | 加州人均卷烟 12 年腰斩，但同期全国都在降，合成控制法怎么把这层「背景」扣掉？（已发 2026-09-04） | SCM 合成控制、约束优化求 W 权重、pre-treatment fit / post-ATT / placebo 三步检验、对照池失灵 + 同期被冲击（99 号提案是加税 + 媒体宣传 + 1994-95 AB 13/AB 846 禁烟令的政策包）、Abadie-Diamond-Hainmueller 2010 *JASA*、Abadie-Gardeazabal 2003 *AER*、Arkhangelsky et al. 2021 *AER* |
-| 05 | 推荐系统 v2 上线 GMV 涨了 30%，因果图怎么挑出该调的变量？（已发 2026-09-07） | DAG 因果图、5 节点 7 边、链/叉/对撞三种基本结构、backdoor 准则、Pearl 1995 *Biometrika*、Glymour et al. 2019 |
-| 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么（已发 2026-08-30） | DID 双重差分、企业出口复杂度（export sophistication）、低复杂度产品退出机制、异质性处理效应、Li, Peng, Huang & Zhou 2022；对照文献 Jia 2014、Card & Krueger 1994 |
+| 00 | 相关不等于因果：怎么从数据里找到因果关系？ | 因果推断概念、Pearl 因果阶梯、confounder |
+| 01 | 推荐 v2 上线，业务组说 GMV 涨了 30%，这是 v2 带来的吗？ | PSM 倾向得分匹配、SMD 平衡性检验、ATT |
+| 02 | 涨最低工资反而不裁员？DID 怎么算出 +2.75 FTE | DID 双重差分、平行趋势、ATT |
+| 03 | 只差高考 1 分：一本线背后，断点回归如何识别精英大学入学的因果效应 | RDD 断点回归、带宽 ±20 分、LATE at cutoff |
+| 04 | 加州人均卷烟 12 年腰斩，但同期全国都在降，合成控制法怎么把这层「背景」扣掉？ | SCM 合成控制、pre-treatment fit、post-ATT、placebo |
+| 05 | 推荐系统 v2 上线 GMV 涨了 30%，因果图怎么挑出该调的变量？ | DAG 因果图、backdoor 准则 |
+| 06 | 涨最低工资，出口复杂度反而升了？因果推断告诉你为什么 | DID 双重差分、企业出口复杂度、异质性效应 |
 
-> **关于 notebook**：causal 系列 4 个 notebook，01 PSM / 02 DID / 04 SCM / 05 DAG 均 self-contained，clone 后在仓库根目录跑 nbconvert 即可复现。02 把 Card & Krueger 1994 Table 2 的 4 行均值数据内联进 `notebooks/causal_02_DID.ipynb` 的 cell-1；01 把 MovieLens 1M 原始数据放进 git-tracked 的 `data/ml-1m/`，loader 一并内联进 `notebooks/causal_01_PSM.ipynb` 的 cell-1；04 把 California tobacco panel 数据与 SCM 求解内嵌进 `notebooks/causal_04_SCM.ipynb` 的 cell-1（实测 ATT = -21.93 packs/人/年 vs 论文 -19.4，因 3+1 预测变量与 V=I 简化）；05 用 1000 样本合成 SEM 数据内嵌进 `notebooks/causal_05_DAG.ipynb` 的 cell-1（5 节点 7 边 DAG，seed=42，独立可运行）。03 RDD 为纯概念文，无 notebook、无数据依赖。
+> **关于 notebook**：causal 系列 4 个 notebook（01/02/04/05）均 self-contained，clone 后在仓库根目录跑 nbconvert 即可复现；03 RDD 纯概念文无 notebook。
 
 ## 项目
 
@@ -179,10 +178,6 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 副线 |
 | LLM Wiki 知识库 | AI 自动构建的环保知识库（YoudaoNote） | 工具 |
 | **fund-tracker** | 个人投资记录工具：4 层架构 + 5 个核心选型（无后端 + Zustand 单 store + 东方财富 JSONP + GitHub Pages + localStorage），纯前端；GitHub Pages 部署；源码在 [外部仓库 HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker) | 工程案例 |
-
-> 展示项目：上表前 3 个（大模型应用）+ gb15618 + wali_cmd + ml_playground + fund-tracker。
->
-> 前 3 个项目的代码分别在 `环境法律法规智能问答系统/`、`projects/env_agent/`、`projects/lora_finetune/`，**已定稿、不再继续开发**。fund-tracker 源码在外部仓库。
 
 ## 快速复现
 
