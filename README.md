@@ -29,6 +29,10 @@
 └── .gitignore
 ```
 
+> 外部仓库（独立 git 项目，不在本仓里）：
+> - `gb15618` 源码：[github.com/HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)
+> - `fund-tracker` 源码：[github.com/HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker)
+
 ## 文章系列
 
 ### AI 发展史线 (`articles/ai-history/`)
@@ -113,6 +117,8 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 04 | Docker Compose：多服务编排实战 |
 | 05 | 一个人用 vibe coding 做小程序：步骤与架构 |
 | 06 | 139 条数据的小程序搜索，真的需要向量数据库吗 |
+| 07 | fund-tracker 工具架构：5 个核心选型与 AI 辅助搭建（外部仓库 [HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker)） |
+| 08 | fund-tracker：个人投资记录工具，记持仓、算收益、自动出报表（同上） |
 
 ### 环境工程线 (`articles/env/`)
 
@@ -172,10 +178,11 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | 行业案例 |
 | **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 副线 |
 | LLM Wiki 知识库 | AI 自动构建的环保知识库（YoudaoNote） | 工具 |
+| **fund-tracker** | 个人投资记录工具：4 层架构 + 5 个核心选型（无后端 + Zustand 单 store + 东方财富 JSONP + GitHub Pages + localStorage），纯前端；GitHub Pages 部署；源码在 [外部仓库 HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker) | 工程案例 |
 
-> 展示项目：上表前 3 个（大模型应用）+ gb15618 + wali_cmd + ml_playground。
+> 展示项目：上表前 3 个（大模型应用）+ gb15618 + wali_cmd + ml_playground + fund-tracker。
 >
-> 前 3 个项目的代码分别在 `环境法律法规智能问答系统/`、`projects/env_agent/`、`projects/lora_finetune/`，**已定稿、不再继续开发**。
+> 前 3 个项目的代码分别在 `环境法律法规智能问答系统/`、`projects/env_agent/`、`projects/lora_finetune/`，**已定稿、不再继续开发**。fund-tracker 源码在外部仓库。
 
 ## 快速复现
 
@@ -216,4 +223,9 @@ cd gb15618 && pip install -e . && python -m gb15618
 
 # GB 15618 评价工具（Windows exe，免装 Python）
 # 从 https://github.com/HuangWuwutelling/gb15618/releases/latest 下载 gb15618.exe，双击运行
+
+# fund-tracker 投资记录工具（外部仓库，纯前端 + GitHub Pages）
+git clone https://github.com/HuangWuwutelling/fund-tracker.git
+cd fund-tracker && npm install && npm run dev
+# 或直接访问 https://huangwuwutelling.github.io/fund-tracker/
 ```
