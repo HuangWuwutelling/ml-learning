@@ -23,6 +23,7 @@ labels_2021 = ['2K', '0%', '纯文本', '本科', '实验级']
 labels_2026 = ['1M (500x)', '100%', '文/图/音/视频', '~PhD', '~生产级']
 
 fig, ax = plt.subplots(figsize=(9, 4), dpi=100)
+fig.subplots_adjust(left=0.22)
 y = np.arange(len(dims))
 h = 0.36
 
