@@ -104,6 +104,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 16 | 让 LLM 必返回 JSON：3 种方法把输出约束为 JSON | Structured Output, Function Calling, JSON Schema, Constrained Decoding, Pydantic, retry 循环 |
 | 17 | 为什么 ChatGPT 逐 token 输出：LLM 流式输出的本质与拼装 | SSE, FastAPI streaming, fetch+ReadableStream, transformers TextIteratorStreamer, TTFT, TPOT |
 | 18 | 为什么 ChatGPT 会被骗：6 层防线抵御 Prompt Injection | 输入预处理, 攻击检测, Prompt 隔离, System 加固, 输出验证, 行动沙盒, Qwen2.5-0.5B |
+| 19 | RAG 评测能信几分：4 件事读 RAGAS 数字（分母/步长/噪声/复现性） | RAGAS, 23 题集分母实为 20, 聚合步长 0.05, 同配置重跑噪声 0.033, 四模式召回判定完全相同 |
 
 ### 项目工程线 (`articles/engineering/`)
 
