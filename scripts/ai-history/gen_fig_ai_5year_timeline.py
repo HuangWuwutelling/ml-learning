@@ -15,17 +15,18 @@ INTL_MAIN = [
     (datetime(2022, 11, 30), 'ChatGPT'),
     (datetime(2023, 3, 14), 'GPT-4\n多模态'),
     (datetime(2024, 3, 4), 'Claude 3\n三层模型'),
-    (datetime(2024, 9, 12), 'OpenAI o1\n推理范式'),
+    (datetime(2024, 9, 12), 'o1\n(推理)'),  # 缩短：避免与下方 DeepSeek-R1 撞标签
     (datetime(2026, 6, 30), 'Sonnet 5\n1M 上下文'),
     (datetime(2026, 9, 22), 'Opus 5.5'),
 ]
-# 次节点（国际）
+# 次节点（国际），每项可指定 y_offset 避免标签撞车
 INTL_MINOR = [
-    (datetime(2023, 11, 6), 'Assistants API'),
-    (datetime(2024, 5, 30), '工具调用 GA'),
-    (datetime(2024, 10, 22), 'Computer Use'),  # Task 1 数据核实修正：精确到 10-22（Anthropic 官方 + Simon Willison + Wikipedia 三源确认）
-    (datetime(2026, 7, 24), 'Opus 5'),
-    (datetime(2026, 9, 28), 'Sonnet 5.5'),
+    # (datetime, label, y_offset, va)
+    (datetime(2023, 11, 6), 'Assistants API', -0.3, 'top'),
+    (datetime(2024, 5, 30), '工具调用 GA', +0.4, 'bottom'),   # y=+0.55 与 Claude 3 同 y 会撞 → 上抬至 +0.4
+    (datetime(2024, 10, 22), 'Computer Use', -0.4, 'top'),     # y=-0.55 与 o1 同 y 会撞 → 下移至 -0.4
+    (datetime(2026, 7, 24), 'Opus 5', -0.3, 'top'),
+    # Sonnet 5.5 (2026-09-28) 已删：与 Opus 5.5 (2026-09-22) 仅隔 6 天，5 年轴上无法清晰呈现
 ]
 # 国产节点（主节点大小，红色区分）
 CN_MAIN = [
@@ -57,10 +58,10 @@ for i, (dt, label) in enumerate(INTL_MAIN):
                 arrowprops=dict(arrowstyle='-', color='#888', lw=0.6))
 
 # 国际次节点（小灰点 + 简短描述）
-for dt, label in INTL_MINOR:
+for dt, label, y_off, va in INTL_MINOR:
     ax.scatter(dt, 0, s=40, color='#999', zorder=2)
-    ax.annotate(label, xy=(dt, 0), xytext=(dt, -0.3), fontsize=7,
-                ha='center', va='top', color='#666')
+    ax.annotate(label, xy=(dt, 0), xytext=(dt, y_off), fontsize=7,
+                ha='center', va=va, color='#666')
 
 # 国产主节点（大红圆 + 上下标签）
 CN_RED = '#C8102E'
