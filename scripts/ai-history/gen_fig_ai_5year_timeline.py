@@ -80,13 +80,7 @@ for dt, label in ENDS:
     ax.annotate(label, xy=(dt, 0), xytext=(dt, 0.85), fontsize=11,
                 ha='center', va='bottom', fontweight='bold', color='#222')
 
-# 背景冷暖渐变（axvspan 模拟）
-import matplotlib.colors as mcolors
-cmap = mcolors.LinearSegmentedColormap.from_list(
-    'coolwarm', ['#E8F0FA', '#FFF4E6'])
-for x in [START, END]:
-    pass
-# 简单做法：左侧浅蓝矩形，右侧浅橙矩形
+# 背景冷暖渐变：左半浅蓝，右半浅橙
 ax.axvspan(START, datetime(2024, 1, 1), alpha=0.15, color='#4A90D9', zorder=0)
 ax.axvspan(datetime(2024, 1, 1), END, alpha=0.15, color='#E8A040', zorder=0)
 
