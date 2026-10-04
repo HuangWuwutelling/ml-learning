@@ -148,6 +148,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 20 | 从没在极地用过，POPs 是怎么到的北极？ | `models/pops_lrt.py` |
 | 21 | 半衰期：为什么布洛芬 4-6 小时吃一次，而不是 24 小时 | `models/ibuprofen_pk.py` |
 | 22 | 同一罐奶粉，为什么冲出来不一样？一个方程讲清溶解的原理 | `models/milk_powder.py` |
+| 23 | 免费高速实施 14 年，几个值得看的数字 | — |
 
 > 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
