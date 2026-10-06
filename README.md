@@ -184,45 +184,27 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 
 ## 快速复现
 
-### 1. 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. 运行 Notebook
-
-```bash
-# Day 1-17: 从线性回归到 Transformer
-python -m jupyter nbconvert --to notebook --execute --inplace notebooks/dayN_*.ipynb
-
-# 或逐个运行
-jupyter notebook notebooks/day1_linear_regression.ipynb
-```
-
-### 3. 运行项目
+> 通用依赖安装与 notebook 启动命令见 `CLAUDE.md`「Quick Start」节。本节只列项目级启动命令。
 
 ```bash
 # ML Playground（演示平台）
 uvicorn projects/ml_playground.app:app
 
-# RAG 法典智能问答
+# RAG 法典智能问答（已定稿；详见子项目 CLAUDE.md）
 cd "环境法律法规智能问答系统" && python app.py
 
-# 环保申报智能助手（Agent），详见 projects/env_agent/README.md
+# 环保申报智能助手（Agent；详见 projects/env_agent/README.md）
 cd projects/env_agent && python init_chromadb.py && python app.py
 
-# 环境违法严重程度识别（QLoRA 微调），详见 projects/lora_finetune/README.md
+# 环境违法严重程度识别（QLoRA 微调；详见 projects/lora_finetune/README.md）
 python projects/lora_finetune/train.py
 
-# GB 15618 评价工具（库 + GUI）
+# GB 15618 评价工具（外仓，库 + GUI）
 git clone https://github.com/HuangWuwutelling/gb15618.git
 cd gb15618 && pip install -e . && python -m gb15618
+# 或下载 Windows exe：https://github.com/HuangWuwutelling/gb15618/releases/latest
 
-# GB 15618 评价工具（Windows exe，免装 Python）
-# 从 https://github.com/HuangWuwutelling/gb15618/releases/latest 下载 gb15618.exe，双击运行
-
-# fund-tracker 投资记录工具（外部仓库，纯前端 + GitHub Pages）
+# fund-tracker 投资记录工具（外仓，纯前端 + GitHub Pages）
 git clone https://github.com/HuangWuwutelling/fund-tracker.git
 cd fund-tracker && npm install && npm run dev
 # 或直接访问 https://huangwuwutelling.github.io/fund-tracker/
