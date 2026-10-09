@@ -1,9 +1,15 @@
 import json
 import os
+import socket
 import sys
 import time
 from pathlib import Path
 from datetime import datetime
+
+# Prevent eval_tools / eval_no_tool from hanging on a slow LLM API (previous
+# run timed out at 120s because DeepSeek returned 401 slowly). Default to
+# 30s — short enough to fail fast and let the run complete.
+socket.setdefaulttimeout(30)
 # Ensure project root is on sys.path so 'agent' and 'qms_app' resolve,
 # AND remove this script's directory (eval/) so it does NOT shadow the
 # `datasets` package (which would break the sentence_transformers import
@@ -11,8 +17,13 @@ from datetime import datetime
 # instead of the installed HuggingFace `datasets` library).
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _SCRIPT_DIR = str(Path(__file__).resolve().parent)
-if _SCRIPT_DIR in sys.path:
-    sys.path.remove(_SCRIPT_DIR)
+# Use normcase for case-insensitive comparison (Windows fs is case-insensitive
+# but sys.path strings may differ in case between __file__ resolution and the
+# cwd-derived path Python inserts at startup).
+for i, p in enumerate(sys.path):
+    if os.path.normcase(p) == os.path.normcase(_SCRIPT_DIR):
+        sys.path.pop(i)
+        break
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 import django
@@ -67,22 +78,43 @@ def eval_no_tool():
             'accuracy': correct / len(cases), 'target': 1.00}
 
 def eval_rag():
+    """Real precision@5 (no filter).
+
+    Previous version constrained results with `filter={'doc_id': {'$in': expected}}`,
+    which made the metric degenerate: it only measured whether the expected doc
+    had >= 5 chunks. This version retrieves top 5 from the full collection and
+    counts how many have an `expected_doc_ids` doc_id — true precision.
+    """
     cases = [json.loads(l) for l in open('eval/datasets/rag_20.jsonl', encoding='utf-8')]
     embeddings = HuggingFaceBgeEmbeddings(model_name='BAAI/bge-small-zh-v1.5',
                                           model_kwargs={'device': 'cpu'},
                                           encode_kwargs={'normalize_embeddings': True})
     chroma = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings,
                     collection_name='qms_knowledge')
-    correct = 0
+    per_case = []
     for c in cases:
-        results = chroma.similarity_search(c['query'], k=5,
-                                           filter={'doc_id': {'$in': c['expected_doc_ids']}})
-        # precision@5 = 命中数 / 5
-        p = len(results) / 5
-        if p >= c['min_precision_at_5']:
-            correct += 1
-    return {'name': 'rag_20', 'total': len(cases), 'correct': correct,
-            'accuracy': correct / len(cases), 'target': 0.62}
+        # NO filter — get top 5 from full collection
+        results = chroma.similarity_search(c['query'], k=5)
+        relevant = sum(1 for r in results
+                       if r.metadata.get('doc_id') in c['expected_doc_ids'])
+        p = relevant / 5 if results else 0.0
+        per_case.append({'id': c['id'], 'precision': p, 'relevant': relevant,
+                         'expected': c['expected_doc_ids']})
+    correct = sum(1 for c in cases
+                  for x in per_case
+                  if x['id'] == c['id'] and x['precision'] >= c['min_precision_at_5'])
+    avg_p = sum(x['precision'] for x in per_case) / len(per_case)
+    return {
+        'name': 'rag_20',
+        'total': len(cases),
+        'correct': correct,
+        'accuracy': correct / len(cases),
+        'avg_precision': avg_p,
+        'per_case': per_case,
+        # Honest target for 47-chunk demo KB with bge-small-zh-v1.5
+        # (real precision, not the degenerate filter-based one)
+        'target': 0.40,
+    }
 
 def main():
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
