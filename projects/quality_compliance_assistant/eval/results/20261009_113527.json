@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-10-09T11:33:16.785984",
+  "metrics": {
+    "severity_25": {
+      "name": "severity_25",
+      "total": 25,
+      "correct": 25,
+      "accuracy": 1.0,
+      "target": 0.75,
+      "passed": true
+    },
+    "eval_tools": {
+      "name": "eval_tools",
+      "status": "skipped",
+      "error": "Missing credentials. Please pass an `api_key`, `workload_identity`, `admin_api_key`, or set the `OPENAI_API_KEY` or `OPENAI_ADMIN_KEY` environment variable."
+    },
+    "eval_no_tool": {
+      "name": "eval_no_tool",
+      "status": "skipped",
+      "error": "Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ****e-me is invalid (request_id: 5e74f32f-5261-4837-899a-34d04d11ffc1)', 'type': 'authentication_error', 'param': None, 'co"
+    },
+    "rag_20": {
+      "name": "rag_20",
+      "total": 20,
+      "correct": 10,
+      "accuracy": 0.5,
+      "target": 0.62,
+      "passed": false
+    }
+  }
+}
