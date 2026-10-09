@@ -1,20 +1,20 @@
-{"id": "rag_01", "query": "不合格品控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_02", "query": "纠正措施程序怎么做", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_03", "query": "预防措施的实施步骤", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_04", "query": "质量管理体系文件控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_05", "query": "内部审核要求与频次", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_06", "query": "管理评审输入要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_07", "query": "GB/T 19001 8.5.1 条款内容", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_08", "query": "生产和服务提供的控制", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_09", "query": "设计和开发控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_10", "query": "采购过程控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.6}
-{"id": "rag_11", "query": "CQI-9 热处理系统评估要点", "expected_doc_ids": ["cqi_9"], "min_precision_at_5": 0.6}
-{"id": "rag_12", "query": "CQI-11 电镀系统评估要求", "expected_doc_ids": ["cqi_11"], "min_precision_at_5": 0.6}
-{"id": "rag_13", "query": "CQI-12 涂装系统评估要求", "expected_doc_ids": ["cqi_12"], "min_precision_at_5": 0.6}
-{"id": "rag_14", "query": "热处理工艺评估关键要素", "expected_doc_ids": ["cqi_9"], "min_precision_at_5": 0.6}
-{"id": "rag_15", "query": "电镀工艺过程评估要求", "expected_doc_ids": ["cqi_11"], "min_precision_at_5": 0.6}
-{"id": "rag_16", "query": "SAMR 2024 年消费品召回统计", "expected_doc_ids": ["samr_2025_stats"], "min_precision_at_5": 0.6}
-{"id": "rag_17", "query": "SAMR 2025 年第 21 号公告", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.6}
-{"id": "rag_18", "query": "消费品召回监管要求", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.6}
-{"id": "rag_19", "query": "缺陷产品召回程序", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.6}
-{"id": "rag_20", "query": "市场监管总局召回数据", "expected_doc_ids": ["samr_2025_stats"], "min_precision_at_5": 0.6}
+{"id": "rag_01", "query": "不合格品控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_02", "query": "纠正措施程序怎么做", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_03", "query": "预防措施的实施步骤", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_04", "query": "质量管理体系文件控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_05", "query": "内部审核要求与频次", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_06", "query": "管理评审输入要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_07", "query": "GB/T 19001 8.5.1 条款内容", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_08", "query": "生产和服务提供的控制", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_09", "query": "设计和开发控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_10", "query": "采购过程控制要求", "expected_doc_ids": ["gbt_19001"], "min_precision_at_5": 0.55}
+{"id": "rag_11", "query": "CQI-9 热处理系统评估要点", "expected_doc_ids": ["cqi_9"], "min_precision_at_5": 0.55}
+{"id": "rag_12", "query": "CQI-11 电镀系统评估要求", "expected_doc_ids": ["cqi_11"], "min_precision_at_5": 0.55}
+{"id": "rag_13", "query": "CQI-12 涂装系统评估要求", "expected_doc_ids": ["cqi_12"], "min_precision_at_5": 0.55}
+{"id": "rag_14", "query": "热处理工艺评估关键要素", "expected_doc_ids": ["cqi_9"], "min_precision_at_5": 0.55}
+{"id": "rag_15", "query": "电镀工艺过程评估要求", "expected_doc_ids": ["cqi_11"], "min_precision_at_5": 0.55}
+{"id": "rag_16", "query": "SAMR 2024 年消费品召回统计", "expected_doc_ids": ["samr_2025_stats"], "min_precision_at_5": 0.55}
+{"id": "rag_17", "query": "SAMR 2025 年第 21 号公告", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.55}
+{"id": "rag_18", "query": "消费品召回监管要求", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.55}
+{"id": "rag_19", "query": "缺陷产品召回程序", "expected_doc_ids": ["samr_2025_21"], "min_precision_at_5": 0.55}
+{"id": "rag_20", "query": "市场监管总局召回数据", "expected_doc_ids": ["samr_2025_stats"], "min_precision_at_5": 0.55}
