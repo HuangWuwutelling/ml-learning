@@ -1,0 +1,30 @@
+{"id": "tool_01", "query": "客户反馈锂电池充电时起火,请评估严重度并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_02", "query": "收到客户投诉充电器冒烟,需要分析并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_03", "query": "客户反映玩具零件脱落,起草纠正预防措施", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_04", "query": "电热水器漏电触电投诉,请分析并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_05", "query": "客户报告燃气灶使用中 CO 中毒,起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_06", "query": "客户投诉电饭煲外壳破损,评估并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_07", "query": "电暖器起火投诉,请评估严重度并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_08", "query": "客户反馈电风扇爆炸,请分析并起草 CAPA", "expected_tools": ["assess_severity", "search_recall_history", "draft_capa"]}
+{"id": "tool_09", "query": "GB/T 19001 8.5.1 条款的具体要求是什么", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_10", "query": "不合格品控制程序文件的要求", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_11", "query": "CQI-9 热处理系统评估要点有哪些", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_12", "query": "CQI-11 电镀系统评估要求", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_13", "query": "CQI-12 涂装系统评估要求", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_14", "query": "质量管理体系文件控制要求", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_15", "query": "纠正预防措施程序文件的具体要求", "expected_tools": ["query_quality_manual"]}
+{"id": "tool_16", "query": "SAMR 2024 年消费品召回统计数据", "expected_tools": ["query_regulation"]}
+{"id": "tool_17", "query": "SAMR 2025 年第 21 号公告内容", "expected_tools": ["query_regulation"]}
+{"id": "tool_18", "query": "市场监管总局召回管理办法规定", "expected_tools": ["query_regulation"]}
+{"id": "tool_19", "query": "消费品召回监管要求有哪些", "expected_tools": ["query_regulation"]}
+{"id": "tool_20", "query": "缺陷产品召回程序", "expected_tools": ["query_regulation"]}
+{"id": "tool_21", "query": "客户投诉锂电池起火,请参考 SAMR 监管口径", "expected_tools": ["assess_severity", "query_regulation"]}
+{"id": "tool_22", "query": "起草充电宝燃烧 CAPA 并参考 CQI-9 条款", "expected_tools": ["draft_capa", "query_quality_manual"]}
+{"id": "tool_23", "query": "电风扇爆炸事件,请评估严重度并查 GB/T 19001 8.5 条款", "expected_tools": ["assess_severity", "query_quality_manual"]}
+{"id": "tool_24", "query": "玩具重伤事件,起草 CAPA 并参考 SAMR 召回办法", "expected_tools": ["draft_capa", "query_regulation"]}
+{"id": "tool_25", "query": "充电宝燃烧,请起草 CAPA 并参考 GB/T 19001", "expected_tools": ["draft_capa", "query_quality_manual"]}
+{"id": "tool_26", "query": "电暖器起火,评估严重度并查类似召回案例", "expected_tools": ["assess_severity", "search_recall_history"]}
+{"id": "tool_27", "query": "电水壶烫伤,起草 CAPA 并参考 CQI-12 条款", "expected_tools": ["draft_capa", "query_quality_manual"]}
+{"id": "tool_28", "query": "空调压缩机失效,评估严重度并参考 SAMR 监管", "expected_tools": ["assess_severity", "query_regulation"]}
+{"id": "tool_29", "query": "客户投诉电磁炉故障,起草 CAPA 并参考 GB/T 19001", "expected_tools": ["draft_capa", "query_quality_manual"]}
+{"id": "tool_30", "query": "插座接触失效,请评估严重度并查类似召回案例", "expected_tools": ["assess_severity", "search_recall_history"]}
