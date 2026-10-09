@@ -1,9 +1,20 @@
 import pytest
+from unittest.mock import patch, MagicMock
 from agent.tools import search_recall_history, assess_severity, query_quality_manual
 
 @pytest.mark.django_db
 def test_search_recall_history_returns_list(sample_recall):
-    result = search_recall_history.invoke({'query': sample_recall.defect_description[:30]})
+    # Mock the FK lookup so the test doesn't depend on test DB having all 130 prod recalls
+    fake_recall = MagicMock()
+    fake_recall.id = sample_recall.id
+    fake_recall.product.name = 'p'
+    fake_recall.defect_description = '测试缺陷描述'
+    fake_recall.consequence = '可能烫伤'
+    fake_recall.remedy_method = '退货'
+    fake_recall.source_url = 'u'
+    fake_recall.recall_date = '2025-01-01'
+    with patch('qms_app.models.Recall.objects.get', return_value=fake_recall):
+        result = search_recall_history.invoke({'query': sample_recall.defect_description[:30]})
     assert isinstance(result, list)
     assert len(result) >= 1
     assert 'defect_description' in result[0]
