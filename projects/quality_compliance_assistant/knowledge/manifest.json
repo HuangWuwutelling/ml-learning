@@ -1,0 +1,10 @@
+{
+  "documents": [
+    {"id": "gbt_19001", "path": "gbt_19001_2016.md", "type": "md", "title": "GB/T 19001-2016 质量管理体系 要求 (DEMO 结构)"},
+    {"id": "samr_2025_stats", "path": "samr_2025_recall_stats.md", "type": "md", "title": "2024 年全国消费品召回统计 (DEMO)"},
+    {"id": "samr_2025_21", "path": "samr_2025_announce_21.md", "type": "md", "title": "SAMR 2025 年第 21 号公告 (DEMO)"},
+    {"id": "cqi_9", "path": "cqi_9_summary.md", "type": "md", "title": "AIAG CQI-9 热处理系统评估 (DEMO)"},
+    {"id": "cqi_11", "path": "cqi_11_summary.md", "type": "md", "title": "AIAG CQI-11 电镀系统评估 (DEMO)"},
+    {"id": "cqi_12", "path": "cqi_12_summary.md", "type": "md", "title": "AIAG CQI-12 涂装系统评估 (DEMO)"}
+  ]
+}
