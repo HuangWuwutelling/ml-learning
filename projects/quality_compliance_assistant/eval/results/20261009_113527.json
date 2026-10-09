@@ -17,7 +17,7 @@
     "eval_no_tool": {
       "name": "eval_no_tool",
       "status": "skipped",
-      "error": "Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ****e-me is invalid (request_id: 5e74f32f-5261-4837-899a-34d04d11ffc1)', 'type': 'authentication_error', 'param': None, 'co"
+      "error": "Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ***PLACEHOLDER*** is invalid (request_id: 5e74f32f-5261-4837-899a-34d04d11ffc1)', 'type': 'authentication_error', 'param': None, 'co"
     },
     "rag_20": {
       "name": "rag_20",

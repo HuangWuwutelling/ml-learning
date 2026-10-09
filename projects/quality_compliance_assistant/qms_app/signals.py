@@ -40,6 +40,12 @@ def log_save(sender, instance, created, **kwargs):
         before_json=getattr(instance, '_before', None),
         after_json=_snapshot(instance),
     )
+    # Clean up the per-instance snapshot attribute set by capture_before so it
+    # does not leak across requests/save cycles (e.g. into __dict__/__slots__).
+    try:
+        del instance._before
+    except AttributeError:
+        pass
 
 @receiver(post_delete)
 def log_delete(sender, instance, **kwargs):

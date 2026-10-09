@@ -119,7 +119,7 @@ class AuditLog(models.Model):
     user = models.CharField(max_length=100, default='system')
     action = models.CharField(max_length=10, choices=ACTION_CHOICES)
     target_model = models.CharField(max_length=50)
-    target_id = models.IntegerField()
+    target_id = models.BigIntegerField()
     before_json = models.JSONField(null=True, blank=True)
     after_json = models.JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

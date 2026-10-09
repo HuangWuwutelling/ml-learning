@@ -16,9 +16,3 @@ class CapaSerializer(serializers.ModelSerializer):
 
 class ComplaintInputSerializer(serializers.Serializer):
     text = serializers.CharField()
-
-class ComplaintOutputSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Complaint
-        fields = ['id', 'text', 'severity_predicted', 'severity_confidence',
-                  'similar_recall', 'capa_draft', 'created_at']

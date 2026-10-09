@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Recall, Capa, Complaint
 from .serializers import (RecallSerializer, CapaSerializer,
-                          ComplaintInputSerializer, ComplaintOutputSerializer)
+                          ComplaintInputSerializer)
 from agent.graph import run as agent_run
 from agent.tools import assess_severity, search_recall_history, draft_capa
 

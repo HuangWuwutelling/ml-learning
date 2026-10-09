@@ -20,6 +20,10 @@ def assess_severity(complaint_text: str) -> dict:
     """根据投诉文本评估严重程度。
     输入：投诉文本
     输出：{'severity': 'high'|'medium'|'low', 'confidence': 0-1, 'similar_cases': [...]}
+
+    Severity is determined by keyword matching (spec-aligned to GB/T 19001 risk
+    categories). Chroma `similar_cases` is returned for human review, not used
+    in the severity decision.
     """
     chroma = _get_chroma('recall_history')
     results = chroma.similarity_search_with_score(complaint_text, k=5)
