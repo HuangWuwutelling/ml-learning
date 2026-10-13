@@ -1,0 +1,6 @@
+# Cargo build artifacts
+/target/
+
+# Library convention: Cargo.lock is for binaries/apps, not libraries.
+# We are a library (src/lib.rs), so lockfile stays out of git.
+/Cargo.lock
