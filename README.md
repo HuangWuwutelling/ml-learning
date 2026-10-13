@@ -119,6 +119,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 05 | 一个人用 vibe coding 做小程序：步骤与架构 |
 | 06 | 139 条数据的小程序搜索，真的需要向量数据库吗 |
 | 07-08 | fund-tracker：工具架构（4 层 + 5 个核心选型）+ 工具介绍（4 个核心功能 + 4 步上手）。外部仓库 [HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker) |
+| 09 | Vibe coding 复刻坦克大战：0 张图片、0 个音频文件。三条纯代码解法（程序化绘制 fillRect / 双坐标系 13×13 tile + 26×26 cell / Web Audio 现合成），4573 行 TypeScript。外部仓库 [HuangWuwutelling/battle-city](https://github.com/HuangWuwutelling/battle-city) |
 
 ### 环境工程线 (`articles/env/`)
 
