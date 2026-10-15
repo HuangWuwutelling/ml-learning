@@ -1,0 +1,17 @@
+[package]
+name = "rust_dbscan"
+version = "0.1.0"
+edition = "2024"
+description = "Stage 1 of 副线 3: DBSCAN clustering ported from ml_playground.models.dbscan"
+license = "MIT"
+
+[lib]
+name = "rust_dbscan"
+path = "src/lib.rs"
+
+[dependencies]
+ndarray = "0.15"
+
+[dev-dependencies]
+ndarray = "0.15"
+rand = "0.8"
