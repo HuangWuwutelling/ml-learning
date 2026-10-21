@@ -18,8 +18,22 @@
 ```bash
 cd projects/rust_dbscan
 cargo run --release --example benchmark      # Rust 705 ms / 4412 ms
+cargo run --release --example benchmark data.csv   # 自己给的 n×2 CSV（Stage 2 用来做同数据对比）
 python bench/python_dbscan_baseline.py      # Python 3607 ms / 13644 ms
 ```
+
+## 2026-10-21 复测（机器状态变了，绝对值不可与上表混用）
+
+同一台机器重跑 `cargo run --release --example benchmark`：**375 ms / 2.66 s**，
+比上表的 705 ms / 4412 ms 快约 1.7–1.9×。上表是 2026-10-15 的记录值，
+当时的机器负载更重。
+
+**比值是稳的，绝对值不是。** 同日 Python 侧也变快（n=4998 时 2105 ms），
+所以 Rust/Python 优势仍是 4.9×，对上表的 5.1×。跨日期引用时**只用比值**，
+或者在同一时段重测两边。
+
+Stage 2 的 FFI 开销就是因此改成「同一份 numpy 数组导 CSV 给原生二进制跑」，
+不拿今天的数去比六天前的数。
 
 ## 结论
 

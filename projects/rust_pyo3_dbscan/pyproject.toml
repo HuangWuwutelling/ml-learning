@@ -1,0 +1,18 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "rust-pyo3-dbscan"
+version = "0.1.0"
+description = "Stage 2 of 副线 3: DBSCAN from Python via PyO3"
+requires-python = ">=3.9"
+dependencies = ["numpy"]
+
+[tool.maturin]
+# Must match `[lib] name` in Cargo.toml, otherwise the built .pyd is named
+# something importlib cannot find.
+module-name = "rust_pyo3_dbscan"
+# extension-module makes the cdylib skip linking libpython, which is what you
+# want on Windows where the extension resolves it from the host process.
+features = ["pyo3/extension-module"]

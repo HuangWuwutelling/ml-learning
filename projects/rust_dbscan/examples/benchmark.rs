@@ -4,11 +4,16 @@
 //! Run with:
 //!
 //! ```bash
-//! cargo run --release --example benchmark
+//! cargo run --release --example benchmark              # built-in dataset
+//! cargo run --release --example benchmark data.csv     # your own n x 2 CSV
 //! ```
 //!
 //! Compare against the Python equivalent in
-//! `bench/python_dbscan_baseline.py`.
+//! `bench/python_dbscan_baseline.py`. The CSV mode exists because the built-in
+//! generator uses `StdRng` + Box-Muller while numpy uses `PCG64` + ziggurat:
+//! statistically the same distribution, but a different array, so a timing
+//! comparison across the two is not like-for-like. Stage 2 drives the CSV mode
+//! to measure the Python->PyO3 hop against this exact input.
 
 use ndarray::Array2;
 use rand::Rng;
@@ -50,7 +55,45 @@ fn dataset_3clusters(n: usize, seed: u64) -> Array2<f64> {
     Array2::from_shape_vec((rows, 2), flat).expect("shape ok")
 }
 
+/// Load an `n x 2` CSV of floats, no header. Used so this benchmark can be
+/// driven from Python on *exactly* the same array the PyO3 path sees — a
+/// like-for-like FFI-overhead number needs identical input, and the built-in
+/// generator uses a different RNG than numpy so its timings are not comparable.
+fn load_csv_2d(path: &str) -> Array2<f64> {
+    let text = std::fs::read_to_string(path).expect("read csv");
+    let rows: Vec<[f64; 2]> = text
+        .lines()
+        .filter(|l| !l.trim().is_empty())
+        .map(|line| {
+            let mut it = line.split(',');
+            let x: f64 = it.next().expect("col 0").trim().parse().expect("f64 col 0");
+            let y: f64 = it.next().expect("col 1").trim().parse().expect("f64 col 1");
+            [x, y]
+        })
+        .collect();
+    let flat: Vec<f64> = rows.iter().flat_map(|r| [r[0], r[1]]).collect();
+    Array2::from_shape_vec((rows.len(), 2), flat).expect("shape ok")
+}
+
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
+
+    // `benchmark <path.csv>` times one fit on data produced elsewhere. Used by
+    // `projects/rust_pyo3_dbscan/examples/bench_gil.py` section B.
+    if let Some(path) = args.get(1) {
+        let x = load_csv_2d(path);
+        println!("=== csv {} (n={}) ===", path, x.nrows());
+        let start = Instant::now();
+        let model = Dbscan::new(1.0, 5).fit(x).expect("fit ok");
+        println!("  Rust DBSCAN fit: {:?}", start.elapsed());
+        println!(
+            "  n_clusters={}, n_noise={}",
+            model.n_clusters(),
+            model.n_noise()
+        );
+        return;
+    }
+
     for &n in &[5000usize, 10000usize] {
         let x = dataset_3clusters(n, SEED);
         println!("\n=== n={n} 2D 3-Gaussian clusters ===");

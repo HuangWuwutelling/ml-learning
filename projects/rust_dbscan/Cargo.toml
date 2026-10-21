@@ -10,8 +10,8 @@ name = "rust_dbscan"
 path = "src/lib.rs"
 
 [dependencies]
-ndarray = "0.15"
+ndarray = "0.17"
 
 [dev-dependencies]
-ndarray = "0.15"
+ndarray = "0.17"
 rand = "0.8"
