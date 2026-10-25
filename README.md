@@ -2,7 +2,7 @@
 
 机器学习 & 深度学习算法学习项目 + LLM 工程作品集。
 
-18 个 numpy 手写 ML 算法 + 14 个环境模型 + 80+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境 / 因果推断），每个模型都有对应文章与可复现代码。
+19 个 numpy 手写算法（18 个 ML / DL + 1 个因果推断）+ 17 个环境模型脚本 + 80+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境 / 因果推断），多数模型配有对应文章与可复现代码。
 
 > 求职叙事与发文计划：见 `_local/plan.md`（本地文件，未跟踪）。
 >
@@ -11,15 +11,22 @@
 ## 项目结构
 
 ```
-├── models/              # 18 个手写算法 + 环境模型
+├── models/              # 19 个手写算法 + 17 个环境模型脚本
 ├── notebooks/           # 训练 & 可视化 Jupyter notebook
 ├── projects/
-│   ├── ml_playground/   # FastAPI + Gradio 统一平台
-│   ├── lora_finetune/   # QLoRA 微调演示（Qwen2.5-0.5B + 4-bit）
-│   ├── wali_cmd/        # 微信小程序（本地仓库）
-│   ├── gb15618/         # 行业案例（源码已迁独立仓库）
-│   └── env_agent/       # LangGraph Agent（5 工具编排）
-├── 环境法律法规智能问答系统/   # RAG 法典智能问答（ChromaDB + BGE）
+│   ├── ml_playground/          # FastAPI + Gradio 统一平台（已登记 15 个算法）
+│   ├── lora_finetune/          # QLoRA 微调演示（Qwen2.5-0.5B + 4-bit）  ← 简历项目 3
+│   ├── env_agent/              # LangGraph Agent（5 工具编排）             ← 简历项目 2
+│   ├── llm_streaming/          # 流式输出复现（llm/17 配套）
+│   ├── llm_injection_guard/    # Prompt Injection 6 层防线（llm/18 配套）
+│   ├── quality_compliance_assistant/  # QMS 质量合规助手（副线，不进简历）
+│   ├── power_bi_recall_dashboard/     # Power BI 召回作品（副线，不进简历）
+│   ├── rust_dbscan/            # Rust 重写 DBSCAN（副线，不进简历）
+│   ├── rust_pyo3_dbscan/       # PyO3 绑定层（副线，不进简历）
+│   ├── rust_embedding_service/ # Qwen2.5 embedding 微服务（副线，不进简历）
+│   ├── wali_cmd/               # 微信小程序（源码在独立仓库）
+│   └── gb15618/                # 行业案例（源码在独立仓库）
+├── 环境法律法规智能问答系统/   # RAG 法典智能问答（ChromaDB + BGE）        ← 简历项目 1
 ├── articles/            # 学习记录（独立 git 仓库）
 ├── scripts/             # 封面图 / notebook 生成脚本（按系列子目录）
 ├── data/                # 数据集
@@ -32,6 +39,7 @@
 > 外部仓库（独立 git 项目，不在本仓里）：
 > - `gb15618` 源码：[github.com/HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)
 > - `fund-tracker` 源码：[github.com/HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker)
+> - `battle-city` 源码：[github.com/HuangWuwutelling/battle-city](https://github.com/HuangWuwutelling/battle-city)
 
 ## 文章系列
 
@@ -78,7 +86,8 @@
 | 15 | Transformer（Decoder-only，自注意力） | `models/transformer.py` |
 | 16 | AutoEncoder（编码器-解码器，无监督降维） | `models/autoencoder.py` |
 | 17 | kNN（k 近邻分类，懒惰学习） | `models/knn.py` |
-| 18 | 倾向得分匹配（PSM, Propensity Score Matching） | `models/propensity_score_matching.py` |
+
+> 倾向得分匹配（PSM）属因果推断方法，文章见因果推断线 `01`（代码 `models/propensity_score_matching.py`）。
 
 ### LLM 工具链线 (`articles/llm/`)
 
@@ -178,7 +187,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | **生态环境法典智能问答** | ChromaDB + BGE-small-zh-v1.5，法典 5 编 1242 条切 445 文本块；三层检索（BM25 + RRF + Cross-Encoder 重排）已落库，默认仍走向量检索；RAGAS 评估 + Web 界面 | 大模型应用 |
 | **环保申报智能助手** | LangGraph ReAct 驱动 5 个工具（查法规 / 算排放 / 填表 / 出报告）+ Gradio 界面；12 条端到端用例工具选择 12/12 | 大模型应用 |
 | **环境违法严重程度识别** | QLoRA 微调 Qwen2.5-0.5B，4-bit + LoRA r=16，4GB 显卡可跑；34 条留出集准确率 91.2% | 大模型应用 |
-| **ML Playground** | 18 个手写算法的 FastAPI + Gradio 统一演示平台 | 演示 |
+| **ML Playground** | FastAPI + Gradio 统一演示平台，已登记 15 个算法（`models/` 另有 RNN / Word2Vec / Transformer / AutoEncoder / PSM 未接入 demo） | 演示 |
 | **GB 15618 评价工具** | 农用地土壤污染风险评价，库 + GUI + exe 三种分发 | 行业案例 |
 | **瓦力命令行速查** | 微信小程序，Linux/Windows 命令速查（139 条），含语法/示例/说明/类目浏览 | 副线 |
 | LLM Wiki 知识库 | AI 自动构建的环保知识库（YoudaoNote） | 工具 |
