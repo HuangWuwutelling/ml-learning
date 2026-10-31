@@ -1,0 +1,4 @@
+# 演示数据不入库：这 3 个 CSV 由 data_gen/generate_demo_data.py 生成，
+# 内容是按 background_values.md 的合成数据（品牌/型号都是占位符），
+# 跑一次 python data_gen/generate_demo_data.py 就能原样重建。
+data/
