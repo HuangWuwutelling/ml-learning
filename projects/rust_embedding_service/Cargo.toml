@@ -17,22 +17,21 @@ path = "src/main.rs"
 
 [dependencies]
 axum = "0.8"
+candle-core = "0.11"
+# candle-transformers uses VarBuilder from candle-nn but does not re-export it.
+candle-nn = "0.11"
+candle-transformers = "0.11"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal", "time"] }
+# Not "1.0.0-rc.3" -- the newest published tag is a release candidate. 0.21 is
+# the last stable line, and it is what candle-transformers 0.11 builds against.
+tokenizers = { version = "0.21", default-features = false, features = ["onig"] }
 # Only TraceLayer in Stage 3. `timeout` needs a real inference latency to set a
 # budget against, and `cors` is meaningless until there is a browser client.
 tower-http = { version = "0.7", features = ["trace"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-
-# Step 8 adds the ML stack. Kept out of step 7 on purpose: candle-core alone
-# takes ~5 min to compile, and the skeleton does not touch it.
-#
-#   candle-core         = "0.11"   # pure-Rust gemm; no BLAS needed (probe: exit 0)
-#   candle-transformers = "0.11"   # VarBuilder + Qwen2 model impl
-#   tokenizers          = "0.21"   # NOT "1.0.0-rc.3" -- the latest tag is an RC
-#
 [dev-dependencies]
 # tower::ServiceExt::oneshot — send a request through the Router in-process.
 tower = { version = "0.5", features = ["util"] }
