@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+raw_html/
+data/parsed/
+data/knowledge_sources/
+knowledge/chroma_db/
+eval/results/
+*.sqlite3
+.venv/

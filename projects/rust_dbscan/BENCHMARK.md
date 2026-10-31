@@ -1,0 +1,48 @@
+# Stage 1 Benchmark
+
+2026-10-15, 同台机器 (Windows 11, rustc 1.99.0 GNU toolchain, Python + numpy), seed=42。
+
+## 数据集
+
+2D 3-Gaussian 团簇（每团簇中心 (0,0)/(5,5)/(-5,5), 标准差 0.5），`n_per = n / 3` 整除对齐。
+
+## 数字
+
+| n | Rust release | Python/numpy | 优势 |
+|---|---|---|---|
+| 5000  | **705 ms** | 3607 ms | **5.1×** |
+| 10000 | **4412 ms** | 13644 ms | **3.1×** |
+
+## 跑法
+
+```bash
+cd projects/rust_dbscan
+cargo run --release --example benchmark      # Rust 705 ms / 4412 ms
+cargo run --release --example benchmark data.csv   # 自己给的 n×2 CSV（Stage 2 用来做同数据对比）
+python bench/python_dbscan_baseline.py      # Python 3607 ms / 13644 ms
+```
+
+## 2026-10-21 复测（机器状态变了，绝对值不可与上表混用）
+
+同一台机器重跑 `cargo run --release --example benchmark`：**375 ms / 2.66 s**，
+比上表的 705 ms / 4412 ms 快约 1.7–1.9×。上表是 2026-10-15 的记录值，
+当时的机器负载更重。
+
+**比值是稳的，绝对值不是。** 同日 Python 侧也变快（n=4998 时 2105 ms），
+所以 Rust/Python 优势仍是 4.9×，对上表的 5.1×。跨日期引用时**只用比值**，
+或者在同一时段重测两边。
+
+Stage 2 的 FFI 开销就是因此改成「同一份 numpy 数组导 CSV 给原生二进制跑」，
+不拿今天的数去比六天前的数。
+
+## 结论
+
+达到 Stage 1 预期 ≥5× 优势（n=5000）。n=10000 时优势缩到 3.1× 但仍拉开真实差距。
+
+## 为什么 DBSCAN 能拉开差距
+
+**DBSCAN 是控制流密集型算法**，三层嵌套（每个点 → 每个邻居 → 簇扩展种子队列）+ 每步都跑条件分支。numpy 的 vectorized 路径是 `X - X[i]` 算全部距离 → O(n² × d) vectorized，单次开销小但摊到整个 fit 主循环的 Python `for i in range(n)` 上仍要重复做小数据。
+
+Rust 的 for 循环**常数开销是 Python 的 1/5 到 1/10**（这是经验值，Stage 1 KNN 案例 Python `X @ X_train.T` BLAS 矩阵乘优化版反而掩盖了 Python for 慢的本质——109ms vs 120ms 仅快 10%）。这次 DBSCAN 没有 BLAS 全局优化机会，Python 端的常数开销暴露出来，Rust 5× 优势就出来了。
+
+完整学习笔记 + Rust 触点 + 踩坑：`../../_local/article_notes/rust/01_stage1_dbscan_notes.md`（本机唯一事实源，gitignored）。

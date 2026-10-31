@@ -1,0 +1,194 @@
+{
+  "timestamp": "2026-10-09T18:41:43.793402",
+  "metrics": {
+    "severity_25": {
+      "name": "severity_25",
+      "total": 25,
+      "correct": 25,
+      "accuracy": 1.0,
+      "target": 0.75,
+      "passed": true
+    },
+    "eval_tools": {
+      "name": "eval_tools",
+      "status": "skipped",
+      "error": "Missing credentials. Please pass an `api_key`, `workload_identity`, `admin_api_key`, or set the `OPENAI_API_KEY` or `OPENAI_ADMIN_KEY` environment variable."
+    },
+    "eval_no_tool": {
+      "name": "eval_no_tool",
+      "status": "skipped",
+      "error": "Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ***PLACEHOLDER*** is invalid (request_id: ea62db99-7b15-4f8f-ba50-0c318126b929)', 'type': 'authentication_error', 'param': None, 'co"
+    },
+    "rag_20": {
+      "name": "rag_20",
+      "total": 20,
+      "correct": 19,
+      "accuracy": 0.95,
+      "avg_precision": 0.74,
+      "per_case": [
+        {
+          "id": "rag_01",
+          "precision": 0.4,
+          "relevant": 2,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_02",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_03",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_04",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_05",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_06",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_07",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_08",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_09",
+          "precision": 0.6,
+          "relevant": 3,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_10",
+          "precision": 0.8,
+          "relevant": 4,
+          "expected": [
+            "gbt_19001"
+          ]
+        },
+        {
+          "id": "rag_11",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "cqi_9"
+          ]
+        },
+        {
+          "id": "rag_12",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "cqi_11"
+          ]
+        },
+        {
+          "id": "rag_13",
+          "precision": 0.4,
+          "relevant": 2,
+          "expected": [
+            "cqi_12"
+          ]
+        },
+        {
+          "id": "rag_14",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "cqi_9"
+          ]
+        },
+        {
+          "id": "rag_15",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "cqi_11"
+          ]
+        },
+        {
+          "id": "rag_16",
+          "precision": 1.0,
+          "relevant": 5,
+          "expected": [
+            "samr_2025_stats"
+          ]
+        },
+        {
+          "id": "rag_17",
+          "precision": 0.4,
+          "relevant": 2,
+          "expected": [
+            "samr_2025_21"
+          ]
+        },
+        {
+          "id": "rag_18",
+          "precision": 0.4,
+          "relevant": 2,
+          "expected": [
+            "samr_2025_21"
+          ]
+        },
+        {
+          "id": "rag_19",
+          "precision": 0.2,
+          "relevant": 1,
+          "expected": [
+            "samr_2025_21"
+          ]
+        },
+        {
+          "id": "rag_20",
+          "precision": 0.6,
+          "relevant": 3,
+          "expected": [
+            "samr_2025_stats"
+          ]
+        }
+      ],
+      "target": 0.4,
+      "passed": true
+    }
+  }
+}

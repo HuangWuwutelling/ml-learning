@@ -7,12 +7,16 @@ _local/
 # 设计文档 / skill 工作区（本地用，不上传 GitHub）
 docs/
 .superpowers/
+# 例外：power_bi_recall_dashboard/docs/ 是项目级文档（设计 + 演示稿），需要上传
+!projects/power_bi_recall_dashboard/docs/
 
 # 辅助脚本（封面图、notebook 生成等，与算法本身无关）
 scripts/
 
 # 测试脚本（本地验证用，不上传 GitHub）
 tests/
+# 例外：Rust crate 标准集成测试目录（tests/integration.rs）需要上传
+!projects/*/tests/
 
 # Python
 __pycache__/

@@ -1,0 +1,29 @@
+[package]
+name = "rust_pyo3_dbscan"
+version = "0.1.0"
+edition = "2024"
+description = "Stage 2 of 副线 3: Python-callable DBSCAN via PyO3, wrapping the Stage 1 rust_dbscan crate"
+license = "MIT"
+
+[lib]
+name = "rust_pyo3_dbscan"
+# cdylib is what maturin ships as an importable Python extension module.
+# rlib stays so `tests/` can link the crate directly for Rust-side unit tests.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# 0.17 must match BOTH rust_dbscan (bumped from 0.15 so the Array2 types are
+# identical across the FFI boundary) and numpy 0.30 (which pins ndarray 0.17).
+# Two ndarray majors in one graph = two incompatible Array2<f64> types.
+ndarray = "0.17"
+numpy = "0.30.0"
+pyo3 = { version = "0.30.1", features = ["extension-module"] }
+rust_dbscan = { version = "0.1.0", path = "../rust_dbscan" }
+
+[dev-dependencies]
+rand = "0.8"
+
+[profile.release]
+# The Stage 1 benchmark measured the `release` profile. Keep opt-level=3 so the
+# Python→PyO3 number is comparable to the 705 ms Rust-native baseline.
+opt-level = 3

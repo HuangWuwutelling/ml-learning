@@ -1,0 +1,5 @@
+# Stage 2 of 副线 3 requires the MSVC toolchain: PyO3 links against
+# `python311.lib`, which official Windows Python ships as MSVC `.lib` only.
+# The GNU target has no import library to link against.
+[toolchain]
+channel = "stable-x86_64-pc-windows-msvc"

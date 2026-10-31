@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: qms_db
+      POSTGRES_USER: qms_user
+      POSTGRES_PASSWORD: qms_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - qms_pgdata:/var/lib/postgresql/data
+volumes:
+  qms_pgdata:
