@@ -2,7 +2,7 @@
 
 机器学习 & 深度学习算法学习项目 + LLM 工程作品集。
 
-19 个 numpy 手写算法（18 个 ML / DL + 1 个因果推断）+ 17 个环境模型脚本 + 80+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境 / 因果推断），多数模型配有对应文章与可复现代码。
+19 个 numpy 手写算法（18 个 ML / DL + 1 个因果推断）+ 18 个环境模型脚本 + 90+ 篇科普文章（AI 史 / 算法 / LLM 工程 / 工程 / 环境 / 因果推断），多数模型配有对应文章与可复现代码。
 
 > 求职叙事与发文计划：见 `_local/plan.md`（本地文件，未跟踪）。
 >
@@ -11,7 +11,7 @@
 ## 项目结构
 
 ```
-├── models/              # 19 个手写算法 + 17 个环境模型脚本
+├── models/              # 19 个手写算法 + 18 个环境模型脚本
 ├── notebooks/           # 训练 & 可视化 Jupyter notebook
 ├── projects/
 │   ├── ml_playground/          # FastAPI + Gradio 统一平台（已登记 15 个算法）
@@ -161,6 +161,7 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 | 23 | 免费高速实施 14 年，几个值得看的数字 | — |
 | 24 | 加宽道路不解堵：密度决定速度 | — |
 | 25 | 没有事故高速也会堵车？NaSch 仿真验证密度决定速度 | — |
+| 26 | 同样测出底泥高镉，为什么处置会分出三路？先定数、再定名、最后判源 | `models/sediment_cd_attribution.py` |
 
 > 另有图件脚本：`models/multi_metal_comparison.py`、`models/multi_metal_spatial.py`（多金属迁移对比与空间分布图）。
 
