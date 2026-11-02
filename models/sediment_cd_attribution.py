@@ -44,6 +44,12 @@ BG_WANDA_GEOCHEM = 0.081        # [L] 完达山区域化探 Cd 背景值 mg/kg�
 BG_WANDA_STUDY = 0.12           # [L] 完达山研究区 Cd 背景值 mg/kg（文献表 2）
 BG_GEM76_SOUTH_MEDIAN = 0.219   # [L] 76 元素地球化学填图（76 GEM）南方 Cd 中位数 219 ug/kg
 BG_GUIZHOU_SOIL = 0.66          # [L] 贵州省表层土壤 Cd 背景值 mg/kg
+# 出处：1990 年中国环境监测总站《中国土壤元素背景值》的贵州省值。
+# 贵州 Sci Rep 2025（PMC12127453）的参考文献 33 就是这本书，其表 1 的 BV 列与
+# Fig. 2(a) 图注 "background soil values in Guizhou Province (CNEMC, 1990)" 指同一套。
+# 同套分母 mg/kg：Cr 95.9 / Ni 39.1 / Cu 32 / Zn 99.5 / Pb 35.2 / Cd 0.66 /
+# As 20 / Hg 0.11，与浙江大学学报（农业与生命科学版）2021 表 2「贵州省表层土壤背景值」
+# 列、贵州云南农业大学学报 2022 表 4 逐项一致。
 
 # 安宁河实测（[L] Toxics 2026, PMC13417149, 表 1/表 2）
 ANNING = {
@@ -130,8 +136,14 @@ GUIZHOU_SOIL = {
     "Zn": {"mean": 617.0, "bv": 99.5},
     # 该文正文：Cr/Ni/Cu 与贵州省背景值相当，Cd/Pb/Zn/As/Hg 超背景值
     "not_elevated": ("Cr", "Ni", "Cu"),
-    # 各元素平均含量 / 省背景值（按该文表 1 现算；论文正文另报一套更低的倍数
-    # 4.71/6.08/4.31/1.99/4.45，与表 1 自身不自洽，这里取表 1）
+    # 各元素平均含量 / 省背景值（按该文表 1 的均值 ÷ 该文表 1 给的 BV 列现算，
+    # 保留 2 位小数）。表 1 均值 mg/kg：Cr 103 / Ni 49.03 / Cu 46.77 / Zn 617 /
+    # Pb 309 / Cd 3.51 / As 41.65 / Hg 0.50；同表分母 BV：95.9 / 39.1 / 32 /
+    # 99.5 / 35.2 / 0.66 / 20 / 0.11。
+    # 该文正文另报一组更低的倍数（Cd 4.71 / Pb 6.08 / Zn 4.31 / As 1.99 /
+    # Hg 4.45，Ni 1.17 / Cu 1.15），反推出来的分母跟表 1 的 BV 列对不上
+    # （Cd 反推 0.745，表 1 是 0.66），两组不能互比；结论方向一致：
+    # Cr/Ni/Cu 与背景值相当，Cd/Pb/Zn/As/Hg 超背景值。
     "mean_ratios": {"Cr": 1.07, "Ni": 1.25, "Cu": 1.46,
                     "Cd": 5.32, "Pb": 8.78, "Zn": 6.20, "As": 2.08, "Hg": 4.55},
     # 土壤 pH 5.23~7.60，均值 6.76，>70% 落在 6.5~7.60（该文正文）
@@ -194,7 +206,8 @@ ANNING_MC = {
     "adult_tcr_prob": 23.4,     # 成人 %
     "adult_tcr_p95": 1.40e-4,
     "adult_tcr_mean": 8.18e-5,
-    "child_thi_prob": 10.0,     # 儿童 THI > 1 的概率（原文 nearly 10%）
+    "child_thi_prob": 9.82,     # 儿童 THI > 1 的概率（原文正文 3.5 节给 9.82%，
+                                # 结论段才写 nearly 10%，取精确值）
     "tcr_drivers": ("Cr", "Ni"),           # 致癌风险的主导元素
     "thi_order": ("Cr", "Pb", "V", "Tl", "Ni", "Cd", "Cu", "Zn"),  # 非致癌风险排序
     "cr_hi_adult": 7.51e-2,
@@ -710,7 +723,7 @@ def main():
       f"（均值 {ANNING_MC['child_tcr_mean']:.2e}、95 分位 "
       f"{ANNING_MC['child_tcr_p95']:.2e}），成人 {ANNING_MC['adult_tcr_prob']}%"
       f"（95 分位 {ANNING_MC['adult_tcr_p95']:.2e}）")
-    p(f"    儿童 THI > 1 的概率约 {ANNING_MC['child_thi_prob']:.0f}%")
+    p(f"    儿童 THI > 1 的概率 {ANNING_MC['child_thi_prob']:.2f}%")
     p("    口径分歧：TCR 超阈由 "
       + "、".join(ANNING_MC["tcr_drivers"]) + " 主导，RI 由 Cd 主导")
     p("    非致癌风险元素排序："
