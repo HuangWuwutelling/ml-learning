@@ -26,6 +26,17 @@ def test_assess_severity(sample_recall):
     assert result['severity'] in ('high', 'medium', 'low')
     assert 0 <= result['confidence'] <= 1
 
+def test_assess_severity_does_not_depend_on_recall_index():
+    """召回索引缺失或损坏时，严重度判定照旧，只是没有相似案例可附。
+
+    改之前是「先查索引，查不到就返回 medium」，于是同一个指标在灌了召回
+    历史和没灌的机器上跑出两个数。
+    """
+    with patch('agent.tools._get_chroma', side_effect=RuntimeError('no index')):
+        result = assess_severity.invoke({'complaint_text': '电池起火'})
+    assert result['severity'] == 'high'
+    assert result['similar_cases'] == []
+
 @pytest.fixture
 def sample_recall(db):
     from qms_app.models import Manufacturer, Product, Recall

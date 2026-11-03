@@ -20,6 +20,8 @@
 | [0014](0014-dual-axis-review-no-rerank.md) | 双轴 review 不跨轴合并重排 | accepted |
 | [0015](0015-contract-tests-live-outside-frozen-projects.md) | 契约测试放在冻结项目外面 | accepted |
 | [0016](0016-issue-tracker-lives-in-plans.md) | 本地 issue tracker 落在 docs/superpowers/plans/ | accepted |
+| [0017](0017-severity-by-keyword-rules.md) | 严重度判定走关键词规则，不调 LLM | accepted |
+| [0018](0018-eval-scoring-is-pure-and-skip-is-not-pass.md) | 评测判定逻辑做成纯函数，跳过不等于通过 | accepted |
 
 新写一条：复制最近一条的文件，把编号往后排，文件名 slug 与标题保持一致，
 然后在本表加一行。

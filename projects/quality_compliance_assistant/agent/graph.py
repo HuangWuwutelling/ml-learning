@@ -68,3 +68,26 @@ def run(message: str, thread_id: str = 'default') -> str:
     config = {'configurable': {'thread_id': thread_id}}
     result = g.invoke({'messages': [HumanMessage(content=message)], 'intent': ''}, config=config)
     return result['messages'][-1].content
+
+def run_with_trace(message: str, thread_id: str = 'default') -> dict:
+    """跑一遍 agent，同时报告它到底调了哪些工具。
+
+    返回 {'text': 最终回复, 'tools_called': [工具名, 按调用顺序]}。
+    工具名从轨迹里每个 AIMessage.tool_calls 上读，图本身不用改。
+
+    eval 的两个工具类指标靠它判断「调了什么」；只看回复文本猜不出这一点。
+    """
+    g = get_graph()
+    config = {'configurable': {'thread_id': thread_id}}
+    result = g.invoke({'messages': [HumanMessage(content=message)], 'intent': ''}, config=config)
+    messages = result.get('messages') or []
+    tools_called = []
+    for m in messages:
+        for call in getattr(m, 'tool_calls', None) or []:
+            name = call.get('name')
+            if name:
+                tools_called.append(name)
+    text = messages[-1].content if messages else ''
+    if not isinstance(text, str):
+        text = str(text)
+    return {'text': text, 'tools_called': tools_called}

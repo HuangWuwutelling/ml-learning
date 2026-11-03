@@ -24,27 +24,31 @@ def assess_severity(complaint_text: str) -> dict:
     Severity is determined by keyword matching (spec-aligned to GB/T 19001 risk
     categories). Chroma `similar_cases` is returned for human review, not used
     in the severity decision.
+
+    判定与召回索引解耦：先按关键词定严重度，再去查相似召回。
+    索引缺失或为空时，严重度结论不变，只是 similar_cases 为空。
     """
-    chroma = _get_chroma('recall_history')
-    results = chroma.similarity_search_with_score(complaint_text, k=5)
-    if not results:
-        return {'severity': 'medium', 'confidence': 0.0, 'similar_cases': []}
     # 严重度判定：高=含"起火/触电/中毒/死亡"等高危词；低=小问题；中=其他
     high_kw = ['起火', '触电', '中毒', '死亡', '重伤', '燃烧', '爆炸']
     med_kw = ['烫伤', '划伤', '破损', '失效', '故障']
     if any(kw in complaint_text for kw in high_kw):
-        severity = 'high'
-        confidence = 0.9
+        severity, confidence = 'high', 0.9
     elif any(kw in complaint_text for kw in med_kw):
-        severity = 'medium'
-        confidence = 0.7
+        severity, confidence = 'medium', 0.7
     else:
-        severity = 'low'
-        confidence = 0.5
+        severity, confidence = 'low', 0.5
+    similar = []
+    try:
+        chroma = _get_chroma('recall_history')
+        results = chroma.similarity_search_with_score(complaint_text, k=5)
+        similar = [{'id': r[0].metadata.get('recall_id'), 'desc': r[0].page_content[:100],
+                    'score': float(r[1])} for r in results[:3]]
+    except Exception:
+        # 只吞掉查索引这一段：索引缺失或损坏不该改掉严重度判定，也不该让工具报错
+        similar = []
     return {
         'severity': severity, 'confidence': confidence,
-        'similar_cases': [{'id': r[0].metadata.get('recall_id'), 'desc': r[0].page_content[:100],
-                           'score': float(r[1])} for r in results[:3]],
+        'similar_cases': similar,
     }
 
 @tool

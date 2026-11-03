@@ -7,6 +7,9 @@ langchain>=0.3
 langchain-openai>=0.1
 langchain-community>=0.3
 chromadb>=0.5
+# chromadb 0.5.x 用了 np.float_，NumPy 2.0 起这个别名被删，import chromadb 直接炸。
+# 要跑通向量库（knowledge/ingest.py、eval 的 rag_20）必须留在 NumPy 1.x。
+numpy<2
 sentence-transformers>=3.0
 openai>=1.50
 streamlit>=1.40
