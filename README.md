@@ -17,6 +17,7 @@
 │   ├── ml_playground/          # FastAPI + Gradio 统一平台（已登记 15 个算法）
 │   ├── lora_finetune/          # QLoRA 微调演示（Qwen2.5-0.5B + 4-bit）  ← 简历项目 3
 │   ├── env_agent/              # LangGraph Agent（5 工具编排）             ← 简历项目 2
+│   ├── evals/                  # 三个主项目的契约测试 + 一条命令复现
 │   ├── llm_streaming/          # 流式输出复现（llm/17 配套）
 │   ├── llm_injection_guard/    # Prompt Injection 6 层防线（llm/18 配套）
 │   ├── quality_compliance_assistant/  # QMS 质量合规助手（副线，不进简历）
@@ -29,6 +30,11 @@
 ├── 环境法律法规智能问答系统/   # RAG 法典智能问答（ChromaDB + BGE）        ← 简历项目 1
 ├── articles/            # 学习记录（独立 git 仓库）
 ├── scripts/             # 封面图 / notebook 生成脚本（按系列子目录）
+├── tools/               # 统一检查入口（check_all.py）
+├── docs/
+│   ├── adr/             # 决策记录（一条一文件，约束 → 裁定 → 后果）
+│   └── agents/          # 新项目开工清单
+├── GLOSSARY-MAP.md      # 术语地图，指向 4 份 context 术语表
 ├── data/                # 数据集
 ├── 环保类知识库LLM Wiki/      # YoudaoNote LLM Wiki
 ├── _local/              # 发文计划 + 求职叙事（gitignored）
@@ -199,6 +205,12 @@ RAG、AI Agent、Prompt Engineering、Fine-tuning 等 LLM 工程实践。
 > 通用依赖安装与 notebook 启动命令见 `CLAUDE.md`「Quick Start」节。本节只列项目级启动命令。
 
 ```bash
+# 静态一致性检查（命名规范 / 文章口径 / 术语表 / ADR / 契约测试）
+python tools/check_all.py
+
+# 三个主项目的契约测试（只读产物，秒级，不需要 key 和 GPU）
+python projects/evals/run_all.py
+
 # ML Playground（演示平台）
 uvicorn projects/ml_playground.app:app
 
