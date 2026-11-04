@@ -87,18 +87,27 @@ def _boom_metric(name):
     return fn
 
 
+def _recorder(ran, name, accuracy=1.0):
+    def fn():
+        ran.append(name)
+        return {'name': name, 'total': 1, 'correct': 1, 'accuracy': accuracy,
+                'target': 0.8, 'summary': 'fake'}
+    return fn
+
+
 def test_exit_code_0_when_all_metrics_pass(monkeypatch, tmp_path):
     import eval.run_eval as run_eval
     monkeypatch.setattr(run_eval, 'RESULTS_DIR', tmp_path)
     monkeypatch.setattr(run_eval, 'METRICS', [(_fake_metric('m1', 1.0), 'm1')])
-    assert run_eval.main() == 0
+    # argv 传 []，不让 argparse 去读 pytest 自己的命令行参数
+    assert run_eval.main([]) == 0
 
 
 def test_exit_code_1_when_a_metric_fails(monkeypatch, tmp_path):
     import eval.run_eval as run_eval
     monkeypatch.setattr(run_eval, 'RESULTS_DIR', tmp_path)
     monkeypatch.setattr(run_eval, 'METRICS', [(_fake_metric('m1', 0.2), 'm1')])
-    assert run_eval.main() == 1
+    assert run_eval.main([]) == 1
 
 
 def test_exit_code_2_when_a_metric_is_skipped(monkeypatch, tmp_path):
@@ -109,4 +118,28 @@ def test_exit_code_2_when_a_metric_is_skipped(monkeypatch, tmp_path):
         (_fake_metric('m1', 1.0), 'm1'),
         (_boom_metric('m2'), 'm2'),
     ])
-    assert run_eval.main() == 2
+    assert run_eval.main([]) == 2
+
+
+def test_only_selects_the_named_metrics(monkeypatch, tmp_path):
+    """--only 只跑点名的指标，其余一个都不碰。"""
+    import eval.run_eval as run_eval
+    ran = []
+    monkeypatch.setattr(run_eval, 'RESULTS_DIR', tmp_path)
+    monkeypatch.setattr(run_eval, 'METRICS', [
+        (_recorder(ran, 'm1'), 'm1'),
+        (_recorder(ran, 'm2'), 'm2'),
+        (_recorder(ran, 'm3'), 'm3'),
+    ])
+    assert run_eval.main(['--only', 'm1,m3']) == 0
+    assert ran == ['m1', 'm3']
+
+
+def test_only_with_unknown_metric_is_not_measured(monkeypatch, tmp_path):
+    """指标名写错：一个都没跑出来，退出码 2（跟「跳过」同一档）。"""
+    import eval.run_eval as run_eval
+    ran = []
+    monkeypatch.setattr(run_eval, 'RESULTS_DIR', tmp_path)
+    monkeypatch.setattr(run_eval, 'METRICS', [(_recorder(ran, 'm1'), 'm1')])
+    assert run_eval.main(['--only', 'typo']) == 2
+    assert ran == []

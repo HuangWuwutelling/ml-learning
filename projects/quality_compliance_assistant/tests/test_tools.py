@@ -1,4 +1,5 @@
 import pytest
+import threading
 from unittest.mock import patch, MagicMock
 from agent.tools import search_recall_history, assess_severity, query_quality_manual
 
@@ -36,6 +37,37 @@ def test_assess_severity_does_not_depend_on_recall_index():
         result = assess_severity.invoke({'complaint_text': '电池起火'})
     assert result['severity'] == 'high'
     assert result['similar_cases'] == []
+
+
+def test_embedding_model_is_built_once():
+    """embedding 模型必须进程内只建一次。
+
+    transformers 4.57 的 from_pretrained 走 meta device 加载，同一个模型并发
+    加载会 race，参数全留在 meta 上，抛 "Cannot copy out of meta tensor"，
+    而且坏状态留在进程里，之后每次加载都失败。LangGraph 的 ToolNode 同一轮
+    里并发跑多个工具，正好会踩到。
+    """
+    from agent.tools import get_embeddings
+    assert get_embeddings() is get_embeddings()
+
+
+def test_get_chroma_under_concurrent_threads():
+    """并发取向量库不能炸（以前会抛 Cannot copy out of meta tensor）。"""
+    from agent.tools import _get_chroma
+    errors = []
+
+    def worker():
+        try:
+            _get_chroma('qms_knowledge')
+        except Exception as exc:
+            errors.append(exc)
+
+    threads = [threading.Thread(target=worker) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert not errors, errors
 
 @pytest.fixture
 def sample_recall(db):

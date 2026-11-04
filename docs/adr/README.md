@@ -25,6 +25,7 @@
 | [0019](0019-standard-limits-are-deterministic-rules.md) | 标准限值与风险分档走确定性规则，不交给模型 | accepted |
 | [0020](0020-standard-pdf-not-in-repo.md) | 标准原文 PDF 不进仓库，提交解析后的 JSON 基线 | accepted |
 | [0021](0021-mcp-not-rest.md) | 标准查询对外用 MCP server，不用 REST | accepted |
+| [0022](0022-embedding-model-loaded-once-per-process.md) | embedding 模型进程内只建一次 | accepted |
 
 新写一条：复制最近一条的文件，把编号往后排，文件名 slug 与标题保持一致，
 然后在本表加一行。

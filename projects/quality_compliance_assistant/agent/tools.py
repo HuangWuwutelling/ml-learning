@@ -1,4 +1,5 @@
 import json
+import threading
 from langchain_core.tools import tool
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -8,11 +9,31 @@ from qms_app.models import Recall
 CHROMA_DIR = str(Path('knowledge/chroma_db'))
 EMBEDDING_MODEL = 'BAAI/bge-small-zh-v1.5'
 
+# transformers 4.57 的 from_pretrained 走 meta device 加载权重。同一个模型并发
+# 加载会 race：后到的那个 71 个参数全留在 meta 上，抛 "Cannot copy out of meta
+# tensor"；而且坏状态会留在进程里，之后每次加载都失败（磁盘上的 HF 缓存是好的，
+# 重开进程就正常）。LangGraph 的 ToolNode 同一轮里的多个工具是并发跑的，所以
+# 模型只能建一次，还要加锁。
+_embeddings = None
+_embeddings_lock = threading.Lock()
+
+
+def get_embeddings():
+    """进程内只建一次 embedding 模型（加锁，避免并发 race）。"""
+    global _embeddings
+    if _embeddings is None:
+        with _embeddings_lock:
+            if _embeddings is None:
+                _embeddings = HuggingFaceBgeEmbeddings(
+                    model_name=EMBEDDING_MODEL,
+                    model_kwargs={'device': 'cpu'},
+                    encode_kwargs={'normalize_embeddings': True})
+    return _embeddings
+
+
 def _get_chroma(collection: str = 'qms_knowledge'):
-    embeddings = HuggingFaceBgeEmbeddings(model_name=EMBEDDING_MODEL,
-                                          model_kwargs={'device': 'cpu'},
-                                          encode_kwargs={'normalize_embeddings': True})
-    return Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings,
+    return Chroma(persist_directory=CHROMA_DIR,
+                  embedding_function=get_embeddings(),
                   collection_name=collection)
 
 @tool

@@ -2,6 +2,7 @@ import json
 import os
 import socket
 import sys
+import argparse
 from pathlib import Path
 from datetime import datetime
 
@@ -29,9 +30,8 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'qms_project.settings')
 django.setup()
 from agent.graph import run_with_trace
-from agent.tools import assess_severity
+from agent.tools import assess_severity, get_embeddings
 from eval.scoring import tool_set_scores, no_tool_score
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.vectorstores import Chroma
 
 RESULTS_DIR = Path('eval/results')
@@ -160,9 +160,9 @@ def eval_rag():
     counts how many have an `expected_doc_ids` doc_id — true precision.
     """
     cases = [json.loads(l) for l in open('eval/datasets/rag_20.jsonl', encoding='utf-8')]
-    embeddings = HuggingFaceBgeEmbeddings(model_name='BAAI/bge-small-zh-v1.5',
-                                          model_kwargs={'device': 'cpu'},
-                                          encode_kwargs={'normalize_embeddings': True})
+    # 复用 agent 的 embedding 模型：同一个进程里只建一次（transformers 4.57
+    # 的 meta device 加载并发会 race），也保证测的就是 agent 用的那个检索器。
+    embeddings = get_embeddings()
     chroma = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings,
                     collection_name='qms_knowledge')
     per_case = []
@@ -199,14 +199,37 @@ METRICS = [
     (eval_rag, 'rag_20'),
 ]
 
-def main():
+
+def parse_args(argv=None):
+    ap = argparse.ArgumentParser(description='跑 QMS 评测')
+    ap.add_argument('--only', help='只跑指定指标，逗号分隔（如 tools_30,no_tool_8）')
+    return ap.parse_args(argv)
+
+
+def main(argv=None):
     """跑全部指标，落盘结果，返回退出码。
 
     退出码三态：
       0 = 所有指标都跑到且达标
       1 = 有指标跑到但低于目标
       2 = 有指标没跑到（跳过），数字没测出来，不算失败也不能当通过
+
+    argv 传 None 时读 sys.argv[1:]；测试直接传 []，免得 pytest 的参数被 argparse
+    当成评测选项解析掉（argparse 的用法错误也用退出码 2，语义上同样是「没测出来」）。
+
+    --only 只跑一部分指标：整轮评测要十几分钟，机器内存吃紧时按指标分开跑，
+    每次进程短一点；结果文件按指标增量落盘，中途被打断也不至于全丢。
     """
+    args = parse_args(argv)
+    selected = METRICS
+    if args.only:
+        want = {s.strip() for s in args.only.split(',') if s.strip()}
+        unknown = want - {n for _, n in METRICS}
+        if unknown:
+            print(f'unknown metric: {sorted(unknown)}', file=sys.stderr)
+            return 2
+        selected = [m for m in METRICS if m[1] in want]
+
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     results = {
         'timestamp': datetime.now().isoformat(),
@@ -215,10 +238,19 @@ def main():
     failed = []
     skipped = []
     passed = []
+    out = RESULTS_DIR / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+
+    def save():
+        """增量落盘：每跑完一个指标写一次，中途被打断也留着已测出的数字。"""
+        results['summary'] = {'passed': passed, 'failed': failed, 'skipped': skipped}
+        # 显式写 UTF-8：write_text 默认用系统 locale（Windows 上是 GBK），
+        # 落盘的中文就不是 UTF-8 了，别人拿 UTF-8 读会直接 UnicodeDecodeError。
+        out.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
+
     # Wrap each fn() call in try/except so a failure in one metric
     # doesn't abort the whole run. Save partial results with
     # "status": "skipped" and the error message for the failed ones.
-    for fn, name in METRICS:
+    for fn, name in selected:
         try:
             r = fn()
             ok = r['accuracy'] >= r['target']
@@ -235,9 +267,7 @@ def main():
                                         'error': f'{type(e).__name__}: {str(e)[:200]}'}
             skipped.append(name)
             print(f"[{name}] SKIPPED: {type(e).__name__}: {str(e)[:120]}")
-    results['summary'] = {'passed': passed, 'failed': failed, 'skipped': skipped}
-    out = RESULTS_DIR / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    out.write_text(json.dumps(results, ensure_ascii=False, indent=2))
+        save()
     print(f'\n[done] saved to {out}')
     print(f"[summary] pass {len(passed)}, fail {len(failed)}, skipped {len(skipped)}")
     if skipped:

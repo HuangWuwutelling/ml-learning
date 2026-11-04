@@ -164,11 +164,11 @@ def check_adr():
     return OK, f'{len(files)} 条 ADR，编号连续，三段齐全'
 
 
-def _pytest(rel_path, cwd=None):
+def _pytest(rel_path, cwd=None, python=None):
     d = REPO_ROOT / rel_path
     if not d.exists():
         return SKIP, f'{rel_path} 不存在'
-    code, out = run([sys.executable, '-m', 'pytest', str(d), '-q'], cwd=cwd)
+    code, out = run([python or sys.executable, '-m', 'pytest', str(d), '-q'], cwd=cwd)
     tail = [ln for ln in out.strip().splitlines() if ln.strip()]
     summary = tail[-1] if tail else ''
     if code == 0:
@@ -200,6 +200,33 @@ def check_agent_unit():
 def check_envstd():
     """GB 36600 MCP server 的单测（语料层 / 规则层 / 评测集自身）。"""
     return _pytest('projects/env_standards_mcp/tests')
+
+
+def check_qms_scoring():
+    """QMS 评测判定口径的离线单测（不调 LLM / 不连 DB / 不碰向量库）。
+
+    跑的是 QMS 项目自己的 tests/test_eval_scoring.py（13 条纯函数单测），
+    守住 2026-11-03 那次「假指标」修复的判定口径不被改坏。
+    项目自带 .venv/（NumPy 1.26.4，chromadb 才起得来）；没有 venv 时用当前解释器
+    也能跑（这批是纯函数）。依赖没装全 → SKIP，不算失败。
+    """
+    proj = REPO_ROOT / 'projects' / 'quality_compliance_assistant'
+    venv_py = proj / '.venv' / 'Scripts' / 'python.exe'
+    if not venv_py.exists():
+        venv_py = proj / '.venv' / 'bin' / 'python'
+    python = str(venv_py) if venv_py.exists() else None
+    rel_path = 'projects/quality_compliance_assistant/tests/test_eval_scoring.py'
+    if not (REPO_ROOT / rel_path).exists():
+        return SKIP, f'{rel_path} 不存在'
+    code, out = run([python or sys.executable, '-m', 'pytest',
+                     str(REPO_ROOT / rel_path), '-q'], cwd=proj)
+    tail = [ln for ln in out.strip().splitlines() if ln.strip()]
+    summary = tail[-1] if tail else ''
+    if code == 0:
+        return OK, f'{rel_path}: {summary}'
+    if 'ModuleNotFoundError' in out or 'No module named' in out:
+        return SKIP, f'{rel_path}: 依赖没装全（缺 langchain-community 等），跳过'
+    return FAIL, f'{rel_path}: {summary or out.strip()[-200:]}'
 
 
 def check_envstd_eval():
@@ -299,6 +326,7 @@ CHECKS = [
     ('agent_unit', 'env_agent 行业名匹配单测（pytest）', check_agent_unit),
     ('envstd', 'GB 36600 MCP server 单测（pytest）', check_envstd),
     ('envstd_eval', 'GB 36600 MCP server 真实评测（走 MCP 通道）', check_envstd_eval),
+    ('qms', 'QMS 评测判定口径离线单测（pytest，不调 LLM）', check_qms_scoring),
     ('memory', '记忆库体检：MEMORY.md 当索引不当档案（长度 / 链接 / description）', check_memory),
     ('clean', '主仓工作区状态（只报告）', check_clean),
 ]
