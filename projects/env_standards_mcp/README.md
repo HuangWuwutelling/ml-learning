@@ -92,7 +92,7 @@ python -m pytest tests -q
 | 项 | 数字 |
 |---|---|
 | 用例 | 38 条，通过 38，失败 0 |
-| 单测 | 32 条全过（`python -m pytest tests -q`） |
+| 单测 | 36 条全过（`python -m pytest tests -q`） |
 | 语料自检 | 85 条目（表 1 45 / 表 2 40），交叉核验未通过 0 |
 
 用例**走真的 MCP 通道**：起 server、连客户端、`call_tool` 发请求，不是直接调 Python 函数。
@@ -100,6 +100,10 @@ python -m pytest tests -q
 
 用例覆盖：三档边界（等于筛选值 / 等于管制值各测一次）、换用地类型结论翻转、用途不明按第一类、
 注①豁免成立与不成立、表 2 项目、按 CAS 查项、未收录项目回 5.3.7、批量定档取最严重一档。
+
+单测里另有 4 条走**子进程 + 真的 stdio 客户端**（`tests/test_stdio_server.py`），
+证明 `python server/mcp_server.py` 这条启动命令确实能用——进程内调的评测全绿也盖不住
+「脚本用相对 import、直接跑就 ImportError」这种问题。
 
 ## 技术栈
 

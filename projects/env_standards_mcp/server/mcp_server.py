@@ -18,12 +18,20 @@
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
 from typing import Any
+
+# 两种跑法都要能起来：`python server/mcp_server.py` 与 `python -m server.mcp_server`。
+# 前者 sys.path[0] 是 server/ 目录，找不到 server 包，这里把项目根补上。
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from mcp.server.fastmcp import FastMCP
 
-from . import rules
-from .corpus import load_corpus
+from server import rules
+from server.corpus import load_corpus
 
 CORPUS = load_corpus()
 
