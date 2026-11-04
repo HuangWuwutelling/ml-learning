@@ -16,29 +16,32 @@ langchain 1.4.3 / langchain-community 0.4.2 / chromadb 0.5.5 / Streamlit 1.65.0�
 
 ## 快速复现
 
+**必须用项目自带的 `.venv/`**：chromadb 0.5.5 用了 `np.float_`（NumPy 2.0 起被删），
+全局环境是 NumPy 2.4.6，`import chromadb` 直接抛 AttributeError。venv 里钉 NumPy 1.26.4。
+
 ```bash
 # 1. 启动数据库
 docker compose up -d
 
-# 2. 安装依赖
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+# 2. 安装依赖（Windows 用 .venv/Scripts/，Linux/macOS 用 .venv/bin/）
+python -m venv .venv
+.venv/Scripts/python -m pip install -r requirements.txt
 cp .env.example .env  # 填 DEEPSEEK_API_KEY（默认是占位符 replace-me）
 
 # 3. 迁移 + 灌演示数据
-python manage.py migrate
-python scripts/seed_demo_data.py
+.venv/Scripts/python manage.py migrate
+.venv/Scripts/python scripts/seed_demo_data.py
 
-# 4. 灌知识库 + 召回历史索引
-python knowledge/ingest.py
-python scripts/seed_chroma_recall.py
+# 4. 灌知识库 + 召回历史索引（已存在可跳过）
+.venv/Scripts/python knowledge/ingest.py
+.venv/Scripts/python scripts/seed_chroma_recall.py
 
 # 5. 启动服务
-python manage.py runserver       # API: http://localhost:8000
-streamlit run dashboard/app.py   # Dashboard: http://localhost:8501
+.venv/Scripts/python manage.py runserver       # API: http://localhost:8000
+.venv/Scripts/python -m streamlit run dashboard/app.py   # Dashboard: http://localhost:8501
 
 # 6. 跑评测
-python eval/run_eval.py
+.venv/Scripts/python eval/run_eval.py
 ```
 
 `docker compose down -v && ./scripts/reset_and_seed.sh` 可一键清库 + 重建（bash 环境，Windows 走 Git Bash）。
@@ -60,19 +63,19 @@ python eval/run_eval.py
 | 1 | 有指标跑到，但低于目标 |
 | 2 | 有指标没跑到（跳过）——数字没测出来，不算失败，也不能当通过 |
 
-**2026-11-03（改动判定逻辑后，本机重跑）**：
+**2026-11-04（建 `.venv/` 后，在 venv 里重跑）**：
 
 | 评测集 | 数字 | 目标 | 结果 |
 |---|---|---|---|
 | 严重度判定（severity_25） | 25/25 = 100% | ≥ 75% | PASS |
+| RAG 引用准确（rag_20，真 precision@5） | 19/20 通过，平均 precision@5 = 0.74 | ≥ 40% | PASS |
 | 工具选择（tools_30） | 没测出来 | ≥ 80% | SKIPPED |
 | 不该调工具（no_tool_8） | 没测出来 | = 100% | SKIPPED |
-| RAG 引用准确（rag_20，真 precision@5） | 没测出来 | ≥ 40% | SKIPPED |
 
-三个跳过的原因各不相同，都不是"跑分不达标"：
+两个跳过的原因不是"跑分不达标"：
 
 - `tools_30` / `no_tool_8`：`.env` 里 `DEEPSEEK_API_KEY=replace-me` 是占位符，DeepSeek 返回 401，30 条 / 8 条全部没跑起来。**这两个指标在 2026-11-03 之前是假指标**（判定逻辑见下），现在逻辑是对的，但本机没有真 key，所以数字还没测出来。填入真 key 重跑即可解锁。
-- `rag_20`：本机装的是 NumPy 2.4.6，而 chromadb 0.5.5 用了 `np.float_`（NumPy 2.0 起被删），`import chromadb` 直接炸。`requirements.txt` 已加 `numpy<2` 钉住，照着装即可跑。
+- `rag_20` 之前跳过的原因已解决：全局环境装的是 NumPy 2.4.6，而 chromadb 0.5.5 用了 `np.float_`（NumPy 2.0 起被删），`import chromadb` 直接炸。现在用项目自带的 `.venv/`（NumPy 1.26.4），测出 **19/20、平均 precision@5 = 0.74**，和 2026-10-09 首次测得的数字一致。**不要把全局环境的 NumPy 降下来**，别的项目共用那个环境。
 
 ### 判定口径（改过的地方，别照旧数字理解）
 
@@ -97,10 +100,13 @@ python eval/run_eval.py
 
 ## 已知限制（Known Limitations）
 
-- **⚠️ 当前评测状态：1 PASS / 3 SKIPPED**（共 4 个指标）。`severity_25` 通过（25/25，目标 75%）；`tools_30`、`no_tool_8` 因 `DEEPSEEK_API_KEY=replace-me` 是占位符被跳过；`rag_20` 因本机 NumPy 2.4.6 与 chromadb 0.5.5 不兼容被跳过。**跳过的三个数字都没有测出来，不能当通过。**
+- **⚠️ 当前评测状态：2 PASS / 2 SKIPPED**（共 4 个指标）。`severity_25` 通过（25/25，目标 75%）；`rag_20` 通过（19/20，平均 precision@5 = 0.74，目标 40%）；`tools_30`、`no_tool_8` 因 `DEEPSEEK_API_KEY=replace-me` 是占位符被跳过。**跳过的两个数字都没有测出来，不能当通过。**
 - **`severity_25` 不是分类能力评测**：它测的是关键词规则表有没有被改坏。数据集标签与规则表同源，换一批人工标注的数据才有资格说"分类准不准"。
 - **`DEEPSEEK_API_KEY` 是占位符**：`scripts/seed_demo_data.py` 与 eval 中的 LLM 调用在没有真实 key 时只能跑不依赖 LLM 的部分（如严重度判定走关键词规则，不调 LLM；agent 多轮、工具选择评估直接跳过）。
-- **NumPy 必须 < 2**：chromadb 0.5.5 用了 `np.float_`，NumPy 2.0 起这个别名被删，`import chromadb` 会直接抛 AttributeError。`requirements.txt` 已钉 `numpy<2`。
+- **NumPy 必须 < 2**：chromadb 0.5.5 用了 `np.float_`，NumPy 2.0 起这个别名被删，`import chromadb` 会直接抛 AttributeError。`requirements.txt` 已钉 `numpy==1.26.4`，项目自带 `.venv/`；全局环境别降。
+- **PostgreSQL 要起着**：`search_recall_history` 用 `Recall.objects.get` 取召回详情，`draft_capa` 又调它；库没起时这两个工具报错（`psycopg2.OperationalError`）。起库 `docker compose up -d`，灌种子数据 `python scripts/seed_demo_data.py`。
+- **HF 直连不通**：`huggingface.co` 直连超时（41 秒），走 `HTTPS_PROXY=http://127.0.0.1:7897`。embedding 模型 `BAAI/bge-small-zh-v1.5` 已在 `HF_HOME`（`D:\Workspace\.cache\huggingface`）缓存里，一般不用重下；**缓存命中时加 `HF_HUB_OFFLINE=1` 更快**（省掉每次联网查 etag 的超时）。
+- **chromadb 会打 telemetry 报错**：`Failed to send telemetry event ... capture() takes 1 positional argument but 3 were given`。这是 chromadb 0.5.5 自带的 posthog 版本对不上，不影响查询结果，可以无视。
 - **知识库为演示节选**：`data/knowledge_sources/` 内是 GB/T 19001-2016 / AIAG CQI / SAMR 公告的摘要 + 节选，不是完整 PDF / 官方公告页。接生产前需要替换为正式来源。
 - **召回数据为种子数据**：`scripts/seed_demo_data.py` 灌的是预置示例，`scrapers/` 下的 3 个爬虫（samr 主站 + samrdprc 公告 + samrdprc 新闻）可拉真实数据但需要出口网络可达，且 samrdprc 主站有反爬，生产 IP 限流时建议走 NHTSA 备援源。
 - **`multi_turn_5` 没有指标消费**：5 条多轮样例只作数据留存，不参与打分。

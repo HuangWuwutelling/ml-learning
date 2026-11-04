@@ -1,20 +1,31 @@
-Django==5.1.*
-djangorestframework==3.15.*
-psycopg2-binary>=2.9
+# 版本是钉死的，不是随手写的 >=。
+# 原因：`chromadb>=0.5` 今天解析到 1.5.9，而代码是照 0.5.5 的 API 写的；
+# `langchain-community` 0.4.2 配 1.x 的 chromadb 会直接炸。
+# 下面这套 = 全局环境里验证过能跑的那组版本（2026-11-04 复刻到 .venv/），
+# 唯一区别是 numpy 从 2.4.6 降到 1.26.4。
+Django==5.1.15
+djangorestframework==3.15.2
+psycopg2-binary==2.9.13
 python-dotenv>=1.0
-langgraph>=0.2
-langchain>=0.3
-langchain-openai>=0.1
-langchain-community>=0.3
-chromadb>=0.5
-# chromadb 0.5.x 用了 np.float_，NumPy 2.0 起这个别名被删，import chromadb 直接炸。
+langgraph==1.2.14
+langchain==1.4.3
+langchain-core==1.6.7
+langchain-openai==1.2.1
+# langchain-community 0.4.2：已 sunset，导入打 DeprecationWarning，但能用。
+# 迁移到 langchain-huggingface 是另一件事，别顺手做。
+langchain-community==0.4.2
+chromadb==0.5.5
+# chromadb 0.5.x 用了 np.float_，NumPy 2.0 起这个别名被删，import chromadb 直接炸
+# （chromadb/api/types.py:106 的 Union 注解里就写着它）。
 # 要跑通向量库（knowledge/ingest.py、eval 的 rag_20）必须留在 NumPy 1.x。
-numpy<2
-sentence-transformers>=3.0
-openai>=1.50
-streamlit>=1.40
-plotly>=5.0
-pandas>=2.0
+numpy==1.26.4
+sentence-transformers==3.0.1
+transformers==4.57.1
+torch==2.11.0
+openai==2.35.1
+streamlit==1.65.0
+plotly==7.1.0
+pandas==3.0.6
 requests>=2.32
 beautifulsoup4>=4.12
 lxml>=5.0
