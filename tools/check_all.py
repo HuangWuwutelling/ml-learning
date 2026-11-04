@@ -197,6 +197,27 @@ def check_agent_unit():
                     cwd=REPO_ROOT / 'projects' / 'env_agent')
 
 
+def check_envstd():
+    """GB 36600 MCP server 的单测（语料层 / 规则层 / 评测集自身）。"""
+    return _pytest('projects/env_standards_mcp/tests')
+
+
+def check_envstd_eval():
+    """GB 36600 MCP server 的真实评测：起 server 走 MCP 通道跑 38 条用例。"""
+    script = REPO_ROOT / 'projects' / 'env_standards_mcp' / 'eval' / 'run_eval.py'
+    if not script.is_file():
+        return SKIP, 'projects/env_standards_mcp/eval/run_eval.py 不存在'
+    code, out = run([sys.executable, str(script)],
+                    cwd=REPO_ROOT / 'projects' / 'env_standards_mcp')
+    summary = ''
+    for line in out.splitlines():
+        if line.startswith('用例 '):
+            summary = line.strip()
+    if code == 0:
+        return OK, summary or 'env_standards_mcp 评测通过'
+    return FAIL, summary or out.strip()[-200:]
+
+
 MEMORY_MAX_CHARS = 6000      # MEMORY.md 总长上限：它是每轮重读的前缀
 MEMORY_LINE_MAX = 300        # 单条索引行上限
 MEMORY_FILE_MAX = 12000      # 单个记忆文件上限（超了就该压缩，只报 WARN）
@@ -276,6 +297,8 @@ CHECKS = [
     ('agent', 'env_agent 边界测试（pytest）', check_agent),
     ('lora', 'lora_finetune 边界测试（pytest）', check_lora),
     ('agent_unit', 'env_agent 行业名匹配单测（pytest）', check_agent_unit),
+    ('envstd', 'GB 36600 MCP server 单测（pytest）', check_envstd),
+    ('envstd_eval', 'GB 36600 MCP server 真实评测（走 MCP 通道）', check_envstd_eval),
     ('memory', '记忆库体检：MEMORY.md 当索引不当档案（长度 / 链接 / description）', check_memory),
     ('clean', '主仓工作区状态（只报告）', check_clean),
 ]

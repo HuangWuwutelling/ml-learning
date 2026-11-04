@@ -21,6 +21,7 @@
 │   ├── llm_streaming/          # 流式输出复现（llm/17 配套）
 │   ├── llm_injection_guard/    # Prompt Injection 6 层防线（llm/18 配套）
 │   ├── quality_compliance_assistant/  # QMS 质量合规助手（副线，不进简历）
+│   ├── env_standards_mcp/      # GB 36600-2018 标准查询 MCP server（副线，不进简历）
 │   ├── power_bi_recall_dashboard/     # Power BI 召回作品（副线，不进简历）
 │   ├── rust_dbscan/            # Rust 重写 DBSCAN（副线，不进简历）
 │   ├── rust_pyo3_dbscan/       # PyO3 绑定层（副线，不进简历）
@@ -222,6 +223,9 @@ cd projects/env_agent && python init_chromadb.py && python app.py
 
 # 环境违法严重程度识别（QLoRA 微调；详见 projects/lora_finetune/README.md）
 python projects/lora_finetune/train.py
+
+# GB 36600-2018 标准查询 MCP server（起 stdio 服务；详见 projects/env_standards_mcp/README.md）
+python projects/env_standards_mcp/server/mcp_server.py
 
 # GB 15618 评价工具（外仓，库 + GUI）
 git clone https://github.com/HuangWuwutelling/gb15618.git
