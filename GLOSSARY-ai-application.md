@@ -85,6 +85,31 @@ _Avoid_: `AI 判定`（没说是哪一段判定）、`智能分析`（不写哪�
 五个工具全部走确定性规则，语料是标准原文解析出来的 JSON，不是向量库。
 _Avoid_: `标准库`（不写协议与是否可检索）、`知识库`（本仓的「知识库」指 RAG 语料）
 
+**KV Cache**: 模型逐 token 生成时，把每层注意力已经算好的 K（key）/ V（value）张量
+留在显存里，下一步直接取用，不再重算。张量形状 `[batch_size, num_heads, seq_len, head_dim]`，
+每层各存一份。占用随上下文长度线性增长，省下的算力变成显存占用。
+_Avoid_: `缓存了上文`、`存了对话`（不写存的是 K/V 张量）
+
+**prefill（预填充）**: 把整段输入一次性算完的阶段，做完之后才进入逐 token 的 decode。
+prefill 要为每个输入 token 算出 K/V 并写进 KV Cache，所以它决定了缓存一开始有多大。
+_Avoid_: `首轮推理`、`首轮`（分不清是 prefill 还是 decode）
+
+**显存（VRAM）**: GPU 上的内存。模型权重、KV Cache、激活值都占显存。本仓的 CPU 实测占的是
+内存不是显存，写文章必须交代测试条件，不能把 CPU 上的字节数直接当成显存数。
+_Avoid_: `内存`（GPU 上叫显存）、`缓存占用`（不说清占的是显存还是内存）
+
+**PagedAttention**: vLLM 的 KV cache 管理方式，把每条序列的 KV cache 切成固定大小的 block
+按需分配，避免碎片。它治的是 KV cache 的分配方式，不改变「每步只算当前 token」这件事。
+_Avoid_: `分页注意力`（不写它解决的是碎片不是重复计算）
+
+**量化（quantization）**: 用更少的比特存模型权重，换显存，代价是精度。本系列口径：
+官方只给「相对 16-bit 省 4 倍」这类说法（bitsandbytes），没有「32-bit → 4-bit 省 8 倍」的官方源。
+_Avoid_: `省了 8 倍`、`精度几乎无损`（前者无官方源，后者无出处）
+
+**采样参数**: 从模型每步输出的概率分布里挑下一个 token 的参数，主要是 temperature / top_p / top_k。
+temperature → 0 等价于 greedy decoding，官方从未承诺跨运行逐字一致。
+_Avoid_: `temperature=0 保证一致`、`确定性参数`
+
 ## Relationships
 
 - **dense / hybrid / hybrid_rerank** 是同一条检索链路上的三个档位，不是三个独立系统。
