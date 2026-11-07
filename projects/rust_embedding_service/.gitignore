@@ -1,6 +1,0 @@
-target/
-
-# Cargo.lock is deliberately NOT ignored here, unlike the two library crates
-# (rust_dbscan, rust_pyo3_dbscan). This is a binary: the lock file pins the
-# exact dependency graph of a deployable artifact, which is the Rust
-# convention. It appears here as soon as the first build resolves.

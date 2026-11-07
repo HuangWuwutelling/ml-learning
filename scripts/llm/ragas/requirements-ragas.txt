@@ -1,0 +1,8 @@
+# RAGAS eval extra deps.
+# Install in the side venv of the env-laws RAG project (avoid gradio 6.x conflict).
+# Time of authoring: 2026-07-18
+ragas>=0.2.0,<0.3.0
+langchain-openai>=0.1.7
+langchain-community>=0.2.0
+langchain-huggingface>=0.1.0
+datasets>=2.14.0

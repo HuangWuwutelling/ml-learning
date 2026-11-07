@@ -9,16 +9,42 @@ _local/
 # 例外：docs/ 下的公开文档（ADR 等）要上传，superpowers 工作区仍私有
 !docs/
 docs/superpowers/
-# 例外：power_bi_recall_dashboard/docs/ 是项目级文档（设计 + 演示稿），需要上传
-!projects/power_bi_recall_dashboard/docs/
 
-# 辅助脚本（封面图、notebook 生成等，与算法本身无关）
-scripts/
+# 辅助脚本（封面图 / 出图 / notebook 生成，与算法本身无关）
+# 例外：文章正文引用到的「复现脚本 + 结果」要上传，白名单见 docs/agents/publish-rules.md
+scripts/*
+!scripts/utility/
+!scripts/ai-history/
+!scripts/llm/
+scripts/utility/*
+!scripts/utility/check_naming.py
+!scripts/utility/check_article.py
+!scripts/utility/count_cjk.py
+scripts/ai-history/*
+!scripts/ai-history/measure_kv_cache.py
+!scripts/ai-history/kv_cache_measure.json
+scripts/llm/*
+!scripts/llm/ragas/
+scripts/llm/ragas/*
+!scripts/llm/ragas/run_ragas_eval.py
+!scripts/llm/ragas/probe_context_recall.py
+!scripts/llm/ragas/testset.jsonl
+!scripts/llm/ragas/testset_v2_30q.jsonl
+!scripts/llm/ragas/requirements-ragas.txt
 
 # 测试脚本（本地验证用，不上传 GitHub）
 tests/
-# 例外：Rust crate 标准集成测试目录（tests/integration.rs）需要上传
-!projects/*/tests/
+# 例外：三个主项目的契约测试要上传
+!projects/evals/tests/
+
+# 副线项目（还没发文章，代码留本机，不上传 GitHub）
+# 判定标准见 docs/adr/0024-public-boundary.md：有已发布文章支撑才进 GitHub
+projects/quality_compliance_assistant/
+projects/env_standards_mcp/
+projects/power_bi_recall_dashboard/
+projects/rust_dbscan/
+projects/rust_pyo3_dbscan/
+projects/rust_embedding_service/
 
 # Python
 __pycache__/

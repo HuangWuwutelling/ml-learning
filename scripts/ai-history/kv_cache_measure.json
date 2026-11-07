@@ -1,0 +1,151 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "device": "cpu",
+  "threads": 4,
+  "dtype": "float32",
+  "config": {
+    "num_hidden_layers": 24,
+    "num_attention_heads": 14,
+    "num_key_value_heads": 2,
+    "hidden_size": 896,
+    "max_position_embeddings": 32768,
+    "dtype": "torch.float32"
+  },
+  "cache": [
+    {
+      "seq_len": 128,
+      "prefill_s": 0.785,
+      "cache_bytes": 3145728,
+      "cache_mib": 3.0,
+      "bytes_per_token": 24576,
+      "tensor_shape": [
+        1,
+        2,
+        128,
+        64
+      ],
+      "num_layers_with_cache": 24
+    },
+    {
+      "seq_len": 512,
+      "prefill_s": 3.886,
+      "cache_bytes": 12582912,
+      "cache_mib": 12.0,
+      "bytes_per_token": 24576,
+      "tensor_shape": [
+        1,
+        2,
+        512,
+        64
+      ],
+      "num_layers_with_cache": 24
+    },
+    {
+      "seq_len": 2048,
+      "prefill_s": 9.173,
+      "cache_bytes": 50331648,
+      "cache_mib": 48.0,
+      "bytes_per_token": 24576,
+      "tensor_shape": [
+        1,
+        2,
+        2048,
+        64
+      ],
+      "num_layers_with_cache": 24
+    }
+  ],
+  "decode": {
+    "cache_on": {
+      "use_cache": true,
+      "elapsed_s": 3.274,
+      "new_tokens": 8,
+      "tok_per_s": 2.4438,
+      "total_tokens_in_seq": 520,
+      "output_ids": [
+        13876,
+        38835,
+        34208,
+        916,
+        279,
+        15678,
+        5562,
+        13
+      ]
+    },
+    "cache_off": {
+      "use_cache": false,
+      "elapsed_s": 18.655,
+      "new_tokens": 8,
+      "tok_per_s": 0.4288,
+      "total_tokens_in_seq": 520,
+      "output_ids": [
+        13876,
+        38835,
+        34208,
+        916,
+        279,
+        15678,
+        5562,
+        13
+      ]
+    },
+    "speedup_cache_on": 5.7
+  },
+  "official_cfg": {
+    "Qwen/Qwen2.5-0.5B-Instruct": {
+      "source": "D:\\Workspace\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775\\config.json",
+      "num_hidden_layers": 24,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 2,
+      "hidden_size": 896,
+      "head_dim": 64,
+      "max_position_embeddings": 32768,
+      "dtype": "bfloat16",
+      "formula": "2 (K and V) * layers * kv_heads * head_dim * dtype_bytes",
+      "per_token_bytes": {
+        "float32": 24576,
+        "bfloat16": 12288
+      },
+      "ctx_bytes": {
+        "float32": {
+          "ctx_len": 32768,
+          "bytes": 805306368,
+          "mib": 768.0
+        },
+        "bfloat16": {
+          "ctx_len": 32768,
+          "bytes": 402653184,
+          "mib": 384.0
+        }
+      }
+    },
+    "Qwen/Qwen2.5-7B-Instruct": {
+      "source": "D:\\Workspace\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-7B-Instruct\\snapshots\\a09a35458c702b33eeacc393d103063234e8bc28\\config.json",
+      "num_hidden_layers": 28,
+      "num_attention_heads": 28,
+      "num_key_value_heads": 4,
+      "hidden_size": 3584,
+      "head_dim": 128,
+      "max_position_embeddings": 32768,
+      "dtype": "bfloat16",
+      "formula": "2 (K and V) * layers * kv_heads * head_dim * dtype_bytes",
+      "per_token_bytes": {
+        "float32": 114688,
+        "bfloat16": 57344
+      },
+      "ctx_bytes": {
+        "float32": {
+          "ctx_len": 32768,
+          "bytes": 3758096384,
+          "mib": 3584.0
+        },
+        "bfloat16": {
+          "ctx_len": 32768,
+          "bytes": 1879048192,
+          "mib": 1792.0
+        }
+      }
+    }
+  }
+}

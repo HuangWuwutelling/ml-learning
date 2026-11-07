@@ -1,9 +1,0 @@
-[toolchain]
-# Pinned to MSVC without changing the global rustup default, so Stage 1
-# (rust_dbscan) keeps building with the GNU toolchain it was benchmarked on.
-#
-# This file is resolved from the *current working directory*, not from
-# --manifest-path. Building from the repo root falls back to the GNU default
-# and fails deep inside pyo3-ffi/candle looking for dlltool.exe, which is a
-# MinGW tool. cd into this directory before running cargo.
-channel = "stable-x86_64-pc-windows-msvc"
