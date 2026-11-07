@@ -11,7 +11,7 @@ Usage:
 设计约束：
 - 只用标准库；Windows 11 + git bash + 系统 python，不依赖 make / just。
 - 不 chdir，全部路径基于本文件位置定位仓库根。
-- 缺依赖（scripts/ 未公开、articles/ 独立仓不在本机）时判 SKIP，不判 FAIL。
+- 缺依赖（articles/ 独立仓不在本机）时判 SKIP，不判 FAIL。
 """
 import argparse
 import re
@@ -360,6 +360,62 @@ def check_clean():
     return WARN, f'主仓有 {len(lines)} 项改动或未跟踪文件'
 
 
+# GitHub 公开集合（ADR-0024）。本地专属目录不许进跟踪集；scripts/ 只放行复现白名单。
+PUBLISHED_SCRIPT_FILES = {
+    'scripts/ai-history/measure_kv_cache.py',
+    'scripts/ai-history/kv_cache_measure.json',
+    'scripts/llm/ragas/probe_context_recall.py',
+    'scripts/llm/ragas/requirements-ragas.txt',
+    'scripts/llm/ragas/run_ragas_eval.py',
+    'scripts/llm/ragas/testset.jsonl',
+    'scripts/llm/ragas/testset_v2_30q.jsonl',
+    'scripts/utility/check_article.py',
+    'scripts/utility/check_naming.py',
+    'scripts/utility/count_cjk.py',
+}
+
+LOCAL_ONLY_PATHS = (
+    'articles',
+    '_local',
+    'docs/superpowers',
+    'projects/quality_compliance_assistant',
+    'projects/env_standards_mcp',
+    'projects/power_bi_recall_dashboard',
+    'projects/rust_dbscan',
+    'projects/rust_pyo3_dbscan',
+    'projects/rust_embedding_service',
+)
+
+
+def check_publish():
+    """GitHub 公开边界：本地专属目录不许被跟踪，scripts/ 只认复现白名单。"""
+    code, out = run(['git', 'ls-files'])
+    if code != 0:
+        return SKIP, 'git 不可用或不是 git 仓库'
+    tracked = [ln.strip() for ln in out.splitlines() if ln.strip()]
+
+    problems = []
+    for path in LOCAL_ONLY_PATHS:
+        prefix = path.rstrip('/') + '/'
+        hits = [t for t in tracked if t == path or t.startswith(prefix)]
+        if hits:
+            problems.append(f'{prefix} 有 {len(hits)} 个文件被跟踪（本地专属，不上 GitHub）')
+
+    extra = sorted(t for t in tracked
+                   if t.startswith('scripts/') and t not in PUBLISHED_SCRIPT_FILES)
+    if extra:
+        problems.append(f'scripts/ 白名单外有 {len(extra)} 个文件：{", ".join(extra[:3])}')
+
+    missing = sorted(f for f in PUBLISHED_SCRIPT_FILES if f not in tracked)
+    if missing:
+        problems.append(f'复现脚本白名单缺 {len(missing)} 个：{", ".join(missing[:3])}')
+
+    if problems:
+        return FAIL, '; '.join(problems[:5])
+    return OK, (f'跟踪集 {len(tracked)} 个文件 / 本地专属目录 0 个 / '
+                f'scripts/ 白名单 {len(PUBLISHED_SCRIPT_FILES)} 个')
+
+
 CHECKS = [
     ('naming', 'scripts/ 下生成器脚本的命名规范', check_naming),
     ('article', '最新 3 篇已发文章的硬约束（破折号 / 禁词 / 图片与链接）', check_article),
@@ -374,6 +430,7 @@ CHECKS = [
     ('qms', 'QMS 评测判定口径离线单测（pytest，不调 LLM）', check_qms_scoring),
     ('memory', '记忆库体检：MEMORY.md 当索引不当档案（长度 / 链接 / description）', check_memory),
     ('plan', 'plan.md 当索引不当档案（总长 / 变更记录单行上限）', check_plan),
+    ('publish', 'GitHub 公开边界：本地专属目录未被跟踪 + scripts/ 白名单', check_publish),
     ('clean', '主仓工作区状态（只报告）', check_clean),
 ]
 

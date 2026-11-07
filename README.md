@@ -20,17 +20,17 @@
 │   ├── evals/                  # 三个主项目的契约测试 + 一条命令复现
 │   ├── llm_streaming/          # 流式输出复现（llm/17 配套）
 │   ├── llm_injection_guard/    # Prompt Injection 6 层防线（llm/18 配套）
-│   ├── quality_compliance_assistant/  # QMS 质量合规助手（副线，不进简历）
-│   ├── env_standards_mcp/      # GB 36600-2018 标准查询 MCP server（副线，不进简历）
-│   ├── power_bi_recall_dashboard/     # Power BI 召回作品（副线，不进简历）
-│   ├── rust_dbscan/            # Rust 重写 DBSCAN（副线，不进简历）
-│   ├── rust_pyo3_dbscan/       # PyO3 绑定层（副线，不进简历）
-│   ├── rust_embedding_service/ # Qwen2.5 embedding 微服务（副线，不进简历）
+│   ├── quality_compliance_assistant/  # QMS 质量合规助手（本机专属，暂无文章）
+│   ├── env_standards_mcp/      # GB 36600-2018 标准查询 MCP server（本机专属，暂无文章）
+│   ├── power_bi_recall_dashboard/     # Power BI 召回作品（本机专属，暂无文章）
+│   ├── rust_dbscan/            # Rust 重写 DBSCAN（本机专属，暂无文章）
+│   ├── rust_pyo3_dbscan/       # PyO3 绑定层（本机专属，暂无文章）
+│   ├── rust_embedding_service/ # Qwen2.5 embedding 微服务（本机专属，暂无文章）
 │   ├── wali_cmd/               # 微信小程序（源码在独立仓库）
 │   └── gb15618/                # 行业案例（源码在独立仓库）
 ├── 环境法律法规智能问答系统/   # RAG 法典智能问答（ChromaDB + BGE）        ← 简历项目 1
 ├── articles/            # 学习记录（独立 git 仓库）
-├── scripts/             # 封面图 / notebook 生成脚本（按系列子目录）
+├── scripts/             # 封面图 / 出图 / notebook 生成脚本（按系列子目录）
 ├── tools/               # 统一检查入口（check_all.py）
 ├── docs/
 │   ├── adr/             # 决策记录（一条一文件，约束 → 裁定 → 后果）
@@ -47,6 +47,20 @@
 > - `gb15618` 源码：[github.com/HuangWuwutelling/gb15618](https://github.com/HuangWuwutelling/gb15618)
 > - `fund-tracker` 源码：[github.com/HuangWuwutelling/fund-tracker](https://github.com/HuangWuwutelling/fund-tracker)
 > - `battle-city` 源码：[github.com/HuangWuwutelling/battle-city](https://github.com/HuangWuwutelling/battle-city)
+
+## 仓库边界
+
+这个仓只放公开内容：
+
+- **文章正文不在这里**。文章在 `articles/`（本机独立仓），发布走公众号流程。
+- **进 GitHub 的**：README、术语表、ADR 与开工清单、`tools/` 检查入口、
+  `models/` `notebooks/` `data/`、有已发布文章支撑的项目、**文章引用到的复现脚本**
+  （`scripts/` 里只放行这 10 个文件，白名单见 `docs/agents/publish-rules.md`）。
+- **不进 GitHub 的**：本机私有目录 `_local/`、`docs/superpowers/`、封面与出图脚本，
+  以及 6 个还没发文章的副线项目（上面的树里标了「本机专属」）。
+
+一句话判定：**一个项目进 GitHub 的条件是有一篇已发布文章支撑它。**
+副线项目写出文章后再转正，规则见 `docs/agents/publish-rules.md`。
 
 ## 文章系列
 
@@ -224,9 +238,6 @@ cd projects/env_agent && python init_chromadb.py && python app.py
 
 # 环境违法严重程度识别（QLoRA 微调；详见 projects/lora_finetune/README.md）
 python projects/lora_finetune/train.py
-
-# GB 36600-2018 标准查询 MCP server（起 stdio 服务；详见 projects/env_standards_mcp/README.md）
-python projects/env_standards_mcp/server/mcp_server.py
 
 # GB 15618 评价工具（外仓，库 + GUI）
 git clone https://github.com/HuangWuwutelling/gb15618.git
