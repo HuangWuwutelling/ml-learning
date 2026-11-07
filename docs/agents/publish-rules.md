@@ -54,6 +54,12 @@ projects/rust_embedding_service/          Qwen2.5 embedding 微服务
 | `scripts/utility/check_naming.py` | `tools/check_all.py` 调用 |
 | `scripts/utility/check_article.py` | `tools/check_all.py` 调用 |
 | `scripts/utility/count_cjk.py` | 字数口径工具 |
+| `scripts/build_commands.py` | engineering/05、engineering/06 的 139 条命令数据生成器（1069 行） |
+
+`scripts/build_commands.py` 与本机独立仓 `projects/wali_cmd/scripts/build_commands.py`
+字节一致，是发布快照：小程序源码本身留本机，发布这份是为了让读者能在仓库里核对
+文章引用的行数与那 139 条命令数据。脚本的输出路径指向小程序目录，要重新生成数据
+请用独立仓里的那份。
 
 新增复现脚本：改 `.gitignore` 的白名单 + 改 `tools/check_all.py` 里的
 `PUBLISHED_SCRIPT_FILES`，两处必须同步，否则 `publish` 检查项会判 FAIL。

@@ -372,6 +372,7 @@ PUBLISHED_SCRIPT_FILES = {
     'scripts/utility/check_article.py',
     'scripts/utility/check_naming.py',
     'scripts/utility/count_cjk.py',
+    'scripts/build_commands.py',
 }
 
 LOCAL_ONLY_PATHS = (

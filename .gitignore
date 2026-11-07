@@ -16,6 +16,7 @@ scripts/*
 !scripts/utility/
 !scripts/ai-history/
 !scripts/llm/
+!scripts/build_commands.py
 scripts/utility/*
 !scripts/utility/check_naming.py
 !scripts/utility/check_article.py
