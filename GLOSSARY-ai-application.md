@@ -85,10 +85,14 @@ _Avoid_: `AI 判定`（没说是哪一段判定）、`智能分析`（不写哪�
 五个工具全部走确定性规则，语料是标准原文解析出来的 JSON，不是向量库。
 _Avoid_: `标准库`（不写协议与是否可检索）、`知识库`（本仓的「知识库」指 RAG 语料）
 
-**KV Cache**: 模型逐 token 生成时，把每层注意力已经算好的 K（key）/ V（value）张量
-留在显存里，下一步直接取用，不再重算。张量形状 `[batch_size, num_heads, seq_len, head_dim]`，
+**KV Cache（键值缓存）**: 模型逐 token 生成时，把每层注意力已经算好的 K（key）/ V（value）张量
+存在显存里，下一步直接取用，不再重算。张量形状 `[batch_size, num_heads, seq_len, head_dim]`，
 每层各存一份。占用随上下文长度线性增长，省下的算力变成显存占用。
 _Avoid_: `缓存了上文`、`存了对话`（不写存的是 K/V 张量）
+
+**GQA（分组查询注意力）**: 多个查询头共用一组 K/V 头的做法。Qwen2.5-0.5B 的 config.json
+是 14 个注意力头、2 个 KV 头，KV Cache 按 2 个头存，比 14 个头各存一份小 7 倍。
+_Avoid_: `多头共享`（不说清共用的是 K/V 头）
 
 **prefill（预填充）**: 把整段输入一次性算完的阶段，做完之后才进入逐 token 的 decode。
 prefill 要为每个输入 token 算出 K/V 并写进 KV Cache，所以它决定了缓存一开始有多大。
