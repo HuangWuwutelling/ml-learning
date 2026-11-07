@@ -250,6 +250,10 @@ MEMORY_LINE_MAX = 300        # 单条索引行上限
 MEMORY_FILE_MAX = 12000      # 单个记忆文件上限（超了就该压缩，只报 WARN）
 MEMORY_DESC_MAX = 200        # description 上限（召回靠它，太长没意义）
 
+PLAN_MAX_CHARS = 30000       # plan.md 总长上限（字符，不是字节）
+PLAN_ROW_MAX = 200           # plan.md 变更记录单行上限（字符）
+PLAN_ENFORCE = False         # True = 超标判 FAIL；False = 只报 WARN（上线首轮用 False）
+
 
 def memory_dir():
     """Claude Code 把记忆库放在 ~/.claude/projects/<仓库路径 slug>/memory/。"""
@@ -304,6 +308,47 @@ def check_memory():
     return OK, f'MEMORY.md {len(text)} 字符 / {len(rows)} 条索引 / 最大文件 {worst[1]} {worst[0]} 字符'
 
 
+def plan_changelog_rows(text):
+    """抽出 plan.md 变更记录表里的数据行（以 | YYYY-MM-DD 开头的行）。
+
+    只认 `## 项目变更记录` 这节里的行，别处同样以竖线开头的表格不算。
+    """
+    rows = []
+    inside = False
+    for ln in text.splitlines():
+        if ln.startswith('## '):
+            inside = '变更记录' in ln
+            continue
+        if inside and re.match(r'^\|\s*\d{4}-\d{2}-\d{2}', ln):
+            rows.append(ln)
+    return rows
+
+
+def check_plan():
+    """plan.md 当索引不当档案：总长与变更记录单行都有上限。
+
+    `_local/` 是本机私有目录，不在这个仓的 git 里，换机器就没有这个文件，
+    所以缺文件判 SKIP 不判 FAIL，跟 check_memory() 同一个套路。
+    """
+    p = REPO_ROOT / '_local' / 'plan.md'
+    if not p.is_file():
+        return SKIP, '_local/plan.md 不存在（plan.md 是本机私有文件）'
+
+    text = p.read_text(encoding='utf-8')
+    rows = plan_changelog_rows(text)
+    warns = []
+
+    if len(text) > PLAN_MAX_CHARS:
+        warns.append(f'plan.md {len(text)} 字符 > 上限 {PLAN_MAX_CHARS}')
+    over = [r for r in rows if len(r) > PLAN_ROW_MAX]
+    if over:
+        warns.append(f'变更记录 {len(over)} 行 > {PLAN_ROW_MAX} 字符，最长 {max(len(r) for r in over)}')
+
+    if warns:
+        return (FAIL if PLAN_ENFORCE else WARN), '; '.join(warns)
+    return OK, f'plan.md {len(text)} 字符 / 变更记录 {len(rows)} 行'
+
+
 def check_clean():
     """主仓工作区状态：只报告，不判失败（未跟踪的本地文件是常态）。"""
     code, out = run(['git', 'status', '--porcelain'])
@@ -328,6 +373,7 @@ CHECKS = [
     ('envstd_eval', 'GB 36600 MCP server 真实评测（走 MCP 通道）', check_envstd_eval),
     ('qms', 'QMS 评测判定口径离线单测（pytest，不调 LLM）', check_qms_scoring),
     ('memory', '记忆库体检：MEMORY.md 当索引不当档案（长度 / 链接 / description）', check_memory),
+    ('plan', 'plan.md 当索引不当档案（总长 / 变更记录单行上限）', check_plan),
     ('clean', '主仓工作区状态（只报告）', check_clean),
 ]
 
