@@ -55,7 +55,7 @@
 - **文章正文不在这里**。文章在 `articles/`（本机独立仓），发布走公众号流程。
 - **进 GitHub 的**：README、术语表、ADR 与开工清单、`tools/` 检查入口、
   `models/` `notebooks/` `data/`、有已发布文章支撑的项目、**文章引用到的复现脚本**
-  （`scripts/` 里只放行这 10 个文件，白名单见 `docs/agents/publish-rules.md`）。
+  （`scripts/` 里只放行这 11 个文件，白名单见 `docs/agents/publish-rules.md`）。
 - **不进 GitHub 的**：本机私有目录 `_local/`、`docs/superpowers/`、封面与出图脚本，
   以及 6 个还没发文章的副线项目（上面的树里标了「本机专属」）。
 
