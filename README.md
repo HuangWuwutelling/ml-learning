@@ -68,6 +68,7 @@
 | 09 | **Token：LLM 的最小单元** | 从字符到 BPE：LLM 看到了什么、读懂了什么 |
 | 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段 |
 | 11 | **Scaling Law 走到头：越大≠越聪明** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling |
+| 12 | **上下文越长越占显存：KV Cache 这笔账怎么算** | 从重算到缓存：一个 token 占多少、为什么随上下文线性涨 |
 
 ### 算法线 (`articles/ml/`) — 已实现算法
 
