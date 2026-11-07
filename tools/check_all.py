@@ -252,7 +252,7 @@ MEMORY_DESC_MAX = 200        # description 上限（召回靠它，太长没意�
 
 PLAN_MAX_CHARS = 30000       # plan.md 总长上限（字符，不是字节）
 PLAN_ROW_MAX = 200           # plan.md 变更记录单行上限（字符）
-PLAN_ENFORCE = False         # True = 超标判 FAIL；False = 只报 WARN（上线首轮用 False）
+PLAN_ENFORCE = True          # True = 超标判 FAIL；False = 只报 WARN
 
 
 def memory_dir():
