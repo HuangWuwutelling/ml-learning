@@ -28,7 +28,7 @@
 | [0022](0022-embedding-model-loaded-once-per-process.md) | embedding 模型进程内只建一次 | accepted |
 | [0023](0023-plan-md-is-an-index.md) | plan.md 是索引层，细节分流到 notes / ADR / plans | accepted |
 | [0024](0024-public-boundary.md) | GitHub 只收 README、复现代码和已发文章的项目 | accepted |
-| [0025](0025-knowledge-point-cards-for-ai-history-13-15.md) | ai-history 13-15 走知识点卡片体裁 | accepted |
+| [0025](0025-knowledge-point-cards-for-ai-history.md) | ai-history 从 13 起走知识点卡片体裁 | accepted |
 
 新写一条：复制最近一条的文件，把编号往后排，文件名 slug 与标题保持一致，
 然后在本表加一行。
