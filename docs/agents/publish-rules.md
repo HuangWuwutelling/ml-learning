@@ -46,6 +46,8 @@ projects/rust_embedding_service/          Qwen2.5 embedding 微服务
 |---|---|
 | `scripts/ai-history/measure_kv_cache.py` | ai-history/12 |
 | `scripts/ai-history/kv_cache_measure.json` | ai-history/12 的实测结果 |
+| `scripts/ai-history/measure_ai_13_quant.py` | ai-history/13 |
+| `scripts/ai-history/quant_measure.json` | ai-history/13 的实测结果 |
 | `scripts/llm/ragas/run_ragas_eval.py` | llm/12、llm/13、llm/19 |
 | `scripts/llm/ragas/probe_context_recall.py` | llm/13 的召回探针 |
 | `scripts/llm/ragas/testset.jsonl` | llm/12 的 23 题集 |

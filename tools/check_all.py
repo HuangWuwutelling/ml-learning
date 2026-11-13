@@ -364,6 +364,8 @@ def check_clean():
 PUBLISHED_SCRIPT_FILES = {
     'scripts/ai-history/measure_kv_cache.py',
     'scripts/ai-history/kv_cache_measure.json',
+    'scripts/ai-history/measure_ai_13_quant.py',
+    'scripts/ai-history/quant_measure.json',
     'scripts/llm/ragas/probe_context_recall.py',
     'scripts/llm/ragas/requirements-ragas.txt',
     'scripts/llm/ragas/run_ragas_eval.py',

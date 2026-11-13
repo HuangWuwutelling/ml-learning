@@ -24,6 +24,8 @@ scripts/utility/*
 scripts/ai-history/*
 !scripts/ai-history/measure_kv_cache.py
 !scripts/ai-history/kv_cache_measure.json
+!scripts/ai-history/measure_ai_13_quant.py
+!scripts/ai-history/quant_measure.json
 scripts/llm/*
 !scripts/llm/ragas/
 scripts/llm/ragas/*
