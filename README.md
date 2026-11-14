@@ -55,7 +55,7 @@
 - **文章正文不在这里**。文章在 `articles/`（本机独立仓），发布走公众号流程。
 - **进 GitHub 的**：README、术语表、ADR 与开工清单、`tools/` 检查入口、
   `models/` `notebooks/` `data/`、有已发布文章支撑的项目、**文章引用到的复现脚本**
-  （`scripts/` 里只放行这 11 个文件，白名单见 `docs/agents/publish-rules.md`）。
+  （`scripts/` 里只放行这 13 个文件，白名单见 `docs/agents/publish-rules.md`）。
 - **不进 GitHub 的**：本机私有目录 `_local/`、`docs/superpowers/`、封面与出图脚本，
   以及 6 个还没发文章的副线项目（上面的树里标了「本机专属」）。
 
@@ -83,6 +83,7 @@
 | 10 | **RLHF 的 5 年：1.3B 模型怎么打败 175B** | SFT → Reward Model → PPO 三阶段 |
 | 11 | **Scaling Law 走到头：越大≠越聪明** | 从 Kaplan 到 Chinchilla，三面墙堵住 scaling |
 | 12 | **上下文越长越占显存：KV Cache 这笔账怎么算** | 从重算到缓存：一个 token 占多少、为什么随上下文线性涨 |
+| 13 | **4-bit 量化：显存省 2.75 倍，这笔账怎么算** | 官方说省 4 倍、实算 2.75 倍：省几倍 = 16 ÷ 平均每权重占几位 |
 
 ### 算法线 (`articles/ml/`) — 已实现算法
 
